@@ -1,0 +1,1 @@
+#laravel_template_with_vue
