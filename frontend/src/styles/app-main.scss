@@ -1,0 +1,40 @@
+#toolbar {
+  background-color: #e8e8e8 !important;
+  margin-bottom: 5px;
+  .el-form-item {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+}
+
+#datagrid {
+  border: 1px solid #ddd;
+  padding-bottom: 5px;
+  .toolbar {
+    padding-left: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .page {
+    margin-top: 5px;
+    height: 40px;
+    .el-col-2 {
+      text-align: center;
+      min-width: 120px;
+      height:100%;
+    }
+    .el-col-20 {
+      line-height: 40px;
+      height: 100%;
+      .el-pagination {
+        padding: 0;
+        margin-top: 5px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+// $border-color: rgba(9, 134, 207, 0.349);
+$border-color: rgb(0, 0, 0);

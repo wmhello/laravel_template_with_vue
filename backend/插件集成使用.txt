@@ -1,0 +1,75 @@
+微信集成(https://github.com/overtrue/laravel-wechat)
+excel插件(https://github.com/Maatwebsite/Laravel-Excel)
+跨域(https://github.com/barryvdh/laravel-cors)
+短信集成(ttps://github.com/overtrue/easy-sms)
+use Overtrue\EasySms\EasySms;
+
+$config = [
+    // HTTP 请求的超时时间（秒）
+    'timeout' => 5.0,
+
+    // 默认发送配置
+    'default' => [
+        // 网关调用策略，默认：顺序调用
+        'strategy' => \Overtrue\EasySms\Strategies\OrderStrategy::class,
+
+        // 默认可用的发送网关
+        'gateways' => [
+            'yunpian', 'aliyun', 'juhe',
+        ],
+    ],
+    // 可用的网关配置
+    'gateways' => [
+        'errorlog' => [
+            'file' => '/tmp/easy-sms.log',
+        ],
+        'yunpian' => [  // 云片
+            'api_key' => '824f0ff2f71cab52936axxxxxxxxxx',
+        ],
+        'aliyun' => [  //阿里云
+            'access_key_id' => '',
+            'access_key_secret' => '',
+            'sign_name' => '',
+        ],
+    'juhe' => [ // 聚合数据
+        'app_key' => '',
+    ],
+    ],
+];
+
+$easySms = new EasySms($config);
+$easySms->send(13188888888, [
+    'content'  => '您的验证码为: 6379',
+    'template' => 'SMS_001',
+    'data' => [
+        'code' => 6379
+    ],
+]);
+
+拼音插件ttps://github.com/overtrue/laravel-pinyin）
+pinyin()	       app('pinyin')->convert()
+pinyin_abbr()	   app('pinyin')->abbr()
+pinyin_permalink   app('pinyin')->permalink()
+pinyin_sentence	   app('pinyin')->sentence()
+
+使用函数或者服务
+var_dump(pinyin('带着希望去旅行，比到达终点更美好'));
+// ["dai", "zhe", "xi", "wang", "qu", "lv", "xing", "bi", "dao", "da", "zhong", "dian", "geng", "mei", "hao"]
+
+var_dump(pinyin_abbr('带着希望去旅行'));
+// dzxwqlx
+
+使用门面
+use Pinyin; // Facade class, NOT Overtrue\Pinyin\Pinyin
+
+var_dump(Pinyin::convert('带着希望去旅行'));
+// ["dai", "zhe", "xi", "wang", "qu", "lv", "xing"]
+
+echo Pinyin::sentence('带着希望去旅行，比到达终点更美好');
+// dài zhe xī wàng qù lǔ xíng, bǐ dào dá zhōng diǎn gèng měi hǎo
+
+
+
+
+
+
