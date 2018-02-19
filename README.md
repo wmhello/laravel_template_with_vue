@@ -23,6 +23,6 @@ laravel5.5和vue.js结合的前后端分离项目模板。作为程序的起点�
 
 ## 6、打赏
 如果我的付出能够帮助到你，我也乐于接受你的帮助，小小的赞赏是我持续改进的动力。
-![支付宝支付](http://img.ynxpyz.cn/template/pay1.jpg)
-![微信支付](http://img.ynxpyz.cn/template/wx.jpg)
+![支付宝支付](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshot/pay1.jpg)
+![微信支付](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshot/wx.jpg)
 
