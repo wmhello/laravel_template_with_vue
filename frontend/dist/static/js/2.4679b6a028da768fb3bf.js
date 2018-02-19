@@ -1,1 +1,0 @@
-webpackJsonp([2],{OVQD:function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.getList=function(e){return Object(a.a)({url:"/table/list",method:"get",params:e})};var a=r("Vo7i")}});

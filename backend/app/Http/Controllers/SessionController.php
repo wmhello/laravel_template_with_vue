@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SessionCollection;
-use App\Session;
+use App\Models\Session;
 use App\Teaching;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Import\SessionImport;
@@ -147,7 +147,7 @@ class SessionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Session  $session
+     * @param  \App\Models\Session $session
      * @return \Illuminate\Http\Response
      */
     /**
@@ -192,7 +192,7 @@ class SessionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Session  $session
+     * @param  \App\Models\Session $session
      * @return \Illuminate\Http\Response
      */
     public function edit(Session $session)
@@ -204,7 +204,7 @@ class SessionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Session  $session
+     * @param  \App\Models\Session $session
      * @return \Illuminate\Http\Response
      */
     /**
@@ -272,7 +272,7 @@ class SessionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Session  $session
+     * @param  \App\Models\Session $session
      * @return \Illuminate\Http\Response
      */
     /**

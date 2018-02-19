@@ -1,3 +1,3 @@
 module.exports = {
-   site: 'http://manger.test'
+   site: 'http://back.test'
 }

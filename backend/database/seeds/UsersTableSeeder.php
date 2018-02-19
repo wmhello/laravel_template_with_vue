@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'dongdong',
             'email' => '786270744@qq.com',
             'password' => bcrypt('123456'),
-            'role' => 'editor',
+            'role' => 'user',
             'avatar' => 'uploads/201711251509th5a19879c71868.jpg',
             'remember_token' => str_random(10),
         ]);

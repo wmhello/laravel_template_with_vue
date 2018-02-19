@@ -9,7 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
-use App\Session;
+use App\Models\Session;
 use Carbon\Carbon;
 
 trait Tools

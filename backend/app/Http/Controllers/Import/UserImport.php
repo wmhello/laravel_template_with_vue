@@ -10,7 +10,8 @@ class UserImport extends \Maatwebsite\Excel\Files\ExcelFile
     public function getFile()
     {
 
-        return storage_path('app') .'/'.$this->fileUpdate();
+        $fileName = storage_path('app') . '/' . $this->fileUpdate();
+        return $fileName;
     }
 
     public function getFilters()

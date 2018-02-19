@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers\Import;
 
-use App\Session;
+use App\Models\Session;
 use Carbon\Carbon;
 
 class SessionImportHandler implements \Maatwebsite\Excel\Files\ImportHandler

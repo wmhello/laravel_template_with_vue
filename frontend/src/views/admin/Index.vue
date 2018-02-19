@@ -41,7 +41,8 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-tooltip content="编辑" placement="right-end">
+          <div v-if="scope.row.id > 2">
+          <el-tooltip content="编辑" placement="right-end" >
             <el-button size="small" plain icon="el-icon-edit-outline" @click="edit(scope.row)"></el-button>
           </el-tooltip>
           <el-tooltip content="修改密码" placement="right-end">
@@ -50,6 +51,8 @@
           <el-tooltip content="删除" placement="right-end">
             <el-button plain icon="el-icon-delete" type="danger" size="small" @click="del(scope.row)"></el-button>
           </el-tooltip>
+          </div>
+
         </template>
       </el-table-column>
     </el-table>
@@ -64,7 +67,7 @@
           </el-col>
           <el-col :span="10" >
             <el-form-item label="登录名">
-              <el-input v-model="form.email"></el-input>
+              <el-input v-model="form.email" :disabled="isEdit"></el-input>
             </el-form-item>
           </el-col>
         </el-row>

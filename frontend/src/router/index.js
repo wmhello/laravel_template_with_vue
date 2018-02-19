@@ -116,7 +116,6 @@ export const asyncRouterMap = [
       }
     ]
   },
-
   {
     path: '/teachmanage',
     component: Layout,
@@ -137,46 +136,6 @@ export const asyncRouterMap = [
           role: ['admin', 'user'],
           title: '学期管理',
           icon: 'zonghe'
-        }
-      },
-      {
-        path: 'leader',
-        name: 'teachermanage/leader',
-        component: _import('teachmanage/Leader'),
-        meta: {
-          role: ['admin'],
-          title: '学校行政管理',
-          icon: 'zujian'
-        }
-      },
-      {
-        path: 'classteacher',
-        name: 'teachermanage/classteacher',
-        component: _import('teachmanage/Classteacher'),
-        meta: {
-          role: ['admin'],
-          title: '班主任管理',
-          icon: 'EXCEL'
-        }
-      },
-      {
-        path: 'department',
-        name: 'teachmanage/department',
-        component: _import('teachmanage/Department'),
-        meta: {
-          role: ['admin'],
-          title: '教研组长管理',
-          icon: 'shouce'
-        }
-      },
-      {
-        path: 'teaching',
-        name: 'teachmanage/teaching',
-        component: _import('teachmanage/Teaching'),
-        meta: {
-          role: ['admin'],
-          title: '教师代课管理',
-          icon: 'quanxian'
         }
       }
     ]

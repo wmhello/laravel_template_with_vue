@@ -1,3 +1,3 @@
 module.exports = {
-  site: 'http://web.ynxpyz.cn'
+  site: 'http://back.ynxpyz.cn'
 }

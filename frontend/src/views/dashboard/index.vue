@@ -2,8 +2,7 @@
   <div class="dashboard-container">
     <div class='dashboard-text'>name:{{name}}</div>
     <div class='dashboard-text'>role:<span v-for='role in roles' :key='role'>{{role}}</span></div>
-    <el-button @click="getSession()">发送请求学期列表的数据</el-button>
-    <el-button @click="getLeader()" v-has="'leader.index'">发送请求行政管理的数据</el-button>
+    <el-button @click="getSession()" v-has="'session.index'">显示学期列表--用户角色默认无此功能</el-button>
 
   </div>
 </template>
@@ -11,7 +10,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getInfo as getInfoBySession } from "@/api/session";
-import { getInfo as getInfoByLeader } from "@/api/leader";
 import {Tools} from "@/views/utils/Tools";
 
 export default {

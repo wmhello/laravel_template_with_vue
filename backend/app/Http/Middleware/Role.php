@@ -29,12 +29,16 @@ class Role
         } else {
             $route = Route::currentRouteName();
             $permissions = [];
+            $white_list = ['admin.userInfo']; //白名单路由，如果访问的路由是白名单里面的内容，则自动放行
+            if (in_array($route, $white_list)) {
+                return $next($request);
+            } 
             // 3、 角色数组中取出每一个角色，得到对应的功能id
-            $feature = \App\Role::whereIn('name',$arrRole)->pluck('permission');
+            $feature = \App\Models\Role::whereIn('name',$arrRole)->pluck('permission');
             $feature = $feature->toArray();
             $strPermission = implode(',', $feature);
             $permissions = explode(',', $strPermission);
-            $feature = Permission::whereIn('id',$permissions)->pluck('route_name');
+            $feature = Permission::whereIn('id',$permissions)->pluck('route_name'); // 当前角色可以访问的功能
             $feature = $feature->toArray();
             if (in_array($route, $feature)) {
                 return $next($request);

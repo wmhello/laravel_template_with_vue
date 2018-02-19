@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Import\UserImport;
 use App\Http\Resources\UserCollection;
 use App\Models\Permission;
-use App\Role;
-use App\User;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -405,7 +405,7 @@ class UserController extends Controller
             'avatar' => $user['avatar']
         ];
         // 用户权限
-        $feature = \App\Role::whereIn('name',$roles)->pluck('permission');
+        $feature = \App\Models\Role::whereIn('name',$roles)->pluck('permission');
         $feature = $feature->toArray();
         $strPermission = implode(',', $feature);
         $permissions = explode(',', $strPermission);
