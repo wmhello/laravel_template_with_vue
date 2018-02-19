@@ -25,19 +25,25 @@ class PermissionController extends Controller
         // $lists  = Permission::Name()->Pid()->Type()->paginate($pageSize);
         $lists  = Permission::Name()->Pid()->Type()->get();
         $count = Permission::Name()->Pid()->Type()->count();
+        $countLen1 = Permission::where('type', 1)->count();
+        $countLen2 = Permission::count();
         $items = $lists->toArray();
         $list_data = $items;
         $end = $list_data;
-        if ( !$request->has('type')) {
-            // 转换为无极限分类格式，分类下的所有API都在一起
-            $data = $this->make_tree($list_data);
-            $end = [];
-            foreach($data as $item) {
-                if (is_array($item['children'])) {
-                    $values = $item['children'];
-                    unset($item['children']);
-                    array_push($end, $item);
-                    $end = array_merge($end, $values);
+        if ($countLen1 !== $countLen2){ // 如果只有组类型，则无需进行无极限分类排序，直接输出结果就可以了
+            if ( !$request->has('type')) {  // 如果仅显示某一类内容，也无需进行无极限分类，直接输出结果
+                // 转换为无极限分类格式，分类下的所有API都在一起
+                $data = $this->make_tree($list_data);
+                $end = [];
+                foreach($data as $item) {
+                    if (isset($item['children'])) {
+                        $values = $item['children'];
+                        unset($item['children']);
+                        array_push($end, $item);
+                        $end = array_merge($end, $values);
+                    } else {
+                        array_push($end, $item);
+                    }
                 }
             }
         }

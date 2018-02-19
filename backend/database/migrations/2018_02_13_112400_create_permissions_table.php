@@ -18,8 +18,8 @@ class CreatePermissionsTable extends Migration
             $table->string('name')->comment('功能名称');
             $table->unsignedInteger('pid')->comment('父节点');
             $table->unsignedTinyInteger('type')->comment('节点类型(1->分组 2->节点)');
-            $table->string('method')->comment('方法');
-            $table->string('route_name')->comment('路由名称');
+            $table->string('method')->nullable()->comment('方法');
+            $table->string('route_name')->nullable()->comment('路由名称');
             $table->string('route_match')->nullable()->comment('路由模式');
             $table->string('remark')->nullable()->comment('功能备注');
             $table->softDeletes();

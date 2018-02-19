@@ -31,7 +31,6 @@ export function updateInfo (id, data) {
 }
 
 export function addInfo (data) {
-  console.log(data)
   return fetch({
     url: '/api/permissions',
     method: 'post',

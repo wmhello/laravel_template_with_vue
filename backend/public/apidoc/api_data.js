@@ -1,5 +1,33 @@
 define({ "api": [
   {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "./public/apidoc/main.js",
+    "group": "D__laravel_template_with_vue_backend_public_apidoc_main_js",
+    "groupTitle": "D__laravel_template_with_vue_backend_public_apidoc_main_js",
+    "name": ""
+  },
+  {
     "type": "delete",
     "url": "/api/admin/:id",
     "title": "删除指定的管理员",
@@ -290,34 +318,6 @@ define({ "api": [
     "filename": "./app/Http/Controllers/UserController.php",
     "groupTitle": "admin",
     "name": "PutApiAdminId"
-  },
-  {
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "optional": false,
-            "field": "varname1",
-            "description": "<p>No type.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "varname2",
-            "description": "<p>With type.</p>"
-          }
-        ]
-      }
-    },
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "./public/apidoc/main.js",
-    "group": "d__laravel_template_with_vue_backend_public_apidoc_main_js",
-    "groupTitle": "d__laravel_template_with_vue_backend_public_apidoc_main_js",
-    "name": ""
   },
   {
     "type": "get",

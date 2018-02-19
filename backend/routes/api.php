@@ -20,7 +20,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('login.logout');
 Route::post('/test', 'PermissionController@index')->name('soft.test');
 Route::middleware('auth:api')->group(function() {
     // 用户管理
-    Route::Resource('admin', 'UserController', ['only' => ['index', 'show', 'store', 'update', 'destory']]);
+    Route::Resource('admin', 'UserController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
     Route::post('/admin/modify', 'UserController@modify' )->name('admin.modify');
     Route::post('/admin/{id}/reset', 'UserController@reset')->name('admin.reset');
     Route::post('/admin/uploadAvatar', 'UserController@uploadAvatar')->name('admin.uploadAvatar');
@@ -30,7 +30,7 @@ Route::middleware('auth:api')->group(function() {
     Route::post('/admin/deleteAll', 'UserController@deleteAll')->name('admin.deleteAll');
 
     // 角色管理
-    Route::Resource('role', 'RoleController', ['only' => ['index', 'show', 'store', 'update', 'destory']]);
+    Route::Resource('role', 'RoleController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
     Route::get('getRoles', 'RoleController@getRoles')->name('role.get');
 
     // 其他支持API
@@ -40,11 +40,11 @@ Route::middleware('auth:api')->group(function() {
 
 
     // 学期管理
-    Route::Resource('session', 'SessionController', ['only' => ['index', 'show', 'store', 'update', 'destory']]);
+    Route::Resource('session', 'SessionController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
     Route::post('/session/upload', 'SessionController@upload')->name('session.upload');
 
     // 程序功能管理
-    Route::Resource('permissions', 'PermissionController', ['only' => ['index', 'show', 'store', 'update', 'destory']]);
+    Route::Resource('permissions', 'PermissionController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
     Route::post('/permissions/addGroup', 'PermissionController@addGroup')->name('permissions.addGroup');
     Route::post('/permissions/getGroup', 'PermissionController@getGroup')->name('permissions.getGroup');
     Route::post('/permissions/deleteAll', 'PermissionController@deleteAll')->name('permissions.deleteAll') ;

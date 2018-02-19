@@ -320,6 +320,7 @@ export default {
             // });
             // this.tableData.splice(record, 1, this.form);
             this.fetchData();
+            this.getGroup();
             Tools.success(this, "信息更新成功");
           }
         })
@@ -332,6 +333,7 @@ export default {
         .then(response => {
             Tools.success(this, "功能信息添加成功");
             this.fetchData();
+            this.getGroup();
         })
         .catch(err => {
           Tools.error(this, err.response.data)
