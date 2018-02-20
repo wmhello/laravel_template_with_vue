@@ -7,7 +7,7 @@
 ## 3、生成项目所需的数据表
 `php artisan migrate`
 
-## 4、生成passport的密钥
+## 4、使用OAuth认证，生成passport的密钥
 `php artisan passport:key --force`
    
 `php artisan passport:install --force`
@@ -23,6 +23,7 @@ PASSPORT_Client_Secret=
 
 ## 6、生成用户数据和各种结构数据
 `php artisan db:seed` 
+
 用户名和密码在database\seeds\UsersTableSeeder.php文件中明文标记
 
 ## 查看API文档地址
