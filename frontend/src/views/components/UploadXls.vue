@@ -12,7 +12,7 @@
          :auto-upload="false"
          :before-upload="beforeUpload">
   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload" disabled>上传到服务器</el-button>
   <div slot="tip" class="el-upload__tip">只能上传xls文件</div>
 </el-upload>
       <div slot="footer" class="dialog-footer">
