@@ -71,9 +71,7 @@
 
 > 如有问题请直接在 Issues 中提，或者您发现问题并有非常好的解决方案，欢迎 PR 👍
 
-> __部署和使用中如果有疑问，可以到项目交流群进行讨论：106822531(QQ)__
-
-> ![QQ群二维码](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/qq_qrcode.jpg)
+> __部署和使用中如果有疑问，可以到项目交流群进行讨论：106822531(QQ)__![QQ群二维码](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/qq_qrcode.jpg)
 
 ## 6、打赏
 如果我的付出能够帮助到你，我也乐于接受你的帮助，小小的赞赏是我们持续进步的动力。
