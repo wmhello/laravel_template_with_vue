@@ -3,8 +3,8 @@
     从多个项目中提取关键点、抛弃了的业务部分，对底层的功能进行了各类优化和抽象，写成本项目。
     
 ## 2、系统概述
-    项目使用了目前主流的laravel5.5与vue.js，采用了主流的前后端分离方式来构建，作为程序的起点，可以直接以此为基础来进行业务扩展。
-    后端(backend目录)负责OAuth认证、用户授权和提供API，在此基础上集成了跨越和excel文件的操作等基础功能，使用者只需专注于业务api的开发即可。
+    项目依托laravel5.5与vue.js，采用了主流的前后端分离方式来构建，作为程序的起点，你可以在此基础上进行自身业务的扩展。
+    后端(backend目录)负责OAuth认证、用户授权和提供API，在此基础上集成了跨域和excel文件的操作等基础功能，使用者只需专注于业务api的开发即可。
     前端(frontend目录)负责页面的显示和前端用户权限的控制。项目已经引入了element UI框架，并已经对用户登录认证、路由、权限等基础功能进行了处理。
     前端用户的权限不但可以控制系统的导航菜单，而且可以控制到页面按钮、表格等内容的显示。使用者只需要专注于业务界面的开发即可。
     本项目使用广泛，已经在本人的多个项目中商用。
@@ -56,6 +56,11 @@
 ![普通用户界面下的学期管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/session-user.png)
 
 ## 4、技术文档
+### [1、后端快速部署](back.md)
+### [2、前端快速部署](front.md)
+### [3、关键知识点讲述](knowledge.md)
+### [4、业务开发](developer.md)
+
 
 ## 5、技术支持
 > 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！ ^_^
@@ -87,7 +92,6 @@
 >- [前端构架 vueAdmin-template](https://github.com/PanJiaChen/vueAdmin-template)
 >- [前端权限控制 Vue-Access-control](https://github.com/tower1229/Vue-Access-Control)
 
-
 # License
 
-[MIT](https://github.com/wmhello/laravel_template_with_vue/LICENSE)
+[MIT](https://github.com/wmhello/laravel_template_with_vue/blob/master/LICENSE)
