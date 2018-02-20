@@ -22,7 +22,7 @@
 #### 管理员面板
 ![管理员面板](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/dashboard.png)
 
-#### 普通用户面板
+#### 普通用户面板[注意观察按钮和左侧导航菜单]
 ![普通用户面板](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/dishboard-user.png)
 
 #### 用户管理
