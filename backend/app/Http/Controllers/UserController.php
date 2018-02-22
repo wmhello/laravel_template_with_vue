@@ -239,6 +239,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        return response()->json([
+          'status' => 'success',
+          'status_code' => 200,
+          'message' => '演示功能，暂时不提供用户删除功能'
+        ], 200);
         $user = User::find($id);
         if ($user->delete()) {
             return $this->success();
@@ -264,6 +269,11 @@ class UserController extends Controller
      */
     public function reset(Request $request, $id)
     {
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => '系统演示，暂时不提供用户修改密码功能'
+        ], 200);
         $password = $request->input('password');
         $user = User::find($id);
         $user->password = bcrypt($password);
@@ -339,6 +349,12 @@ class UserController extends Controller
      */
     public function modify(Request $request)
     {
+
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => '系统演示，暂时不提供用户修改密码功能'
+        ], 200);
 
         $oldPassword = $request->input('oldPassword');
         $password = $request->input('password');

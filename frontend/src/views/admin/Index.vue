@@ -343,7 +343,11 @@ export default {
         resetAdminByPsw(this.resetId, password).then(response => {
           let result = response.status_code;
           if (result == 200) {
-            Tools.success(this, "恭喜你，重置密码成功")
+              if (response.message) {
+                Tools.success(this, response.message)
+                } else {
+                Tools.success(this, "删除成功!")
+                }
             this.resetDialogFormVisible = false;
           }
         });
@@ -367,8 +371,13 @@ export default {
             .then(response => {
               let result = response.status_code;
               if (result == 200) {
+                if (response.message) {
+                Tools.success(this, response.message)
+                } else {
                 Tools.success(this, "删除成功!")
                 this.tableData.splice(record, 1);
+                }
+
               }
             })
             .catch(() => {
