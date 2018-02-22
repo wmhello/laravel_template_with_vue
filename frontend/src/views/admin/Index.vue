@@ -377,7 +377,6 @@ export default {
                 Tools.success(this, "删除成功!")
                 this.tableData.splice(record, 1);
                 }
-
               }
             })
             .catch(() => {
@@ -400,7 +399,15 @@ export default {
           arr.push(item.id);
         })
        deleteAll(arr).then(response=>{
-         this.fetchData()
+        let result = response.status_code;
+          if (result == 200) {
+            if (response.message) {
+              Tools.success(this, response.message)
+            } else {
+              Tools.success(this, "删除成功!")
+              this.fetchData()
+                }
+              }
        }).catch(err => {
          Tools.error(err.response.data)
        })

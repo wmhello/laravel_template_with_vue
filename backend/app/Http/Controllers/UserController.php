@@ -539,6 +539,12 @@ class UserController extends Controller
 
     public function deleteAll(Request $request)
     {
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => '演示功能，暂时不提供批量删除功能'
+        ], 200);
+
       $data = $request->only('ids');
       $rules = [
           'ids' => 'required | Array'
