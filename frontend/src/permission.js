@@ -9,7 +9,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {
     if (to.path === '/login') {
-      next({ path: '/' })
+      next({ path: '/' })  // 如果已经登录了 就无需再输入密码
     } else {
       if (store.getters.roles.length === 0) {
         store.dispatch('GetInfo').then(res => {
