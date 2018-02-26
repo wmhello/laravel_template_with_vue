@@ -12,14 +12,12 @@
    
 `php artisan passport:install --force`
 
-## 5、复制第4步生成的密钥到.env文件中，填写为PERSONAL_Client_Secret和PASSPORT_Client_Secret的参数
-PERSONAL_Client_ID=1   
+## 5、复制第4步生成的密钥到.env文件中，填写为PERSONAL_CLIENT_SECRET和PASSPORT_CLIENT_SECRET的参数
+PERSONAL_CLIENT_ID=1
+PERSONAL_CLIENT_SECRET=
 
-PERSONAL_Client_Secret=
-
-PASSPORT_Client_ID=2 
-
-PASSPORT_Client_Secret=
+PASSPORT_CLIENT_ID=2
+PASSPORT_CLIENT_SECRET=
 
 ## 6、生成用户数据和各种结构数据
 `php artisan db:seed` 
