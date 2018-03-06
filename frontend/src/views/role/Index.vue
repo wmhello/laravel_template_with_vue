@@ -16,13 +16,13 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-           <el-tooltip content="设置功能" placement="right-end" v-if="!(scope.row.name == 'admin')">
+           <el-tooltip content="设置功能" placement="right-end" v-if="!(scope.row.name == 'admin') && !(scope.row.name == 'user')">
             <el-button plain icon="el-icon-edit-outline" size="small" @click="setPermission(scope.row)"></el-button>
           </el-tooltip>
-          <el-tooltip content="编辑" placement="right-end" v-if="!(scope.row.name == 'admin')">
+          <el-tooltip content="编辑" placement="right-end" v-if="!(scope.row.name == 'admin') && !(scope.row.name == 'user')">
             <el-button plain icon="el-icon-edit" type="primary" size="small" @click="edit(scope.row)"></el-button>
           </el-tooltip>
-          <el-tooltip content="删除" placement="right-end" v-if="!(scope.row.name == 'admin')">
+          <el-tooltip content="删除" placement="right-end" v-if="!(scope.row.name == 'admin') && !(scope.row.name == 'user')">
             <el-button plain icon="el-icon-delete" type="danger" size="small" @click="del(scope.row)"></el-button>
           </el-tooltip>
         </template>
