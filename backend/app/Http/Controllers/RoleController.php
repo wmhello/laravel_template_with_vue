@@ -11,11 +11,6 @@ class RoleController extends Controller
 {
      use Result;
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    /**
      * @api {get} /api/role 显示学期列表
      * @apiGroup role
      *
@@ -64,22 +59,11 @@ class RoleController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     /**
      * @api {post}/api/role 新建一条角色信息
      * @apiGroup role
@@ -119,12 +103,6 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    /**
      * @api {get} /api/role/:id 获取一条角色
      * @apiGroup role
      * @apiParam {number} id 角色标识
@@ -155,12 +133,6 @@ class RoleController extends Controller
         return new \App\Http\Resources\Role($role);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Role $role)
     {
         //
@@ -168,13 +140,6 @@ class RoleController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
 
     /**
      * @api {patch}/api/role/:id 更新角色信息
@@ -253,9 +218,9 @@ class RoleController extends Controller
         }
     }
 
-    public function addPermission(Request $request)
+    protected function getModel()
     {
-        $data = $request->only(['id', 'name', 'permission', 'explain', 'remark']);
-
+        return 'App\Models\Role';
     }
+
 }

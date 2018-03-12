@@ -48,7 +48,9 @@ class TokenProxy
         ]);
         $token = json_decode((string)$response->getBody(), true);
         return response()->json(['token'      => $token['access_token'],
-                                 'expires_in' => $token['expires_in']
+                                 'expires_in' => $token['expires_in'],
+                                 'status' => 'success',
+                                 'status_code' => 200
         ])->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
     }
 

@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class PermissionController extends Controller
 {
     use Result;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         //
@@ -58,22 +54,13 @@ class PermissionController extends Controller
         //return new PermissionCollection($lists);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(PermissionRequest $request)
     {
         //
@@ -86,36 +73,19 @@ class PermissionController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Permission $permission)
     {
         //
         return new \App\Http\Resources\Permission($permission);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Permission $permission)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
     public function update(PermissionRequest  $request, Permission $permission)
     {
         //
@@ -134,12 +104,6 @@ class PermissionController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Permission $permission)
     {
         //
@@ -179,17 +143,6 @@ class PermissionController extends Controller
         return $this->successWithData($lists);
     }
 
-    public function deleteAll(Request $request)
-    {
-        $data = $this->deleteByIds($request);
-        if ($data) {
-            if (Permission::destroy($data['ids'])) {
-                return $this->success();
-            } else {
-                return $this->error();
-            }
-        }
-    }
 
     public function getPermissionByTree()
     {
@@ -217,6 +170,11 @@ class PermissionController extends Controller
             }
         }
         return $tree;
+    }
+
+    public function getModel()
+    {
+        return 'App\Models\Permission';
     }
 
 }

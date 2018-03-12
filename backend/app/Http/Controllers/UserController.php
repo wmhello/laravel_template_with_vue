@@ -108,28 +108,39 @@ class UserController extends Controller
         $data = $request->only(['name', 'role', 'password','password_confirmation', 'email', 'avatar']);
         $rules = [
             'name'=>'required',
-            'role' =>'nullable|array',
+            'role' =>'nullable',
             'password' => 'required|confirmed',
             'email' => 'required|unique:users',
             'avatar' => 'nullable|string'
         ];
-       $message = [
-           'name.required' => '用户名是必填项',
-           'password.required' => '用户密码是必填项',
-           'password.confirmed' => '两次输入的密码不匹配',
-           'email.required' => '登录名是必填项',
-           'email.unique' => '登录名已经存在，请重新填写',
-       ];
-       $validator = Validator::make($data, $rules, $message);
-       if ($validator->fails()) {
-           $errors = $validator->errors($validator);
-           return $this->errorWithCodeAndInfo(422, $errors);
-       }
-       $data['password'] = bcrypt($data['password']);
-       $data['role'] = implode(',', $data['role']);
-       if (User::create($data)) {
+        $message = [
+            'name.required' => '用户名是必填项',
+            'password.required' => '用户密码是必填项',
+            'password.confirmed' => '两次输入的密码不匹配',
+            'email.required' => '登录名是必填项',
+            'email.unique' => '登录名已经存在，请重新填写',
+        ];
+        $validator = Validator::make($data, $rules, $message);
+        if ($validator->fails()) {
+            $errors = $validator->errors($validator);
+            return $this->errorWithCodeAndInfo(422, $errors);
+        }
+        $data['password'] = bcrypt($data['password']);
+        $role = $request->input('role', ['user']);
+        if ($role === null || $role == [])
+        {
+            $role = ['user'];
+        }
+        if (! is_array($role)) {
+            $roles = json_decode($role, true);
+            $data['role'] = implode(',', $roles);
+        } else {
+            $data['role'] = implode(',', $role);
+        }
+
+        if (User::create($data)) {
             return $this->success();
-       }
+        }
     }
 
 
@@ -199,22 +210,37 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-
-        $all = $request->validate([
+        $data = $request->only(['name', 'role', 'avatar']);
+        $rules = [
             'name' => 'required|string',
-            'role' => 'required|array',
+            'role' => 'nullable|array',
             'avatar' =>'nullable|string'
-        ]);
-        $roles = $all['role'];
-        $all['role'] = implode(',', $roles); // 把前台传回的数组型角色字段转化为字符型存入数据表
-        if (! (isset($all['role']) && $all['role'])) { // 没有填写内容 则删除，默认为user角色
-            //array_except($all, 'role');
-            $all['role'] = 'user';
+        ];
+        $message = [
+            'name.required' => '用户名是必填项',
+        ];
+        $validator = Validator::make($data, $rules, $message);
+        if ($validator->fails()) {
+            $errors = $validator->errors($validator);
+            return $this->errorWithCodeAndInfo(422, $errors);
         }
-        $bool = User::where('id', $id)->update($all);
+
+        $role = $request->input('role', ['user']);
+        if ($role === null || $role == [])
+        {
+            $role = ['user'];
+        }
+        if (! is_array($role)) {
+            $roles = json_decode($role, true);
+            $data['role'] = implode(',', $roles);
+        } else {
+            $data['role'] = implode(',', $role);
+        }
+        $bool = User::where('id', $id)->update($data);
         if ($bool) {
             return $this->success();
         }
+
     }
 
     /**
@@ -445,43 +471,12 @@ class UserController extends Controller
         }
     }
 
-    public function exportAll(Request $request) {
-
-        // $rec = User::count(); // 获得总记录数,因为是所有的数据
-        $this->generator(null, 1);
-    }
-
-    public function export(Request $request)
-    {
-        $pageSize = (int)$request->input('pageSize');
-        $pageSize = isset($pageSize) && $pageSize? $pageSize: 10;
-        $page = (int)$request->input('page');
-        $page = isset($page) && $page ? $page: 1;
-        $this->generator($pageSize, $page);
-    }
-
-    public function generator($pageSize, $page)
-
-    {
-
-        $name = (int)request()->input('name');
-        $email= (int)request()->input('email');
-
-        $name = (isset($name)&&$name)?$name: null;
-        $email = (isset($email)&&$email)?$email: null;
-
-        $lists = $this->queryData($pageSize, $page,$name, $email);
-
-        $data = $lists->toArray();  // 分页内容
-
-        $items = $this->generatorData($data);
-        $this->generatorXls($items);
-    }
 
     protected  function queryData($pageSize = null, $page = 1, $name, $email){
         // 查询条件  根据姓名或者电话号码进行查询
         $offset = $pageSize * ($page - 1) == 0? 0: $pageSize * ($page - 1);
-        $lists = User::select('name', 'email', 'role')
+        $model = $this->getModel();
+        $lists = $model::select('name', 'email', 'role')
                        ->name()
                        ->email()
                        ->when($pageSize,function($query) use($offset, $pageSize) {
@@ -518,53 +513,30 @@ class UserController extends Controller
         return $items;
     }
 
-    /**
-     * 生成xls文件  名称叫做员工信息
-     */
-    protected function generatorXls($items): void
-    {
-        $file = time();
-        Excel::create('用户管理', function ($excel) use ($items) {
-            $excel->sheet('score', function ($sheet) use ($items) {
-                $sheet->rows($items);
-            });
-        })->store('xls', public_path('xls'));
-    }
-
     public function test()
     {
         $str = 'abacde,';
         dump(substr($str,0,-1));
     }
 
-    public function deleteAll(Request $request)
+    public function deleteAll()
     {
         return response()->json([
             'status' => 'success',
             'status_code' => 200,
             'message' => '演示功能，暂时不提供批量删除功能'
         ], 200);
+    }
 
-      $data = $request->only('ids');
-      $rules = [
-          'ids' => 'required | Array'
-      ];
-      $messages = [
-          'ids.required' => '必须选择相应的记录',
-          'ids.Array' => 'ids字段必须是数组'
-      ];
+    protected function  getExportFile()
+    {
+        // 导出文件的名称
+        return '用户管理';
+    }
 
-      $validator = Validator::make($data, $rules, $messages);
-      if ($validator->fails()) {
-          $errors = $validator->error($validator);
-          return $this->errorWithCodeAndInfo(422, $errors);
-      }
-
-      if (User::destroy($data['ids'])) {
-          return $this->success();
-      } else {
-          return $this->error();
-      }
-
+    protected function getModel()
+    {
+        // 当前控制器所对应的模型
+        return 'App\Models\User';
     }
 }

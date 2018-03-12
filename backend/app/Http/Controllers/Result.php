@@ -93,6 +93,9 @@ trait Result
     public function deleteByIds($request)
     {
         $data = $request->only('ids');
+        if (! is_array($data['ids'])) {
+            $data['ids']  = json_decode($data['ids'], true);
+        }
         $rules = [
             'ids' => 'required | Array'
         ];
