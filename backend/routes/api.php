@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', 'UserController@getUserInfo')->name(
 Route::post('/login', 'Auth\LoginController@login')->name('login.login');
 Route::post('/token/refresh', 'Auth\LoginController@refresh')->name('login.refresh');
 Route::post('/logout', 'Auth\LoginController@logout')->name('login.logout');
-Route::post('/test', 'PermissionController@index')->name('soft.test');
+Route::post('/test', 'SmsController@send')->name('soft.test');
 Route::middleware('auth:api')->group(function() {
     // 用户管理
     Route::Resource('admin', 'UserController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
@@ -49,4 +49,9 @@ Route::middleware('auth:api')->group(function() {
     Route::post('/permissions/getGroup', 'PermissionController@getGroup')->name('permissions.getGroup');
     Route::post('/permissions/deleteAll', 'PermissionController@deleteAll')->name('permissions.deleteAll') ;
     Route::post('/permissions/getPermissionByTree', 'PermissionController@getPermissionByTree')->name('Permission.getPermissionByTree');
+
+    // 手机信息管理
+    Route::post('/sms/send', 'SmsController@send')->name('sms.send');
+    Route::post('/sms/verify', 'SmsController@verify')->name('sms.verify');
+
 });

@@ -30,6 +30,15 @@ trait Result
         ], 200);
     }
 
+    public function successWithInfo($info)
+    {
+        return response()->json([
+            'info' => $info,
+            'status' => 'success',
+            'status_code' => 200
+        ], 200);
+    }
+
     public function error()
     {
         return response()->json([

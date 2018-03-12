@@ -125,6 +125,10 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    // 业务相关的各种配置
+    'sms_gateway_type' => env('SMS_GATEWAY_TYPE', null),
+    'sms_api_key' => env('SMS_API_KEY', null),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

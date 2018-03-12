@@ -18,7 +18,6 @@ class UserImportHandler implements \Maatwebsite\Excel\Files\ImportHandler
         // get the results
         // 获取第一个工作表电子表格的数据
         $result = $import->first()->toArray();
-        dump($result);
         $lists = [];
         foreach ($result as $v){
             $data = [

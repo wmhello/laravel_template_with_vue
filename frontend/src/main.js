@@ -77,3 +77,5 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+// 跳转首页  http://front.test/
