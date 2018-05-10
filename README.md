@@ -63,7 +63,8 @@
 ### [5、系统视频](vedio.md)
 
 ## 5、技术支持
-> 本人[博客](https://wmhello.github.io)
+> 欢迎大家来光临我的博客，主要专注于laravel与vue.js的应用
+[博客](https://wmhello.github.io)
 
 > 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！ ^_^
 
