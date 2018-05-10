@@ -115,12 +115,11 @@ return [
     'attributes' => [
         'session_id'         => '学期',
         'teacher_id'         => '姓名',
-        'leader_type'        => '行政类型',
-        'role'               => '角色',
-        'grade'              => '年级',
-        'teach_id'           => '学科',
-        'leader'             => '组长类型',
-        'class_id'           => '班级'
+        'student_name'       => '学生姓名',
+        'student_sex'       => '学生性别',
+        'student_phone'       => '学生电话',
+        'student_status'       => '学生状态',
+
     ],
 
 ];

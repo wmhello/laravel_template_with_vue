@@ -1,14 +1,14 @@
 ## 1、写在前面
     2018年的春节假期，受朋友的鼓励和内心的指引，对近两年所学到的知识进行了系统的沉淀和总结。
     从多个项目中提取关键点、抛弃了的业务部分，对底层的功能进行了各类优化和抽象，写成本项目。
-    
+
 ## 2、系统概述
     项目依托laravel5.5与vue.js，采用了主流的前后端分离方式来构建，作为程序的起点，你可以在此基础上进行自身业务的扩展。
     后端(backend目录)负责OAuth认证、用户授权和提供API，在此基础上集成了跨域和excel文件的操作等基础功能，使用者只需专注于业务api的开发即可。
     前端(frontend目录)负责页面的显示和前端用户权限的控制。项目已经引入了element UI框架，并已经对用户登录认证、路由、权限等基础功能进行了处理。
     前端用户的权限不但可以控制系统的导航菜单，而且可以控制到页面按钮、表格等内容的显示。使用者只需要专注于业务界面的开发即可。
     本项目使用广泛，已经在本人的多个项目中商用。
-    
+
 ## 3、项目演示与截图
 > 演示网站(http://front.ynxpyz.cn)  
 > 管理员用户名和密码(871228582@qq.com/123456)  
@@ -75,6 +75,8 @@
 
 > ![QQ群二维码](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/qq_qrcode.jpg)
 
+> 更多的学习laravel与vue.js相关的内容 可以访问本人[博客](https://wmhello.github.io)
+>
 ## 6、打赏
 如果我的付出能够帮助到你，我也乐于接受你的帮助，小小的赞赏是我们持续进步的动力。
 
@@ -83,12 +85,12 @@
 
 ## 7、致谢
   站在巨人之上，我们才能走得更远。项目中使用和借鉴了以下开源框架的实现方法 一并致谢
->- [laravel](https://laravel.com/) 
+>- [laravel](https://laravel.com/)
 >- [后端excel插件](https://github.com/Maatwebsite/Laravel-Excel)
 >- [后端跨域](https://github.com/barryvdh/laravel-cors)
 >- [API接口文档书写](http://apidocjs.com/)
 >- [vue.js](https://cn.vuejs.org/index.html)
->- [element ui](http://element.eleme.io/#/zh-CN) 
+>- [element ui](http://element.eleme.io/#/zh-CN)
 >- [vue-router](https://router.vuejs.org/)
 >- [vuex](https://vuex.vuejs.org/)
 >- [前端构架 vueAdmin-template](https://github.com/PanJiaChen/vueAdmin-template)

@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', 'UserController@getUserInfo')->name(
 Route::post('/login', 'Auth\LoginController@login')->name('login.login');
 Route::post('/token/refresh', 'Auth\LoginController@refresh')->name('login.refresh');
 Route::post('/logout', 'Auth\LoginController@logout')->name('login.logout');
-Route::post('/test', 'SmsController@send')->name('soft.test');
+Route::post('/test', 'UserController@destroy')->name('soft.test');
 Route::middleware('auth:api')->group(function() {
     // 用户管理
     Route::Resource('admin', 'UserController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
@@ -53,5 +53,12 @@ Route::middleware('auth:api')->group(function() {
     // 手机信息管理
     Route::post('/sms/send', 'SmsController@send')->name('sms.send');
     Route::post('/sms/verify', 'SmsController@verify')->name('sms.verify');
+
+    // 学生信息管理
+    Route::resource('students', 'StudentController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
+    Route::post('students/deleteAll', 'StudentController@deleteAll')->name('students.deleteAll');
+    Route::post('students/upload', 'StudentController@upload')->name('students.upload');
+    Route::post('students/export', 'StudentController@export')->name('students.export');
+    Route::post('students/exportAll', 'StudentController@exportAll')->name('students.exportAll');
 
 });

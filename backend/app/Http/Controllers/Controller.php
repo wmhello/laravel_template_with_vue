@@ -66,4 +66,5 @@ class Controller extends BaseController
             });
         })->store('xls', public_path('xls'));
     }
+
 }
