@@ -4,5 +4,6 @@ const _module = require('./_import_' + process.env.NODE_ENV)
 // detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
 
 export var config = {
-  site: _module.site
+  site: _module.site,
+  github: _module.github
 }

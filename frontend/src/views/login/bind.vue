@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
    <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px"  class="card-box login-form">
-       <h3 class="title">后台管理系统</h3>
+       <h3 class="title">绑定存在的用户</h3>
          <el-form-item prop="username">
              <el-input prefix-icon="el-icon-search" type="text" name="username" v-model="loginForm.username"  placeholder="登陆名">  </el-input>
          </el-form-item>
@@ -9,28 +9,17 @@
         <el-input prefix-icon="el-icon-search" name="password" type="password" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
           placeholder="密码"></el-input>
       </el-form-item>
-      <el-form-item style="border-width: 0px;">
-        <el-button type="primary" style="width: 80%; border-radius: 0px;" :loading="loading" @click.native.prevent="handleLogin">
-          登录
+      <el-form-item>
+        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
+          绑定登录
         </el-button>
-        <div class="github" title="使用github登录" @click.prevent="openGithub">
-          <a @click.prevent="openGithub" title="使用github登录">
-            <svg-icon icon-class="social-github" style="color: #f80"/>
-          </a>
-        </div>
       </el-form-item>
-
     </el-form>
   </div>
 </template>
 
 <script>
-
-
 import { isvalidUsername } from "@/utils/validate";
-import {config} from "@/config/index";
-import { getToken, setToken, removeToken } from '@/utils/auth'
-let UUID = require("uuidjs");
 
 export default {
   name: "login",
@@ -59,7 +48,6 @@ export default {
         password: [{ required: true, trigger: "blur", validator: validatePass }]
       },
       loading: false,
-      githubAddress: config.github,
     };
   },
   methods: {
@@ -67,8 +55,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
+          console.log('数据有效')
           this.$store
-            .dispatch("Login", this.loginForm)
+            .dispatch("LoginWithThree", this.loginForm)
             .then(() => {
               this.loading = false;
               this.$router.push({ path: "/" });
@@ -83,37 +72,8 @@ export default {
         } else return false;
       });
     },
-    openGithub() {
-      sessionStorage.setItem('uuid', UUID.generate());
-      var url = this.githubAddress + '?time='+sessionStorage.getItem('uuid');
-      window.window1 = window.open(url, 'githubLogin', "height=400, width=400, top=10,left=10, resizeable='yes', location='no'")
-    }
   },
   created: function() {
-    window.Echo.channel('github').listen('GithubLogin', e => {
-      // 后端使用github第三方登录，第一次必须绑定指定的用户
-      var uuid = e.user.time
-      if (uuid == sessionStorage.getItem('uuid')){
-        sessionStorage.setItem('platformId', e.user.id);
-        sessionStorage.setItem('provider', e.user.provider);
-        if (window1 && window1.close) {
-          window1.close();
-        }
-        this.$router.push({ path: "/bind" })
-      }
-    })
-    window.Echo.channel('githubSuccess').listen('GithubLoginSuccess', e => {
-      // 后端使用github登录后，前端通过token登录
-      var uuid = e.data.time
-      if (uuid == sessionStorage.getItem('uuid')){
-        setToken(e.data.token)
-        if (window1 && window1.close) {
-          window1.close();
-        }
-        this.$store.commit('SET_TOKEN', e.data.token)
-        this.$router.push({ path: "/" })
-      }
-    })
   }
 };
 </script>
@@ -123,19 +83,6 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.github {
-  margin-left: 5px;
-  width: 18%;
-  text-align: center;
-  float:right;
-  border: 1px solid #999;
-  background: #999
-}
-div.github:hover{
-  background: #ccc;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
 .login-container {
   height: 100vh;
   background-color: $bg;

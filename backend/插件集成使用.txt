@@ -1,5 +1,16 @@
-excel插件(https://github.com/Maatwebsite/Laravel-Excel)
+﻿excel插件(https://github.com/Maatwebsite/Laravel-Excel)
 跨域(https://github.com/barryvdh/laravel-cors)
+
+pusher参数
+
+
+app_id = "538376"
+key = "cf8303b8e5d709e4b8c4"
+secret = "ec438525c5a88743fac8"
+cluster = "ap1"
+
+4c754436-4af2-4b49-afb2-581107b43788
+4c754436-4af2-4b49-afb2-581107b43788
 
 
 

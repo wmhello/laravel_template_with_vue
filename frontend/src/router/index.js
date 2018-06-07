@@ -18,9 +18,15 @@ import Layout from '../views/layout/Layout'
     icon: 'svg-name'             the icon show in the sidebar,
   }
 **/
-export const constantRouterMap = [{
+export const constantRouterMap = [
+  {
     path: '/login',
     component: _import('login/index'),
+    hidden: true
+  },
+  {
+    path: '/bind',
+    component: _import('login/bind'),
     hidden: true
   },
   {

@@ -69,6 +69,11 @@ class LoginController extends Controller
         //$this->validateLogin(request());
         return $this->proxy->login(request('email'),request('password'));
     }
+    public function loginWithThree()
+    {
+        //$this->validateLogin(request());
+        return $this->proxy->loginWithThree(request('email'),request('password'), request('platformId'), request('provider'));
+    }
 
     /**
      * @api {post} /api/logout 注销用户登陆

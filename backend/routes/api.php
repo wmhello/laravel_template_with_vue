@@ -15,6 +15,7 @@ use \Illuminate\Http\Response;
 
 Route::middleware('auth:api')->get('/user', 'UserController@getUserInfo')->name('admin.userInfo');
 Route::post('/login', 'Auth\LoginController@login')->name('login.login');
+Route::post('/loginWithThree', 'Auth\LoginController@loginWithThree')->name('login.loginWithThree');
 Route::post('/token/refresh', 'Auth\LoginController@refresh')->name('login.refresh');
 Route::post('/logout', 'Auth\LoginController@logout')->name('login.logout');
 Route::post('/test', 'UserController@destroy')->name('soft.test');

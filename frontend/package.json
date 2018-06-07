@@ -16,8 +16,11 @@
     "axios": "0.17.1",
     "element-ui": "2.0.8",
     "js-cookie": "2.2.0",
+    "laravel-echo": "^1.4.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
+    "pusher-js": "^4.2.2",
+    "uuidjs": "^4.0.3",
     "vue": "2.5.10",
     "vue-router": "3.0.1",
     "vuex": "3.0.1"

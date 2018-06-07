@@ -14,7 +14,9 @@
         "laravel/passport": "^4.0",
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "~2.1.0",
-        "overtrue/easy-sms": "^1.0"
+        "overtrue/easy-sms": "^1.0",
+        "overtrue/laravel-socialite": "~2.0",
+        "pusher/pusher-php-server": "^3.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

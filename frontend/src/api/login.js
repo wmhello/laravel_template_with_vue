@@ -11,6 +11,19 @@ export function login(username, password) {
   })
 }
 
+export function loginWithThree(username, password,platformId,provider) {
+  return fetch({
+    url: '/api/loginWithThree',
+    method: 'post',
+    data: {
+      email:username,
+      password,
+      platformId,
+      provider
+    }
+  })
+}
+
 export function getInfo() {
   return fetch({
     url: '/api/user',
@@ -24,6 +37,7 @@ export function logout() {
     method: 'post'
   })
 }
+
 export function loginToken() {
   return fetch({
     url: '/api/token/refresh',

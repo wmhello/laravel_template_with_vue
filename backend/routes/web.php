@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
 });
+Route::get('/oauth/github', 'AuthController@redirectToProvider');
+Route::get('/oauth/github/callback', 'AuthController@handleProviderCallback');

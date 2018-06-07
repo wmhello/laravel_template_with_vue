@@ -1,4 +1,4 @@
-import { login, logout, getInfo, loginToken } from '@/api/login'
+import { login, loginWithThree, logout, getInfo, loginToken } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -38,6 +38,22 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
+          const data = response
+          setToken(data.token)
+          commit('SET_TOKEN', data.token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    LoginWithThree({ commit }, userInfo) {
+
+      const username = userInfo.username.trim()
+      return new Promise((resolve, reject) => {
+        let platformId =   sessionStorage.getItem('platformId');
+        let provider =   sessionStorage.getItem('provider');
+        loginWithThree(username, userInfo.password, platformId, provider).then(response => {
           const data = response
           setToken(data.token)
           commit('SET_TOKEN', data.token)
@@ -88,7 +104,7 @@ const user = {
     RefreshToken({commit}) {
       return new Promise((resolve, reject) => {
         loginToken().then((response) => {
-          const data = respons
+          const data = response
           setToken(data.token)
           commit('SET_TOKEN', data.token)
           resolve()

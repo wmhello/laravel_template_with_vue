@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Proxy;
+use App\Models\ThreeLogin;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Created by PhpStorm.
@@ -24,6 +26,23 @@ class TokenProxy
     public function login($email, $password)
     {
         if (auth()->attempt(['email'=> $email, 'password'=> $password])){
+            return $this->proxy('password', [
+                'username' => $email,
+                'password' => $password,
+                'scope' => '',
+            ]);
+        }
+        return response()->json([
+            'status' => 'login error',
+            'status_code' => 421,
+            'message' => 'Credentials not match'
+        ],421);
+    }
+    public function loginWithThree($email, $password, $id, $provider)
+    {
+        if (auth()->attempt(['email'=> $email, 'password'=> $password])){
+            $user_id = Auth::user()->id;
+            ThreeLogin::firstOrCreate(['platform_id'=>$id, 'provider'=>$provider, 'user_id' => $user_id]);
             return $this->proxy('password', [
                 'username' => $email,
                 'password' => $password,

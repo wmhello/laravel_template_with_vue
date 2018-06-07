@@ -37,7 +37,7 @@ service.interceptors.request.use(config => {
 // }
   let url = config.url  // 当前访问的地址
   // 对指定的白名单API自动放行，一般用于登录和退出
-  let white_list = ['/api/login', '/api/user', '/api/logout', '/api/loginWithThree']
+  let white_list = ['/api/login', '/api/user', '/api/logout']
   if (Array.indexOf(white_list, url) !== -1) {
     return config
   }
