@@ -37,7 +37,7 @@ return [
     'github' => [
         'client_id'     => '52c2e3cc172fee5bccd7',
         'client_secret' => 'fb41f02e19c7bf55319d80c8fe55a6c2ef699bbd',
-        'redirect'      => 'http://wmhello.tunnel.qydev.com/oauth/github/callback',
+        'redirect'      => 'http://back.ynxpyz.cn/oauth/github/callback',
     ],
 
 ];
