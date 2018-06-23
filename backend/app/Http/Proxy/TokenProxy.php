@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Proxy;
+use App\Events\UserLogin;
+use App\Events\UserLogout;
+use App\Models\LogLogin;
 use App\Models\ThreeLogin;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +29,7 @@ class TokenProxy
     public function login($email, $password)
     {
         if (auth()->attempt(['email'=> $email, 'password'=> $password])){
+            event(new UserLogin());
             return $this->proxy('password', [
                 'username' => $email,
                 'password' => $password,
@@ -42,6 +46,7 @@ class TokenProxy
     {
         if (auth()->attempt(['email'=> $email, 'password'=> $password])){
             $user_id = Auth::user()->id;
+            event(new UserLogin());
             ThreeLogin::firstOrCreate(['platform_id'=>$id, 'provider'=>$provider, 'user_id' => $user_id]);
             return $this->proxy('password', [
                 'username' => $email,
@@ -84,6 +89,10 @@ class TokenProxy
                          ]);
         app('cookie')->forget('refreshToken');
         $accessToken->revoke();
+ //       $log = new LogLogin();
+//        $log->saveLogoutLog($user);
+       event(new UserLogout($user));
+//        event(new UserLogout($user));
         return response()->json([
             'status' => 'success',
             'status_code' => 200,

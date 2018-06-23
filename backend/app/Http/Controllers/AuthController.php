@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserLogin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,9 @@ class AuthController extends Controller
             // 自动登录
             $userInstance = User::where('id', $id)->firstOrFail();
             Auth::login($userInstance);
+
             $token = $userInstance->createToken('token')->accessToken;
+            event(new UserLogin());
             // 得到$token
             $data['time'] =  session('uuid') ;
             $data['token'] = $token;
