@@ -62,4 +62,6 @@ Route::middleware('auth:api')->group(function() {
     Route::post('students/export', 'StudentController@export')->name('students.export');
     Route::post('students/exportAll', 'StudentController@exportAll')->name('students.exportAll');
 
+    // 日志管理API
+    Route::get('logs', 'LogController@index')->name('logs.index');
 });
