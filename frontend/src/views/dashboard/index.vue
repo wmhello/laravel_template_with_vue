@@ -65,38 +65,17 @@
           <div slot="header" class="clearfix">
             <span>功能进度列表</span>
           </div>
-          <div >
-          <div >
-          <el-table
-            :data="tableData"
-            stripe
-            style="width: 100%">
-            <el-table-column
-              prop="name"
-              label="功能"
-              width="120">
-            </el-table-column>
-            <el-table-column
-              prop="desc"
-              label="描述"
-              width="200">
-            </el-table-column>
-            <el-table-column
-              prop="date"
-              label="日期"
-              width="100">
-            </el-table-column>
-            <el-table-column
-              label="完成度">
-              <template slot-scope="scope">
-                <el-tag v-if="scope.row.isSuccess">已完成</el-tag>
-                <el-tag type="danger" v-else>未完成</el-tag>
-              </template>
-            </el-table-column>
-          </el-table>
-          </div>
-
-          </div>
+              <el-tabs v-model="task">
+                <el-tab-pane label="已完成" name="task-completed">
+                  <data-table :list="todoList.completed"></data-table>
+                </el-tab-pane>
+                <el-tab-pane label="进行中" name="task-doing">
+                  <data-table :list="todoList.doing"></data-table>
+                </el-tab-pane>
+                <el-tab-pane label="计划中" name="task-plan">
+                  <data-table :list="todoList.plan"></data-table>
+                </el-tab-pane>
+            </el-tabs>
 
         </el-card>
       </el-col>
@@ -163,14 +142,19 @@ import { mapGetters } from 'vuex'
 import { getInfo as getInfoBySession } from "@/api/session";
 import { getLogInfo } from "@/api/dashboard";
 import {Tools} from "@/views/utils/Tools";
+import DataTable from '@/views/components/DataTable'
 
 export default {
   name: 'dashboard',
+  components: {
+   DataTable
+  },
   data() {
     return {
       sessionInfo: [],
       leaderInfo: [],
       activeName2:'first',
+      task:'task-completed',
       tableData: [
        {
           name: '基本构架',
@@ -207,6 +191,62 @@ export default {
       current_page: 1,
       total: 0,
       pageSize: 5,
+      todoList:{
+        completed:[
+          {
+             id:1,
+             name: '基础',
+             desc: '后端API，前端SPA结构成型',
+             date: '2018.2'
+          },
+          {
+            id:2,
+            name: '权限控制',
+            desc: '权限集成，权限控制到按钮',
+            date: '2018.2'
+          },
+          {
+            id:3,
+            name: '短信',
+            desc: '系统集成短信通知API',
+            date:'2018.6'
+          },
+          {
+            id: 4,
+            name: '第三方登录',
+            desc: '第三方登录集成到项目',
+            date: '2018.6'
+          },
+          {
+            id: 5,
+            name: '日志',
+            desc: '集成日志功能，能显示日志',
+            date: '2018.6'
+          }
+        ],
+        doing:[
+          {
+            id: 6,
+            name: '首页',
+            desc: '优化首页面板',
+            date: '进行中'
+          }
+        ],
+        plan: [
+          {
+            id: 7,
+            name: 'QQ登录',
+            desc: '集成QQ登录到项目',
+            date: '计划中'
+          },
+          {
+            id: 8,
+            name: '客服',
+            desc: '集成客服功能，实现IM通讯',
+            date: '计划中'
+          }
+        ]
+      },
       sponsor:['rcyboom','hello','Baoming_Wong', '灯火阑珊',
       '无骑士','Mr.king','河豚','杨威利de红茶', '风--自由','李晓峰',
       '往事如风','黑白', 'A You', '曾欧文', '梦', 'rough',
@@ -337,6 +377,7 @@ export default {
     border-collapse: collapse;
   }
 
+
   table.browsersupport {
     margin-top: 15px;
     border-collapse: collapse;
@@ -399,6 +440,9 @@ export default {
    display: inline-block;
    margin-right: 5px;
    margin-bottom: 5px;
+  }
+  .el-table .cell{
+    line-height: 20px;
   }
 
 </style>
