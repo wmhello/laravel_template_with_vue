@@ -63,5 +63,6 @@ Route::middleware('auth:api')->group(function() {
     Route::post('students/exportAll', 'StudentController@exportAll')->name('students.exportAll');
 
     // 日志管理API
-    Route::get('logs', 'LogController@index')->name('logs.index');
+    Route::get('logs/show', 'LogController@show')->name('logs.show'); // 操作日志
+    Route::get('logs', 'LogController@index')->name('logs.index');  // 登录日志
 });

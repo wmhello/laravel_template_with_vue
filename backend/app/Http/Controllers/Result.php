@@ -112,4 +112,14 @@ trait Result
             return $data;
         }
     }
+
+    public function log($type, $route_name, $desc)
+    {
+        $data = [
+            'type' => $type,
+            'route_name' => $route_name,
+            'desc' => $desc
+        ];
+        event(new DataOperation($data));
+    }
 }

@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Request;
 use App\Models\Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 trait Tools
 {
@@ -58,5 +59,12 @@ trait Tools
         $grades = ['', '高一', '高二', '高三'];
         return $grades[$id];
     }
+
+    public function isAdmin()
+    {
+        $roles = explode(',', Auth::user()->role);
+        return  in_array('admin', $roles);
+    }
+
 
 }
