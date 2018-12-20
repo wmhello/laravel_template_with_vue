@@ -19,7 +19,7 @@ class LogController extends Controller
             ->when(!$this->isAdmin(), function($query) {
                 return $query->where('user_id', Auth::user()->id);
             })
-            ->paginate($pageSize);
+            ->latest()->paginate($pageSize);
         return Response()->json($data);
     }
 

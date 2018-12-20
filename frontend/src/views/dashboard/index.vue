@@ -19,17 +19,12 @@
                   </ol>
                  </p>
               </el-tab-pane>
-              <el-tab-pane label="登录用户介绍" name="second">
-                  <div class='dashboard-text'>name:{{name}}</div>
-                  <div class='dashboard-text'>role:<span v-for='role in roles' :key='role'>{{role}}</span></div>
-                  <el-button @click="getSession()" v-has="'session.index'">显示学期列表--用户角色默认无此功能</el-button>
-              </el-tab-pane>
               <el-tab-pane label=" 技术交流" name="third">
                 <table class="dataintable browsersupport">
                   <tbody>
                     <tr>
                       <th>QQ群</th>
-                      <th>QQ</th>
+                      <th>公众号</th>
                       <th>微信</th>
                       <th>博客</th>
                   </tr>
@@ -40,13 +35,13 @@
                       </p>
                       </td>
                       <td class="">
-                        <img src="https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/QQ.png" height="80" width="80" alt="QQ二维码"></img>
-                        <p><h3>871228582</h3></p>
+                        <img src="https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/gzh.jpg" height="80" width="80" alt="QQ二维码"></img>
+                        <p><h3>computer_life</h3></p>
                       </td>
                       <td class=""><img src="https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/weixin1.png" alt="微信二维码" width="80" height="80">  <p><h3>xpyzwm</h3></p></td>
                       <td class="">
                         <img src="data:image/png;base64,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" alt="" width="80" height="80">
-                        <p><h3><a href="https://wmhello.github.io">地址</a></h3></p>
+                      <p><h3><a href="https://wmhello.github.io">地址</a></h3></p>
                       </td>
                   </tr>
                 </tbody>
@@ -244,13 +239,21 @@ export default {
             name: '客服',
             desc: '集成客服功能，实现IM通讯',
             date: '计划中'
+          },
+          {
+            id: 9,
+            name: '微信',
+            desc: '集成微信公众号的基本管理功能',
+            date: '计划中'
           }
         ]
       },
       sponsor:['rcyboom','hello','Baoming_Wong', '灯火阑珊',
       '无骑士','Mr.king','河豚','杨威利de红茶', '风--自由','李晓峰',
       '往事如风','黑白', 'A You', '曾欧文', '梦', 'rough',
-      'breath呼哈卢','laravel_vue', '刘天承']
+      'breath呼哈卢','laravel_vue', '刘天承','姜维',
+      '王小涛','A.T.', '枫叶', '刘洋','天空的颜色', 'ComeZc',
+       'LGY']
     }
   },
   computed: {
