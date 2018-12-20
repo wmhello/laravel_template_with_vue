@@ -80,7 +80,7 @@
 
 > ![QQ群二维码](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/qq_qrcode.jpg)
 
-> ![全栈开发公众号](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/zgh.jpg)
+> ![全栈开发公众号](https://github.com/wmhello/laravel_template_with_vue/blob/master/Screenshots/gzh.jpg)
 
 
 ## 6、打赏
