@@ -38,7 +38,7 @@ export function deleteInfoById (id) {
 }
 
 export function addInfo (data) {
-  data.permissions = data.permissions.joi1n(',')
+  data.permissions = data.permissions.join(',')
   return fetch({
     url: '/api/roles',
     method: 'post',
@@ -46,9 +46,3 @@ export function addInfo (data) {
   })
 }
 
-export function Model (name='', explain='', remark='', permissions = []) {
-    this.name = name
-    this.explain = explain
-    this.remark = remark
-    this.permissions = permissions
-}

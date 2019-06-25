@@ -2,7 +2,10 @@
 `composer  install`
 
 ## 2、复制配置文件，进行数据库配置
-`cp .env.example .env`
+`cp .env.example .env`  
+>  根据需求，配置.env文件中的DB_DATABASE、DB_USERNAME和DB_PASSWORD  
+`php artisan key:generate`
+
 
 ## 3、生成项目所需的数据表
 `php artisan migrate`

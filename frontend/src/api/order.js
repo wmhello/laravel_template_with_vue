@@ -6,7 +6,6 @@ export function getInfo(searchObj = {}, page = 1, pageSize = 10, id) {
     url: baseUrl,
     method: 'get',
     params: {
-        id,
         page: page,
         pageSize: pageSize,
         order_number: searchObj.order_number,

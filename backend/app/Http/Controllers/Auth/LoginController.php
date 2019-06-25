@@ -92,8 +92,8 @@ class LoginController extends Controller
         $data = [
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken,
-            'client_id' =>  env('Password_ID'),
-            'client_secret' => env('Password_Secret'),
+            'client_id' =>  env('PASSPORT_CLIENT_ID'),
+            'client_secret' => env('PASSPORT_CLIENT_SECRET'),
             'scope' => '',
         ];
         return $this->token($data);
@@ -103,8 +103,8 @@ class LoginController extends Controller
    protected function proxy($username, $password){
        $data = [
            'grant_type' => 'password',
-           'client_id' => env('Password_ID'),
-           'client_secret' => env('Password_Secret'),
+           'client_id' => env('PASSPORT_CLIENT_ID'),
+           'client_secret' => env('PASSPORT_CLIENT_SECRET'),
            'username' => $username,
            'password' => $password,
            'scope' => '',

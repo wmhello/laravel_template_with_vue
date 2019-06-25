@@ -43,6 +43,7 @@ export const constantRoutes = [
     hidden: true
   },
 
+
   {
     path: '/',
     component: Layout,
@@ -64,7 +65,22 @@ export const constantRoutes = [
     component: () => import('@/views/admin/modify/index'),
     name: 'modify',
     meta: { title: '修改个人密码', icon: 'user', noCache: true }
-  }]
+  },
+  {
+    path: 'view',
+    component: () => import('@/views/table/view'),
+    hidden: true,
+    name: 'view',
+    meta: { title: '组件测试', icon: 'user' }
+  },
+  {
+    path: 'template',
+    component: () => import('@/views/table/template'),
+    hidden: true,
+    name: 'desc-template',
+    meta: { title: '组件和渲染函数', icon: 'user' }
+  }
+  ]
  }
 ]
 

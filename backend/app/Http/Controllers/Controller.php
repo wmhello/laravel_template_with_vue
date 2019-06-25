@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Validator;
+/**
+ * @SWG\Swagger(
+ *   basePath="/calculate-rates",
+ *   @SWG\Info(
+ *     title="项目名称 API",
+ *     version="1.0.0"
+ *   )
+ * )
+ */
 
 class Controller extends BaseController
 {
