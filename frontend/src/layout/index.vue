@@ -70,7 +70,6 @@ export default {
 
     window.Echo.private('leave.'+ this.name)
       .listen('UserLogin', (e) => {
-        if (e.user.name === this.name) {
           this.$alert('当前用户在其它地方已经登录，现在即将退出', '登录警告', {
           confirmButtonText: '确定',
           callback: action => {
@@ -78,9 +77,8 @@ export default {
               window.location.reload();
             })
           }
-        });
-        }
-      });
+        })
+      })
   },
   methods: {
     handleClickOutside() {
