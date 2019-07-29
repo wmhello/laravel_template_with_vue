@@ -10,18 +10,20 @@
 >  2. 数据表部分字段的调整，取消permissions中不常用的method和route_match字段,修改users表中的role字段为roles， roles表中的permission为permissions，使数据表更加规范化     
 >  3. 代码层面，资源控制器的功能复用，让代码更简洁和实用，父类Controller中编写好了数据的增删改查和数据表的导入和导出功能，用户可以根据TempController的方式来编写相关代码，可以参考OrderController(订单控制),开箱即用，节省业务的编写时间  
 > 4. 完善日志管理的API
+> 5. 利用showdoc完成文档构建
+> 6. 利用laravel-echo-server,集成websocket,当同一个用户多次登陆，前次登陆的页面，将自动退出。利用webasocket的消息推送来实现
+
 #### 前端：
 >  1. 前端element ui 更新到了2.7.2版本，请参照开发
 >  2. 集成了同时打开多个页面的功能，多标签功能  
 >  3. 集成了全屏操作的功能  
 >  4. 增加了日志管理功能  
 >  5. 增加了前端开发示列，商品订单管理，代码层面利用mixin功能优化书写
+>  6. 接收后端推送的消息，强制下线多次登陆的用户，保证同一个用户在什么时间与地点只能登陆一次。
 
 #### ToDo：
->  1. 集成swagger到后端，进行API文档的编写  
->  2. 前端增加用户多角色动态切换功能
->  3. 利用laravel广播功能，编写IM示列  
->  4. 系统增加成员管理功能、增加成员注册和使用第三方用户登录的功能
+>  1. 前端增加用户多角色动态切换功能
+>  2. 系统增加成员管理功能、增加成员注册和使用第三方用户登录的功能
 
 ## 2、系统概述
     项目依托laravel5.5与vue.js，采用了主流的前后端分离方式来构建，作为程序的起点，你可以在此基础上进行自身业务的扩展。
@@ -37,6 +39,8 @@
 
 ### 项目截图
 
+####  文档
+![系统文档](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/doc.png)
 
 #### 管理员面板
 ![管理员面板](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-admin-dashboard.png)
@@ -124,7 +128,7 @@
 >- [laravel](https://laravel.com/)
 >- [后端excel插件](https://github.com/rap2hpoutre/fast-excel)
 >- [后端跨域](https://github.com/barryvdh/laravel-cors)
->- [API接口文档书写](http://apidocjs.com/)
+>- [API接口文档](https://github.com/star7th/showdoc)
 >- [vue.js](https://cn.vuejs.org/index.html)
 >- [element ui](http://element.eleme.io/#/zh-CN)
 >- [vue-router](https://router.vuejs.org/)

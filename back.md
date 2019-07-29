@@ -61,9 +61,12 @@ npm run build
 ~~~
 
 ## 查看API文档地址
- 假设后端的域名为back.test 则文档地址为http://back.test/apidoc/
 
-## 编译API文档
-  由于文档使用了apidoc 请使用前预先安装apidoc
+API文档使用了[showdoc](https://github.com/star7th/showdoc)
+如果系统部署于Windows服务器,为了保证showdoc的运行，请先检查下列条件：
 
-  编译命令为apidoc -i ./ -o public/apidoc/
+在php.ini里面把”extension=php_sqlite.dll”和”extension=php_pdo_sqlite.dll”启用以便开启对SQlite的支持；也启用php_mbstring.dll；Linux服务器则不需要此操作。
+
+
+ 假设后端的域名为back.test 则文档地址为http://back.test/showdoc/
+

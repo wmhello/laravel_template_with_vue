@@ -15,6 +15,8 @@
 <script>
 import { Navbar, Sidebar, AppMain, TagsView} from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+import Echo from 'laravel-echo'
+import { getToken } from '@/utils/auth'
 
 export default {
   name: 'Layout',
@@ -42,7 +44,43 @@ export default {
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
       }
+    },
+    name(){
+      return this.$store.state.user.name
     }
+  },
+    created(){
+    // 获取网站域名
+    let hostURL = process.env.VUE_APP_BASE_API;
+    let start = hostURL.indexOf('//')
+    let end = hostURL.lastIndexOf('/')
+    let host = hostURL.substring(start + 2, end)   // 获得域名
+    let token = getToken()
+
+    window.io = require('socket.io-client')
+    window.Echo = new Echo({
+      auth: {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      },
+      broadcaster: 'socket.io',
+      host: host + ':6001'
+    });
+
+    window.Echo.private('leave.'+ this.name)
+      .listen('UserLogin', (e) => {
+        if (e.user.name === this.name) {
+          this.$alert('当前用户在其它地方已经登录，现在即将退出', '登录警告', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$store.dispatch('user/resetToken').then(() => {
+              window.location.reload();
+            })
+          }
+        });
+        }
+      });
   },
   methods: {
     handleClickOutside() {

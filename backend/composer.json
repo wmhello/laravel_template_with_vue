@@ -12,8 +12,7 @@
         "laravel/framework": "5.5.*",
         "laravel/passport": "^4.0",
         "laravel/tinker": "~1.0",
-        "predis/predis": "^1.0",
-        "pusher/pusher-php-server": "^3.4",
+        "predis/predis": "^1.1",
         "rap2hpoutre/fast-excel": "^1.2"
     },
     "require-dev": {

@@ -4,7 +4,6 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-//import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import locale from 'element-ui/lib/locale/lang/zh-CN'
 
 import '@/styles/index.scss' // global css
@@ -24,20 +23,19 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
-import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
+// import { mockXHR } from '../mock'
+// if (process.env.NODE_ENV === 'production') {
+//   mockXHR()
+// }
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
-
 import contentmenu from 'v-contextmenu'
 import 'v-contextmenu/dist/index.css'
 Vue.use(contentmenu)
 
 
- // 注册全局指令
+// 注册全局指令
 import permission from '@/directive/permission/index.js'
 Vue.use(permission)
 

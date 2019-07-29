@@ -54,7 +54,10 @@ class LoginController extends Controller
         // 2. 尝试使用用户名和密码进行登录
           if (Auth::attempt(['email' => $email, 'password'=> $password ])){
               // 3. 登录成功后，进行令牌发送
-              event( new UserLogin());
+              $user = Auth::user();
+              event( new UserLogin($user));
+              DB::table('oauth_access_tokens')->where('user_id', $user->id)->update(['revoked' => 1]);
+
                return $this->proxy($email, $password);
 
           } else {
@@ -119,10 +122,10 @@ class LoginController extends Controller
        $http = new Client();
        $web = $_SERVER['HTTP_HOST'];
        $url = 'http://'.$web.'/oauth/token';
+
        $result = $http->post($url, [
            'form_params' => $data
        ]);
-
        $result = json_decode((string) $result->getBody(), true);
        return response()->json([
            'token' => $result['access_token'],
