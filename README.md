@@ -12,6 +12,7 @@
 > 4. 完善日志管理的API
 > 5. 利用showdoc完成文档构建
 > 6. 利用laravel-echo-server,集成websocket,当同一个用户多次登陆，前次登陆的页面，将自动退出。利用webasocket的消息推送来实现
+> 7. 利用laravel-echo-server,集成websocket，实现聊天室功能和客服功能
 
 #### 前端：
 >  1. 前端element ui 更新到了2.7.2版本，请参照开发
@@ -20,18 +21,22 @@
 >  4. 增加了日志管理功能  
 >  5. 增加了前端开发示列，商品订单管理，代码层面利用mixin功能优化书写
 >  6. 接收后端推送的消息，强制下线多次登陆的用户，保证同一个用户在什么时间与地点只能登陆一次。
+>  7. 增加了应用事例模块，把具有代表性的聊天室功能和客服功能集成到项目中
 
 #### ToDo：
 >  1. 前端增加用户多角色动态切换功能
->  2. 系统增加成员管理功能、增加成员注册和使用第三方用户登录的功能
+>  2. 增加成员管理功能，实现微信登录、qq登录等第三方用户登录的功能
+>  3. 增加成员注册和使用功能
 
 ## 2、系统概述
     项目依托laravel5.5与vue.js，采用了主流的前后端分离方式来构建，作为程序的起点，你可以在此基础上进行自身业务的扩展。
     后端(backend目录)负责OAuth认证、用户授权、第三方用户登录验证和提供API，在此基础上集成了跨域和excel文件的操作等基础功能，使用者只需专注于业务api的开发即可。
+    后端(backend目录)整合了laravel-echo-server，实现了websocket。用于消息的实时推送、聊天室、客服等功能，是全网最好的laravel-echo-server教程。
     前端(frontend目录)负责页面的显示和前端用户权限的控制。项目已经引入了element UI框架，并已经对用户登录认证、路由、权限等基础功能进行了处理。
     前端用户的权限不但可以控制系统的导航菜单，而且可以控制到页面按钮、表格等内容的显示。使用者只需要专注于业务界面的开发即可。
     本项目使用广泛，已经在本人的多个项目中商用。
->  第三方登录测试时，可以先进入系统创建一个用户，然后用github登录后绑定刚刚创建的新用户，之后就可以使用github来自动登录了
+>  第三方登录测试时，可以先进入系统创建一个用户，然后用github登录后绑定刚刚创建的新用户，之后就可以使用github来自动登录了（可以参考版本1，版本2因为项目调整的关系，之后才会增加）
+
 ## 3、项目演示与截图
 > 演示网站(http://front.ynxpyz.cn)  
 > 管理员用户名和密码(871228582@qq.com/123456)  
@@ -41,6 +46,15 @@
 
 ####  文档
 ![系统文档](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/doc.png)
+
+####  聊天室
+![聊天室](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/chat.png)
+
+####  客服(普通用户界面 1对1)
+![客服界面1](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/kefu-user.png)
+
+####  客服(客服界面 1对多)
+![客服界面2](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/kefu-service.png)
 
 #### 管理员面板
 ![管理员面板](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-admin-dashboard.png)

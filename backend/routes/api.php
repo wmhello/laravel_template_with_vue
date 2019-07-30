@@ -46,6 +46,17 @@ Route::middleware(['auth:api', 'role'])->group(function(){
     Route::get('logs/show', 'LogController@show')->name('logs.show'); // 操作日志
     Route::get('logs/index', 'LogController@index')->name('logs.index');  // 登录日志
 
+    // 聊天室功能
+    Route::post('/chat', function(){
+        $msg = request()->only(['name', 'time', 'timezone', 'content']);
+        broadcast(new \App\Events\Chat($msg))->toOthers();
+    })->name('chat.index');
+
+    Route::post('/kefu', function(){
+        $msg = request()->only(['sendName', 'receiveName', 'time', 'timezone', 'content']);
+        broadcast(new \App\Events\CustomerService($msg))->toOthers();
+    })->name('chat.kefu');
+
 });
 Route::get('refresh', "Auth\LoginController@refresh")->name('users.refresh');
 Route::post('login', 'Auth\LoginController@login')->name('users.login');

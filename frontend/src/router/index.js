@@ -190,7 +190,7 @@ export const asyncRoutes = [
   meta: {
     role: ['admin'],
     icon: 'edit',
-    title: '订单管理',
+    title: '业务事例',
     roles: ['orders.index']
   },
   children: [
@@ -204,6 +204,41 @@ export const asyncRoutes = [
         icon: 'tab'
       }
     }]
+  },
+{
+  path: '/app',
+  component: Layout,
+  redirect: '/app/chat',
+  name: 'app',
+  alwaysShow: true,
+  meta: {
+    role: ['admin'],
+    icon: 'edit',
+    title: '应用事例',
+    roles: ['chat.index', 'chat.kefu']
+  },
+  children: [
+    {
+      path: 'chat',
+      name: 'chat_index',
+      component:  () => import('@/views/chat/index'),
+      meta: {
+        roles: ['chat.index'],
+        title: '聊天室',
+        icon: 'tab'
+      }
+    },
+    {
+      path: 'kefu',
+      name: 'chat_kefu',
+      component:  () => import('@/views/chat/kefu'),
+      meta: {
+        roles: ['chat.kefu'],
+        title: '客服',
+        icon: 'tab'
+      }
+    },
+  ]
   },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

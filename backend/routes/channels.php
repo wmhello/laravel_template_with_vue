@@ -18,3 +18,13 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('leave.{name}', function ($user, $name) {
     return $user->name === $name;
 });
+
+Broadcast::channel('chat', function($user){
+  return $user->name;
+});
+
+Broadcast::channel('kefu', function($user){
+  return $user->name;
+});
+
+
