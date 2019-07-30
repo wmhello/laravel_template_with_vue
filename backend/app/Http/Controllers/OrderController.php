@@ -43,20 +43,24 @@ class OrderController extends Controller
 
     protected function storeHandle($data)
     {
-        $data['password'] = bcrypt($data['password']);  // 需要在保存内容之前做相应的处理，则添加
-        if (!isset($data['roles'])) {
-          $data['roles'] = 'user';   // 默认值的情况，可以通过数据表直接设置，也可以通过程序来设置
-        }
+        // $data['password'] = bcrypt($data['password']);  // 需要在保存内容之前做相应的处理，则添加
+        // if (!isset($data['roles'])) {
+        //   $data['roles'] = 'user';   // 默认值的情况，可以通过数据表直接设置，也可以通过程序来设置
+        // }
+        $timeStamp = $data['order_time'];
+        $data['order_time'] = Carbon::createFromTimestamp($timeStamp);
         return parent::storeHandle($data);   // TODO: 调用父类
     }
 
 
     protected  function  updateHandle($data){
         // 保存到数据表之前进一步处理数据，用于数据的转换等操作
-        $data['password'] = bcrypt($data['password']);  // 需要在保存内容之前做相应的处理，则添加
-        if (!isset($data['roles'])) {
-            $data['roles'] = 'user';   // 默认值的情况，可以通过数据表直接设置，也可以通过程序来设置
-        }
+        // $data['password'] = bcrypt($data['password']);  // 需要在保存内容之前做相应的处理，则添加
+        // if (!isset($data['roles'])) {
+        //     $data['roles'] = 'user';   // 默认值的情况，可以通过数据表直接设置，也可以通过程序来设置
+        // }
+        $timeStamp = $data['order_time'];
+        $data['order_time'] = Carbon::createFromTimestamp($timeStamp);
         return parent::updateHandle($data);
     }
 
@@ -138,7 +142,6 @@ class OrderController extends Controller
                 Rule::unique('orders')->ignore($id)],
             // 订单号必填且必须唯一
             'merchant_number' => 'required',  // 商户编号必填
-            'order_status' => 'required|in:1,2,3',  // 订单状态必填，并且只能是1,2,3
             'order_time' => 'required'
         ];
     }
@@ -153,7 +156,6 @@ class OrderController extends Controller
             //
             'order_number' => 'required|unique:orders',  // 订单号必填且必须唯一
             'merchant_number' => 'required',  // 商户编号必填
-            'order_status' => 'required|in:1,2,3',  // 订单状态必填，并且只能是1,2,3
             'order_time' => 'required'
         ];
     }
