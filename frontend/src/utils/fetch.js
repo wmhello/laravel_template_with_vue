@@ -30,20 +30,8 @@ service.interceptors.response.use(
     return res
   },
   error => {
-        console.log(error.response);
-       // console.log(error.response)
-       // if (error.response.status == 401) {  // 刷新token
-       //    loginToken().then(response => {
-       //      setToken(response.token)
-       //      let url = location.href
-       //       window.VM.$router.go(0)
-       //    })
-       // } else {
-       //   if (error.response.status == 500) { // token过期  退出系统
-       //     store.dispatch('FedLogOut').then(() => {
-       //       window.VM.$router.push({ path: '/login'})
-       //    })
-       //   }
+         // 401 并且有 token 表示 令牌过期
+         // 可以在这里调用刷新
          return Promise.reject(error)
   }
 )

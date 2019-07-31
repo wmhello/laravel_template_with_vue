@@ -34,33 +34,23 @@ PASSPORT_CLIENT_SECRET=
 
 **此步骤是OAuth认证所必须，请务必设置,否则无法登录**
 
-## 8、第三方登录
->此步骤配置较复杂 由于需要认证的关系 暂时只有提供github的第三方登录配置  
-> 其它类似  更多的配置  可以通过qq群来讨论  此步骤只影响第三方登录  
-> 不影响其它功能使用 不配置则只是无法使用第三方登录
+## 8、消息推送
 
-1. 配置文件修改BROADCAST_DRIVER为pusher
-~~~
-BROADCAST_DRIVER=pusher
-~~~
-2. 去[Pusher官网](https://pusher.com/)注册应用程序，然后填写下列信息
-~~~
-PUSHER_APP_ID=
-PUSHER_APP_KEY=
-PUSHER_APP_SECRET=
-PUSHER_APP_CLUSTER=
-~~~
-3. 修改前端frontend目录下的config文件夹下的prod.env.js文件内容
-~~~
-MIX_PUSHER_APP_KEY:  '"XXXXXXXXX"', // 后端PUSHER_APP_KEY
-MIX_PUSHER_APP_CLUSTER: '"ap1"', // 后端PUSHER_APP_CLUSTER
-~~~
-4. 编译前端
-~~~
-npm run build
-~~~
+需要根据要求配置laravel-echo-server，全局安装  
 
-## 查看API文档地址
+`npm install -g laravel-echo-server`  
+
+安装之后，在后端目录(backend)执行初始化  
+
+`laravel-echo-server init`  
+
+相关的配置请参考相关文档，或者加我微信（xpyzwm）交流  
+
+配置完成之后，需要后端目录下启动laravel-echo-server 才能实现聊天、推送等功能
+
+`laravel-echo-server start`
+
+## 9、查看API文档地址
 
 API文档使用了[showdoc](https://github.com/star7th/showdoc)
 如果系统部署于Windows服务器,为了保证showdoc的运行，请先检查下列条件：
@@ -68,5 +58,5 @@ API文档使用了[showdoc](https://github.com/star7th/showdoc)
 在php.ini里面把”extension=php_sqlite.dll”和”extension=php_pdo_sqlite.dll”启用以便开启对SQlite的支持；也启用php_mbstring.dll；Linux服务器则不需要此操作。
 
 
- 假设后端的域名为back.test 则文档地址为http://back.test/showdoc/
-
+ 假设后端的域名为back.test 则文档地址为http://back.test/showdoc/web/#/1  
+ 线上文档的话，可以通过进入演示系统的登录界面就可以进入

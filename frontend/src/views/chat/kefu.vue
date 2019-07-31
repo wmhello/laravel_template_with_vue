@@ -9,7 +9,7 @@
             </div>
           </div>
           <!-- 客服页面 -->
-          <el-tabs tab-position="left" style="margin-top: 20px;" v-if="kefu === name" v-model="currentUser">
+          <el-tabs tab-position="left" style="margin-top: 20px;" v-if="kefu === name && users.length > 1" v-model="currentUser">
             <el-tab-pane :label="item" :name="item" v-for="item in users" :key="item" v-if="kefu !== item">
               <div class="chat-box">
                   <div  v-for="msg in kefuMsg[item]" :key="item.timezone">
@@ -18,7 +18,9 @@
               </div>
             </el-tab-pane>
           </el-tabs>
-
+          <div class="chat-box warnTips" v-else>
+            <h1>暂时没有用户接入客服，请耐心等待</h1>
+          </div>
         </el-col>
 
         <!-- 侧边提示栏 -->
@@ -59,7 +61,7 @@
               可以查看api/chat下的getCustomer,实际中你可以根据自己的情况，从后台数据库配置中获取
             </p>
             <p style="color: #f50;line-height: 1.4" class="tips">
-            要完整的查看演示效果，最好有3个用户，一个是客服，另外两个是其他管理员用户。
+            要完整的查看演示效果，可以用多个浏览器分别使用不同的系统管理员登录，一个是871228582@qq.com，表示客服，另几个是其他的系统管理员（如test1和test2）。
             </p>
           </el-card>
         </el-col>
@@ -103,7 +105,7 @@ export default {
     ...mapGetters(['name']),
   },
   beforeRouteLeave(to, from, next) {
-    window.Echo.leave('chat')
+    window.Echo.leave('kefu')
     next()
   },
   beforeRouteEnter(to, from, next) {
@@ -115,15 +117,32 @@ export default {
       window.Echo.join('kefu')
         .here((users) => {
           vm.users = users
+          if (vm.users.length && vm.kefu === vm.name) { // 客服界面下，显示第一个与用户的对话界面
+            vm.$nextTick(()=>{
+              vm.currentUser = vm.users[vm.users.length-1]
+            })
+          }
+
         }).joining((user) => {
           vm.users.push(user);
-          if (!vm.kefuMsg[user]) {  // 不存在该用户，则定义该用户的信息
-            vm.$set(vm.kefuMsg, user, [])
-            vm.currentUser = user
+          if (vm.name === vm.kefu){  // 客服操作
+            if (!vm.kefuMsg[user]) {  // 不存在该用户，则定义该用户的信息
+              vm.$set(vm.kefuMsg, user, [])
+            }
+            vm.$nextTick(()=>{
+              vm.currentUser = vm.users[vm.users.length-1]
+            })
           }
         }).leaving((user) => {
           let index = vm.users.findIndex(item => item === user)
           vm.users.splice(index, 1)
+          if (vm.name === vm.kefu) {  // 客服界面的操作
+            if (vm.users[vm.users.length-1] !== vm.name) {  // 客服状态下，如果还有联系人，则显示相关的联系人界面
+              vm.currentUser = vm.users[vm.users.length-1]
+            } else {
+              vm.currentUser = ''  // 没有接入的联系人
+            }
+          }
         }).listen('CustomerService', (e) => {
           let msg = e.msg
             // 用户模式
@@ -266,6 +285,11 @@ export default {
     }
     p.tips{
       text-indent: 2em;
+    }
+    .warnTips {
+      display:flex;
+      justify-content: center;
+      align-items: center;
     }
 }
 </style>

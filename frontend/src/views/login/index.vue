@@ -1,7 +1,14 @@
 <template>
   <div class="login-container">
+    <div class="imgButtons">
+      <h1 style="color:#fff"><a target="_blank" href="https://github.com/wmhello/laravel_template_with_vue" alt="跳转到开源项目">
+        <svg-icon icon-class="github" /><span>开源项目</span>
+      </a></h1>
+      <h1 style="color:#fff"><a :href="docAddress" target="_blank">
+        <svg-icon icon-class="article" /><span>文档</span>
+      </a></h1>
+    </div>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
       <div class="title-container">
         <h3 class="title">系统登录</h3>
       </div>
@@ -121,6 +128,12 @@ export default {
         }
       })
     }
+  },
+  computed: {
+    docAddress(){
+      let hostURL = process.env.VUE_APP_BASE_API;
+      return hostURL + 'showdoc/web/#/1'
+    }
   }
 }
 </script>
@@ -232,6 +245,27 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  & .imgButtons{
+    position: fixed;
+    right: 15px;
+    & h1{
+      display:inline-block;
+      margin-right: 20px;
+      position:relative;
+      width:60px;
+      & a:link span{
+         display:none;
+       }
+      & a:hover span{
+        display:inline;
+        font-weight: normal;
+        position: absolute;
+        top: 50px;
+        left: 1px;
+        font-size:12px;
+      }
+    }
   }
 }
 </style>
