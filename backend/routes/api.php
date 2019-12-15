@@ -21,7 +21,6 @@ Route::middleware(['auth:api', 'role'])->group(function(){
     Route::post('orders/import', 'OrderController@import')->name('orders.import');  // 导入数据
     Route::apiResource('orders', 'OrderController');
 
-
     Route::post('logout', 'Auth\LoginController@logout')->name('users.logout');
     Route::post('/users/modify', 'UserController@modify' )->name('users.modify');
     Route::post('/users/{id}/reset', 'UserController@reset')->name('users.reset');
