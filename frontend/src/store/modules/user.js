@@ -77,7 +77,6 @@ const actions = {
         window.Echo.leave('leave.' + state.name);
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
-        
         removeToken()
         resetRouter()
         resolve()
@@ -93,7 +92,6 @@ const actions = {
       window.Echo.leave('leave.' + state.name);
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-
       removeToken()
       resolve()
     })

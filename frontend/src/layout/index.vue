@@ -55,6 +55,7 @@ export default {
     let start = hostURL.indexOf('//')
     let end = hostURL.lastIndexOf('/')
     let host = hostURL.substring(start + 2, end)   // 获得域名
+   
     let token = getToken()
 
     window.io = require('socket.io-client')
@@ -67,8 +68,7 @@ export default {
       broadcaster: 'socket.io',
       host: host + ':6001'
     });
-
-    window.Echo.private('leave.'+ this.name)
+    window.Echo.channel('leave.'+ this.name)
       .listen('UserLogin', (e) => {
           this.$alert('当前用户在其它地方已经登录，现在即将退出', '登录警告', {
           confirmButtonText: '确定',
