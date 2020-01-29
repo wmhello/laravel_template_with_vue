@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d226cac"],{e9bd:function(t,n,o){"use strict";function e(t){return fetch({url:"/api/editor/upload",method:"post",data:t,headers:{"Content-Type":"multipart/form-data"}})}o.r(n),o.d(n,"uploadImg",(function(){return e}))}}]);
