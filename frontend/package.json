@@ -24,10 +24,12 @@
     "path-to-regexp": "2.4.0",
     "screenfull": "^4.2.0",
     "socket.io-client": "^2.2.0",
+    "tinymce": "^5.1.6",
     "v-contextmenu": "^2.8.0",
     "vue": "2.6.10",
     "vue-image-crop-upload": "^2.5.0",
     "vue-router": "3.0.6",
+    "vue-runtime-helpers": "^1.1.2",
     "vuex": "3.1.0"
   },
   "devDependencies": {
@@ -47,7 +49,7 @@
     "eslint-plugin-vue": "5.2.2",
     "html-webpack-plugin": "3.2.0",
     "mockjs": "1.0.1-beta3",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "runjs": "^4.3.2",
     "sass-loader": "^7.1.0",
     "script-ext-html-webpack-plugin": "2.1.3",

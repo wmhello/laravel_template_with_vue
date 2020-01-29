@@ -203,7 +203,19 @@ export const asyncRoutes = [
         title: '订单列表',
         icon: 'tab'
       }
-    }]
+    },
+    {
+      path: 'editor',
+      name: 'editor_index',
+      component:  () => import('@/views/editor/index'),
+      meta: {
+        roles: ['editor.index'],
+        title: '富文本',
+        icon: 'tab'
+      }
+    },
+     
+  ]
   },
 {
   path: '/app',
