@@ -57,7 +57,8 @@ export default {
     let host = hostURL.substring(start + 2, end)   // 获得域名
    
     let token = getToken()
-
+    console.log(host);
+    
     window.io = require('socket.io-client')
     window.Echo = new Echo({
       auth: {

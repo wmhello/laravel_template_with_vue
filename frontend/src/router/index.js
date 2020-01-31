@@ -52,36 +52,36 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard'}
+      meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
   },
   {
-  path: '/modify',
-  component: Layout,
-  hidden: true,
-  redirect: '/modify/index',
-  children: [{
-    path: 'index',
-    component: () => import('@/views/admin/modify/index'),
-    name: 'modify',
-    meta: { title: '修改个人密码', icon: 'user', noCache: true }
-  },
-  {
-    path: 'view',
-    component: () => import('@/views/table/view'),
+    path: '/modify',
+    component: Layout,
     hidden: true,
-    name: 'view',
-    meta: { title: '组件测试', icon: 'user' }
-  },
-  {
-    path: 'template',
-    component: () => import('@/views/table/template'),
-    hidden: true,
-    name: 'desc-template',
-    meta: { title: '组件和渲染函数', icon: 'user' }
+    redirect: '/modify/index',
+    children: [{
+      path: 'index',
+      component: () => import('@/views/admin/modify/index'),
+      name: 'modify',
+      meta: { title: '修改个人密码', icon: 'user', noCache: true }
+    },
+    {
+      path: 'view',
+      component: () => import('@/views/table/view'),
+      hidden: true,
+      name: 'view',
+      meta: { title: '组件测试', icon: 'user' }
+    },
+    {
+      path: 'template',
+      component: () => import('@/views/table/template'),
+      hidden: true,
+      name: 'desc-template',
+      meta: { title: '组件和渲染函数', icon: 'user' }
+    }
+    ]
   }
-  ]
- }
 ]
 
 /**
@@ -90,167 +90,162 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-  menuId: 1,
-  path: '/admin',
-  component: Layout,
-  name: 'user_manage',
-  hidden: false,
-  redirect: '/admin/index', // == /admin/user
-  alwaysShow: true,
-  meta: {
-    title: '用户管理',
-    icon: 'people'
-  },
-  children: [
-    {
-      menuId: 2,
-      path: 'index',
-      component: () => import('@/views/admin/Index'),
-      name: 'user_list',
-      meta: {
-        title: '用户列表',
-        icon: 'user'
-      }
-    }
-  ]
-},
-{
-  menuId: 3,
-  path: '/role',
-  component: Layout,
-  name: 'permission',
-  hidden: false,
-  redirect: '/role/index',
-  alwaysShow: true,
-  meta: {
-    title: '权限管理',
-    icon: 'people'
-  },
-  children: [
-    {
-      menuId: 4,
-      path: 'index',
-      component: () => import('@/views/role/Index'),
-      name: 'role_index',
-      meta: {
-        title: '角色管理',
-        icon: 'user'
-      }
+    path: '/admin',
+    component: Layout,
+    name: 'user_manage',
+    hidden: false,
+    redirect: '/admin/index', // == /admin/user
+    alwaysShow: true,
+    meta: {
+      title: '用户管理',
+      icon: 'people'
     },
-    {
-      menuId: 5,
-      path: 'permission',
-      component: () => import('@/views/permission/Index'),
-      name: 'permission_index',
-      meta: {
-        title: '功能管理',
-        icon: 'user'
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/admin/Index'),
+        name: 'user_list',
+        meta: {
+          title: '用户列表',
+          icon: 'user'
+        }
       }
-    }
-  ]
-},
-{
-  path: '/log',
-  component: Layout,
-  name: 'log',
-  hidden: false,
-  redirect: '/log/login',
-  alwaysShow: true,
-  meta: {
-    title: '日志管理',
-    icon: 'edit'
+    ]
   },
-  children: [
-    {
-      path: 'login',
-      component: () => import('@/views/log/Login'),
-      name: 'log_login',
-      meta: {
-        title: '系统日志',
-        icon: 'user'
-      }
+  {
+    path: '/role',
+    component: Layout,
+    name: 'permission',
+    hidden: false,
+    redirect: '/role/index',
+    alwaysShow: true,
+    meta: {
+      title: '权限管理',
+      icon: 'people'
     },
-    {
-      path: 'work',
-      component: () => import('@/views/log/Work'),
-      name: 'log_work',
-      meta: {
-        title: '操作日志',
-        icon: 'user'
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/role/Index'),
+        name: 'role_index',
+        meta: {
+          title: '角色管理',
+          icon: 'user'
+        }
+      },
+      {
+        path: 'permission',
+        component: () => import('@/views/permission/Index'),
+        name: 'permission_index',
+        meta: {
+          title: '功能管理',
+          icon: 'user'
+        }
       }
-    }
-  ]
-},
-{
-  path: '/order',
-  component: Layout,
-  redirect: '/order/index',
-  name: 'order',
-  alwaysShow: true,
-  meta: {
-    role: ['admin'],
-    icon: 'edit',
-    title: '业务事例',
-    roles: ['orders.index']
+    ]
   },
-  children: [
-    {
-      path: 'index',
-      name: 'order_index',
-      component:  () => import('@/views/order/index'),
-      meta: {
-        roles: ['orders.index'],
-        title: '订单列表',
-        icon: 'tab'
-      }
+  {
+    path: '/log',
+    component: Layout,
+    name: 'log',
+    hidden: false,
+    redirect: '/log/login',
+    alwaysShow: true,
+    meta: {
+      title: '日志管理',
+      icon: 'edit'
     },
-    {
-      path: 'editor',
-      name: 'editor_index',
-      component:  () => import('@/views/editor/index'),
-      meta: {
-        roles: ['editor.index'],
-        title: '富文本',
-        icon: 'tab'
+    children: [
+      {
+        path: 'login',
+        component: () => import('@/views/log/Login'),
+        name: 'log_login',
+        meta: {
+          title: '系统日志',
+          icon: 'user'
+        }
+      },
+      {
+        path: 'work',
+        component: () => import('@/views/log/Work'),
+        name: 'log_work',
+        meta: {
+          title: '操作日志',
+          icon: 'user'
+        }
       }
-    },
-     
-  ]
+    ]
   },
-{
-  path: '/app',
-  component: Layout,
-  redirect: '/app/chat',
-  name: 'app',
-  alwaysShow: true,
-  meta: {
-    role: ['admin'],
-    icon: 'edit',
-    title: '应用事例',
-    roles: ['chat.index', 'chat.kefu']
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/index',
+    name: 'order',
+    alwaysShow: true,
+    meta: {
+      role: ['admin'],
+      icon: 'edit',
+      title: '业务事例',
+      roles: ['orders.index']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'order_index',
+        component: () => import('@/views/order/index'),
+        meta: {
+          roles: ['orders.index'],
+          title: '订单列表',
+          icon: 'tab'
+        }
+      },
+      {
+        path: 'editor',
+        name: 'editor_index',
+        component: () => import('@/views/editor/index'),
+        meta: {
+          roles: ['editor.index'],
+          title: '富文本',
+          icon: 'tab'
+        }
+      },
+
+    ]
   },
-  children: [
-    {
-      path: 'chat',
-      name: 'chat_index',
-      component:  () => import('@/views/chat/index'),
-      meta: {
-        roles: ['chat.index'],
-        title: '聊天室',
-        icon: 'tab'
-      }
+  {
+    path: '/app',
+    component: Layout,
+    redirect: '/app/chat',
+    name: 'app',
+    alwaysShow: true,
+    meta: {
+      role: ['admin'],
+      icon: 'edit',
+      title: '应用事例',
+      roles: ['chat.index', 'chat.kefu']
     },
-    {
-      path: 'kefu',
-      name: 'chat_kefu',
-      component:  () => import('@/views/chat/kefu'),
-      meta: {
-        roles: ['chat.kefu'],
-        title: '客服',
-        icon: 'tab'
-      }
-    },
-  ]
+    children: [
+      {
+        path: 'chat',
+        name: 'chat_index',
+        component: () => import('@/views/chat/index'),
+        meta: {
+          roles: ['chat.index'],
+          title: '聊天室',
+          icon: 'tab'
+        }
+      },
+      {
+        path: 'kefu',
+        name: 'chat_kefu',
+        component: () => import('@/views/chat/kefu'),
+        meta: {
+          roles: ['chat.kefu'],
+          title: '客服',
+          icon: 'tab'
+        }
+      },
+    ]
   },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

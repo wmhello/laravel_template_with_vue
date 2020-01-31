@@ -99,7 +99,7 @@
         <el-col :span="10" style="height: 100%">
           <el-form-item label="用户角色">
             <el-select v-model="form.roles" multiple placeholder="用户权限">
-              <el-option v-for="item in roles"  :key="item.name" :label="item.explain" :value="item.name">
+              <el-option v-for="item in roles"  :key="item.name"  :value="item.name">
                 {{item.explain}}</el-option>
             </el-select>
           </el-form-item>
@@ -255,18 +255,12 @@ export default {
       });
       return true;
     },
-    fetchData(searchObj = this.searchForm , page = this.current_page, pageSize = this.pageSize) {
+    async fetchData(searchObj = this.searchForm , page = this.current_page, pageSize = this.pageSize) {
        this.loading = true
-      getInfo(searchObj, page, pageSize)
-        .then(response => {
-          let result = response.data;
-          this.tableData = result;
-          this.total = response.meta.total;
-           this.loading = false
-        })
-        .catch(() => {
-           this.loading = false
-        });
+      let { data, meta} =  await getInfo(searchObj, page, pageSize)
+          this.tableData = data;
+          this.total = meta.total;
+          this.loading = false
     },
     edit(row) {
       let id = row.id;
@@ -422,15 +416,10 @@ export default {
        })
     }
   },
-  mounted() {
-  },
-  beforeCreate() {
-        getRoles().then(res => {
-         this.roles = res.data
-         this.fetchData()
-       })
-       .catch(err => {
-       })
+  async created() {
+      let { data } = await getRoles();
+      this.roles = data
+      this.fetchData()
   },
   filters: {
     roleFilter(val, items) {
