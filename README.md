@@ -157,6 +157,12 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 25  laravel中短信发送功能的集成  
 26  laravel中邮件发送功能的集成  
 
+### 利用uni-app开发微信小程序(核心知识点)
+
+#### 目录:
+![微信公众号开发](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/mp-mulu.png)
+
+
 ### 在线辅导
  如果你在计算机程序设计的学习与开发的过程中，碰到难点，需要技术指导和相关的开发辅导。可以联系本人，本人将提供有偿的技术支持和辅导（50元/时-100元/小时），辅导的内容包括但不局限于以下（前端、后端PHP、nodejs、数据库、javascript和PHP的程序设计模式、公众号、小程序、vue.js、uni-app等）。
 
