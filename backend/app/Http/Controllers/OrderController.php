@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -169,5 +170,11 @@ class OrderController extends Controller
 //        return [ ];
 //    }
 
+    public function test()
+    {
+      $file = public_path('uploads/1.pdf');
+      $stream = Storage::readStream($file);
+      return $stream;
+    }
 
 }

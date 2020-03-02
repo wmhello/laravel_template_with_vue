@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:api'])->get('/user',"UserController@info")->name('users.info');
-Route::get('test', 'OrderController@index')->name('soft.test');
+Route::get('test', 'OrderController@test')->name('soft.test11');
 Route::middleware(['auth:api', 'role'])->group(function(){
     Route::get('orders/export', 'OrderController@export')->name('orders.export');  // 导出数据
     Route::delete('orders/delete', 'OrderController@deleteAll')->name('orders.deleteAll');  // 使用json的方式来发送数据

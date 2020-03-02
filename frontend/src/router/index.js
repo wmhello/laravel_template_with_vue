@@ -43,7 +43,6 @@ export const constantRoutes = [
     hidden: true
   },
 
-
   {
     path: '/',
     component: Layout,
@@ -208,7 +207,7 @@ export const asyncRoutes = [
           title: '富文本',
           icon: 'tab'
         }
-      },
+      }
 
     ]
   },
@@ -245,6 +244,16 @@ export const asyncRoutes = [
           icon: 'tab'
         }
       },
+      {
+        path: 'pdf',
+        name: 'pdf_index',
+        component: () => import('@/views/pdf/index'),
+        meta: {
+          roles: ['pdf.index'],
+          title: 'pdf读取',
+          icon: 'tab'
+        }
+      }
     ]
   },
   // 404 page must be placed at the end !!!
