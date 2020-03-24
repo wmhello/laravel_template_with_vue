@@ -44,3 +44,28 @@ export function loginToken() {
         method: 'post'
     })
 }
+
+export function refreshTokenFn()
+{
+  return new Promise((resolve, reject) =>
+  {
+    axios(
+      {
+        url: `${process.env.VUE_APP_BASE_API}/api/refresh`,
+        method: "get",
+        params:
+        {
+          refresh_token: getRefreshToken()
+        }
+      })
+      .then(response =>
+      {
+        // return response;
+        resolve(response);
+      })
+      .catch(error =>
+      {
+        resolve(error.response);
+      });
+  });
+}

@@ -245,12 +245,22 @@ export const asyncRoutes = [
         }
       },
       {
-        path: 'pdf',
-        name: 'pdf_index',
+        path: 'xls',
+        name: 'xls_preview',
         component: () => import('@/views/pdf/index'),
         meta: {
+          roles: ['xls.index'],
+          title: '预览xlsx',
+          icon: 'tab'
+        }
+      },
+      {
+        path: 'pdf',
+        name: 'pdf_test',
+        component: () => import('@/views/pdf/test'),
+        meta: {
           roles: ['pdf.index'],
-          title: 'pdf读取',
+          title: '预览pdf',
           icon: 'tab'
         }
       }

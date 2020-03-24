@@ -1,16 +1,40 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import {
+  getToken,
+  setToken,
+  removeToken,
+  getRefreshToken,
+  setRefreshToken,
+  removeRefreshToken,
+  getTokenExpiresIn,
+  setTokenExpiresIn,
+  removeTokenExpiresIn,
+  getIsAutoLogin,
+  expiresDayVar,
+  setIsAutoLogin,
+  getExpiresTime
+ } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
-const state = {
-  token: getToken(),
-  name: '',
-  avatar: '',
-  roles: [],
-  permissions: []
+
+const getDefaultState = () => {
+  return {
+    token: getToken(),
+    name: '',
+    avatar: '',
+    roles: [],
+    refreshToken: getRefreshToken(),
+    tokenExpiresIn: getTokenExpiresIn(),
+    permissions: []
+  }
 }
 
+const state = getDefaultState()
+
 const mutations = {
+  RESET_STATE: (state) => {
+    Object.assign(state, getDefaultState())
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -35,8 +59,16 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
          let data = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+         let expiresDay = null
+         if (Number(getIsAutoLogin()) === 1) {
+           expiresDay = expiresDayVar
+         }
+        const { token, express_in, refresh_token } = data
+        commit('SET_TOKEN', token)
+        setToken(token, expiresDay)
+        setRefreshToken(refresh_token, expiresDay)
+        const expiresTime = getExpiresTime(express_in)
+        setTokenExpiresIn(expiresTime, expiresDay)
         resolve()
       }).catch(error => {
         reject(error)
@@ -58,7 +90,6 @@ const actions = {
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
-
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
@@ -77,7 +108,13 @@ const actions = {
         window.Echo.leave('leave.' + state.name);
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
+        commit('SET_PERMISSIONS', [])
+        commit('SET_NAME', '')
+        commit('SET_AVATAR', '')
         removeToken()
+        removeRefreshToken()
+        removeTokenExpiresIn()
+        setIsAutoLogin(0)
         resetRouter()
         resolve()
       }).catch(error => {
@@ -87,12 +124,36 @@ const actions = {
   },
 
   // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
-      window.Echo.leave('leave.' + state.name);
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      removeToken()
+//   resetToken({ commit }) {
+//     return new Promise(resolve => {
+//       window.Echo.leave('leave.' + state.name);
+//       commit('SET_TOKEN', '')
+//       commit('SET_ROLES', [])
+//       removeToken()
+//       resolve()
+//     })
+//   }
+// }
+
+  resetToken({ commit }, logInfo) {
+    const { accessToken, refreshToken, expiresIn } = logInfo
+    return new Promise((resolve, reject) => {
+      if (!accessToken || !refreshToken) {
+        commit('SET_TOKEN', '')
+        removeToken()
+        removeRefreshToken()
+        removeTokenExpiresIn()
+      } else {
+        let expiresDay = null
+        if (Number(getIsAutoLogin()) === 1) {
+          expiresDay = expiresDayVar
+        }
+        commit('SET_TOKEN', accessToken)
+        setToken(accessToken, expiresDay)
+        setRefreshToken(refreshToken, expiresDay)
+        const expiresTime = getExpiresTime(expiresIn)
+        setTokenExpiresIn(expiresTime, expiresDay)
+      }
       resolve()
     })
   }

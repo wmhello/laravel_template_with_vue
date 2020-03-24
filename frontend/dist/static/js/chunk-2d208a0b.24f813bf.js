@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d208a0b"],{a633:function(n,t,e){"use strict";e.r(t),e.d(t,"test",(function(){return s}));var o=e("1c1e");function s(){return Object(o["a"])({url:"/api/test",method:"post",responseType:"blob"})}}}]);

@@ -91,7 +91,10 @@ class LoginController extends Controller
 
     public function refresh(Request $request)
     {
-        $refreshToken = $request->cookie('refreshToken');
+        $refreshToken = $request->input('refreshToken', '');
+        if (empty($refreshToken)) {
+            $refreshToken = $request->cookie('refreshToken');
+        }
         $data = [
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken,
@@ -130,6 +133,7 @@ class LoginController extends Controller
        return response()->json([
            'token' => $result['access_token'],
            'express_in' => $result['expires_in'],
+           'refresh_token' => $result['refresh_token'],
            'status' => 'success',
            'status_code' => 200
        ], 200)->cookie('refreshToken', $result['refresh_token'], 43200);

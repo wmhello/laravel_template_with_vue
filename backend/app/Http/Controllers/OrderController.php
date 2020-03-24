@@ -8,6 +8,9 @@
 
 namespace App\Http\Controllers;
 
+
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -172,9 +175,19 @@ class OrderController extends Controller
 
     public function test()
     {
-      $file = public_path('uploads/1.pdf');
-      $stream = Storage::readStream($file);
-      return $stream;
+//        $pdf = App::make('dompdf.wrapper');
+//        $pdf->loadFile(public_path().'/uploads/1.pdf');
+//        return $pdf->stream();
+
+//        $fp = fopen(public_path().'/uploads/1.pdf', "r");
+//        header("Content-type: application/pdf");
+//        fpassthru($fp);
+//        fclose($fp);
+
+        $fileData = file_get_contents(public_path().'/uploads/1.pdf');
+        $data=base64_encode($fileData);
+//        $data = 'data:application/pdf;base64,'.$data;
+        return $this->successWithData($data);
     }
 
 }

@@ -28,6 +28,7 @@
     "v-contextmenu": "^2.8.0",
     "vue": "2.6.10",
     "vue-image-crop-upload": "^2.5.0",
+    "vue-pdf": "^4.0.8",
     "vue-router": "3.0.6",
     "vue-runtime-helpers": "^1.1.2",
     "vuex": "3.1.0"

@@ -1,3 +1,5 @@
+import fetch from '@/utils/fetch'
+
 export function uploadImg(data) {
     return fetch({
         url: '/api/editor/upload',
