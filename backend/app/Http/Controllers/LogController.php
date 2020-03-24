@@ -37,7 +37,7 @@ class LogController extends Controller
             ->when($createdAt, function($query) use($createdAt) {
                 return $query->whereDate('created_at', $createdAt);
             })
-            ->paginate($pageSize);
+            ->latest()->paginate($pageSize);
         return new LogLoginCollection($data);
     }
 
@@ -65,7 +65,7 @@ class LogController extends Controller
             ->when($createdAt, function($query) use($createdAt) {
                 return $query->whereDate('created_at', $createdAt);
             })
-            ->paginate($pageSize);
+            ->latest()->paginate($pageSize);
         return new LogLoginCollection($data);
     }
 

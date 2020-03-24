@@ -1,4 +1,6 @@
 import fetch from '@/utils/fetch'
+import axios from 'axios'
+import {getRefreshToken} from '@/utils/auth'
 
 export function login(data) {
     return fetch({
@@ -38,12 +40,6 @@ export function logout() {
     })
 }
 
-export function loginToken() {
-    return fetch({
-        url: '/api/token/refresh',
-        method: 'post'
-    })
-}
 
 export function refreshTokenFn()
 {
@@ -51,9 +47,9 @@ export function refreshTokenFn()
   {
     axios(
       {
-        url: `${process.env.VUE_APP_BASE_API}/api/refresh`,
-        method: "get",
-        params:
+        url: `${process.env.VUE_APP_BASE_API}api/refresh`,
+        method: "post",
+        data:
         {
           refresh_token: getRefreshToken()
         }

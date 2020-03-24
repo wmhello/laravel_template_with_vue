@@ -17,19 +17,6 @@ const service = axios.create({
 })
 
 
-// request拦截器
-// service.interceptors.request.use(config => {
-//   if (getToken()) {
-//     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
-//   }
-//   return config
-// }, error => {
-//   // Do something with request error
-//   // console.log(error) // for debug
-//   return Promise.reject(error)
-// })
-
-// request interceptor
 service.interceptors.request.use(
   async config => {
     // 判断是否过期 未过期

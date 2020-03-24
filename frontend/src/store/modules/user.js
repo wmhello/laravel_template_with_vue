@@ -47,7 +47,7 @@ const mutations = {
   SET_ROLES: (state, roles) => {
     state.roles = roles
   },
-  SET_PREMISSIONS: (state, permissions) => {
+  SET_PERMISSIONS: (state, permissions) => {
     state.permissions = permissions
   }
 }
@@ -93,7 +93,7 @@ const actions = {
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
-        commit('SET_PREMISSIONS', permissions)
+        commit('SET_PERMISSIONS', permissions)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -124,16 +124,6 @@ const actions = {
   },
 
   // remove token
-//   resetToken({ commit }) {
-//     return new Promise(resolve => {
-//       window.Echo.leave('leave.' + state.name);
-//       commit('SET_TOKEN', '')
-//       commit('SET_ROLES', [])
-//       removeToken()
-//       resolve()
-//     })
-//   }
-// }
 
   resetToken({ commit }, logInfo) {
     const { accessToken, refreshToken, expiresIn } = logInfo

@@ -59,28 +59,20 @@
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (value < 3) {
-        callback(new Error('登录名必须大于等于3个字符'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码必须大于等于6个字符'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
         username: '',
         password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: 'blur', message: '登陆名必须填写'},
+          { min: 3, trigger: 'blur', message: '登陆名不少于三个字符'}
+          ],
+        password: [
+          { required: true, trigger: 'blur', message: '登陆密码必须填写' },
+          { min: 3, trigger: 'blur', message: '登陆密码不少于6个字符'}
+          ]
       },
       loading: false,
       passwordType: 'password',

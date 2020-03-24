@@ -1,5 +1,8 @@
+/**
+ * 刷新令牌，并填充到vuex和cookie里面
+ */
 import store from '@/store'
-import { refreshTokenFn } from '@/api/user'
+import { refreshTokenFn } from '@/api/login'
 import { setIsAutoLogin } from '@/utils/auth'
 import { Message } from 'element-ui'
 import router from '@/router'
@@ -12,7 +15,7 @@ export function refreshToken() {
         token,
         express_in,
         refresh_token
-      } = tokenResult.data.data
+      } = tokenResult.data
       const tokenInfo = {
         accessToken: token,
         refreshToken: refresh_token,
