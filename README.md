@@ -4,7 +4,8 @@
 ## 1、 当前版本介绍
 ### 1.1 版本说明
 >  当前版本laravel_template_with_vue (2.1)  
-### 1.2  改进说明
+>
+>  ### 1.2  改进说明
 #### 后端：
 >  1. 调整xlsx文件的处理插件为fast-excel  
 >  2. 数据表部分字段的调整，取消permissions中不常用的method和route_match字段,修改users表中的role字段为roles， roles表中的permission为permissions，使数据表更加规范化     
@@ -47,7 +48,12 @@
 ####  文档
 ![系统文档](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/doc.png)
 
+#### 登陆页面  
+
+![登陆页面](https://img03.sogoucdn.com/app/a/100520146/b9199da42800f2d9f2680729c8e2bd07)
+
 ####  聊天室
+
 ![聊天室](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/chat.png)
 
 ####  客服(普通用户界面 1对1)

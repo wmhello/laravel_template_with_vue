@@ -26,6 +26,7 @@
     "socket.io-client": "^2.2.0",
     "tinymce": "^5.1.6",
     "v-contextmenu": "^2.8.0",
+    "vee-validate": "^3.2.5",
     "vue": "2.6.10",
     "vue-image-crop-upload": "^2.5.0",
     "vue-pdf": "^4.0.8",

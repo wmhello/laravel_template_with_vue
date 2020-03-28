@@ -39,6 +39,8 @@ Vue.use(contentmenu)
 import permission from '@/directive/permission/index.js'
 Vue.use(permission)
 
+// 表单校验
+
 
 Vue.config.productionTip = false
 
