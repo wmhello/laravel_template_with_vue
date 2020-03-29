@@ -48,9 +48,9 @@
 ####  文档
 ![系统文档](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/doc.png)
 
-#### 登陆页面  
-
-![登陆页面](https://img03.sogoucdn.com/app/a/100520146/b9199da42800f2d9f2680729c8e2bd07)
+#### 登陆页面(随机选择登陆页面)  
+![](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/login.png)
+![](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/login2.png)
 
 ####  聊天室
 

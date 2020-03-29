@@ -20,23 +20,27 @@
         <ValidationObserver v-slot="{ invalid }">
           <el-form class="login-form">
             <ul class="login-list">
-              <ValidationProvider name="用户名" rules="required" v-slot="{ classes, errors }">
+              <ValidationProvider name="用户名" rules="required"  mode="eager" v-slot="{ classes, errors, valid}">
                 <li>
                   <img src="@/assets/login/user2.png" alt="" />
                   <input name="username" v-model="loginForm.username" type="text" placeholder="用户名" autocomplete="off" />
                 </li>
-                <p>{{ errors[0] }}</p>
+                <span :class="`is-${valid}`">{{ errors[0] }}</span>
               </ValidationProvider>
-              <ValidationProvider name="密码" rules="required|min:6" v-slot="{ classes, errors }">
+              <ValidationProvider name="密码" rules="required|min:6"  mode="eager" v-slot="{ classes, errors, valid}">
                 <li>
                   <img src="@/assets/login/password2.png" alt="" />
                   <input v-model="loginForm.password" name="password" :type="pwdType" placeholder="输入密码" autocomplete="off" />
                   <img src="@/assets/login/show2.png" v-if="pwdType === 'password'" alt="" style="margin-right: 10px;" @click="changeType" />
                   <img src="@/assets/login/no-show.png" v-if="pwdType === 'text'" alt="" style="margin-right: 10px;" @click="changeType" />
                 </li>
-                <p>{{ errors[0] }}</p>
+                <span :class="`is-${valid}`">{{ errors[0] }}</span>
               </ValidationProvider>
             </ul>
+            <div class="remember">
+              <input v-model="loginForm.isAutoLogin" type="checkbox" class="e-selfecheckbox" id="place1" />
+              <label class="selfecheckbox_label" for="place1">自动登陆</label>
+            </div>
             <el-button
               :loading="loading"
               :disabled="invalid"
@@ -54,30 +58,16 @@
 </template>
 
 <script>
-import { ValidationProvider, extend, configure, ValidationObserver } from 'vee-validate';
-import { required, min } from 'vee-validate/dist/rules';
-extend('required', {
-  ...required,
-  message: '{_field_}必须填写'
-});
-extend('min', {
-  ...min,
-  message: '{_field_}长度不少于{length}字符'
-});
-configure({
-  classes: {
-    valid: 'is-valid',
-    invalid: 'is-invalid',
-    dirty: ['is-dirty', 'is-dirty'] // multiple classes per flag!
-  }
-});
+import { ValidationProvider, extend,  ValidationObserver } from 'vee-validate';
+import {setIsAutoLogin} from '@/utils/auth'
 export default {
   name: 'Login',
   data() {
     return {
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        isAutoLogin: 0
       },
       pwdType: 'password',
       loginRules: {
@@ -101,6 +91,9 @@ export default {
       immediate: true
     }
   },
+  created() {
+    setIsAutoLogin(0)
+  },
   methods: {
     changeType() {
       this.pwdType = this.pwdType === 'text' ? 'password' : 'text';
@@ -116,6 +109,8 @@ export default {
       });
     },
     handleLogin() {
+      let status = this.loginForm.isAutoLogin? 1: 0;
+      setIsAutoLogin(status)
       this.loading = true;
       this.$store
         .dispatch('user/login', this.loginForm)
@@ -197,10 +192,7 @@ export default {
           display: flex;
           padding-bottom: 3px;
           border-bottom: 1px solid rgb(243, 243, 243);
-          margin-top: 20px;
-          & + p {
-            color: #f20c0f;
-          }
+          margin-top: 10px;
           &:first-child {
             margin-top: 30px;
           }
@@ -239,5 +231,43 @@ export default {
   right: 0px;
   bottom: 0px;
   background-color: rgba(133, 133, 133, 0.6);
+}
+
+.remember {
+  display: flex;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.e-selfecheckbox {
+  display: none;
+}
+.selfecheckbox_label {
+  font-size: 16px;
+  font-weight: 100;
+  color: #eee;
+}
+.selfecheckbox_label:before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 13px;
+  height: 13px;
+  background-image: url('../../assets/login2/no-select.png');
+  background-size: 100%;
+  margin-right: 3px;
+}
+
+.e-selfecheckbox:checked + .selfecheckbox_label:before {
+  background-image: url('../../assets/login2/select.png');
+}
+
+span.is-false{
+  color:#ef0307;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
 }
 </style>

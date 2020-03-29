@@ -6,6 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -33,7 +34,13 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => {
+       let rand = Math.ceil(Math.random()* 30);
+       let arrForm = ['index', 'login2']
+       const value = rand % 2
+       return import(`@/views/login/${arrForm[value]}`)
+       // return import(`@/views/login/index`)
+    },
     hidden: true
   },
 

@@ -1,17 +1,17 @@
 <template>
   <div class="login-container">
     <div class="warp">
-      <!--    <div class="imgButtons">
+     <div class="imgButtons">
       <h1 style="color:#fff"><a target="_blank" href="https://github.com/wmhello/laravel_template_with_vue" alt="跳转到开源项目">
         <svg-icon icon-class="github" /><span>开源项目</span>
       </a></h1>
       <h1 style="color:#fff"><a :href="docAddress" target="_blank">
         <svg-icon icon-class="article" /><span>文档</span>
       </a></h1>
-    </div> -->
+    </div>
       <div class="loginForm">
         <h3 class="title">系统登录</h3>
-<!--        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
           <el-form-item prop="username">
             <span class="svg-container"><svg-icon icon-class="user" /></span>
             <el-input ref="username" v-model="loginForm.username" placeholder="登录名" name="username" type="text" tabindex="1" auto-complete="on" />
@@ -31,7 +31,7 @@
               @keyup.enter.native="handleLogin"
             />
             <span class="show-pwd" @click="showPwd"><svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" /></span>
-          </el-form-item> -->
+          </el-form-item>
 
           <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
         </el-form>
@@ -115,7 +115,6 @@ export default {
 <style lang="scss" scoped>
 .login-container {
   overflow: hidden;
-  background: url(../../assets/login/bg.jpg);
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -147,6 +146,7 @@ export default {
 
 	$bg:#283443;
 	$light_gray:#fff;
+  $dark_gray: #000;
 	$cursor: #fff;
 
 	@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -185,80 +185,78 @@ export default {
 			border-radius: 5px;
 			color: #454545;
 		}
-	}
-</style>
 
+    .login-form {
+       position: relative;
+       width: 520px;
+       max-width: 100%;
+       padding: 160px 35px 0;
+       margin: 0 auto;
+       overflow: hidden;
+     }
 
+     .tips {
+       font-size: 14px;
+       color: #fff;
+       margin-bottom: 10px;
 
-
- .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
-  }
-
-  .svg-container {
-    padding: 6px 5px 6px 15px;
-    color: $dark_gray;
-    vertical-align: middle;
-    width: 30px;
-    display: inline-block;
-  }
-
-  .title-container {
-    position: relative;
-
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-  }
-
-  .show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    color: $dark_gray;
-    cursor: pointer;
-    user-select: none;
-  }
-  & .imgButtons{
-    position: fixed;
-    right: 15px;
-    & h1{
-      display:inline-block;
-      margin-right: 20px;
-      position:relative;
-      width:60px;
-      & a:link span{
-         display:none;
+       span {
+         &:first-of-type {
+           margin-right: 16px;
+         }
        }
-      & a:hover span{
-        display:inline;
-        font-weight: normal;
-        position: absolute;
-        top: 50px;
-        left: 1px;
-        font-size:12px;
-      }
-    }
-  }
+     }
+
+     .svg-container {
+       padding: 6px 5px 6px 15px;
+       color: $dark_gray;
+       vertical-align: middle;
+       width: 30px;
+       display: inline-block;
+     }
+
+     .title-container {
+       position: relative;
+
+       .title {
+         font-size: 26px;
+         color: $light_gray;
+         margin: 0px auto 40px auto;
+         text-align: center;
+         font-weight: bold;
+       }
+     }
+
+     .show-pwd {
+       position: absolute;
+       right: 10px;
+       top: 7px;
+       font-size: 16px;
+       color: $dark_gray;
+       cursor: pointer;
+       user-select: none;
+     }
+     & .imgButtons{
+       position: fixed;
+       right: 15px;
+       & h1{
+         display:inline-block;
+         margin-right: 20px;
+         position:relative;
+         width:60px;
+         & a:link span{
+            display:none;
+          }
+         & a:hover span{
+           display:inline;
+           font-weight: normal;
+           position: absolute;
+           top: 50px;
+           left: 1px;
+           font-size:12px;
+         }
+       }
+     }
+	}
+
+</style>

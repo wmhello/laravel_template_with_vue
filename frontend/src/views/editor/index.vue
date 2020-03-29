@@ -31,7 +31,8 @@ export default {
       async images_upload_handler (blobInfo, success, fail) {
           const file = blobInfo.blob()
           console.log(file);
-          
+          // 得到文件后，调用接口就行了  
+          // 完成后返回url就行
           // try {
           //   const url = self.YB.businessURL(await self.upload.post(file))
           //   success(url)
