@@ -110,6 +110,18 @@
 #### 普通用户下的订单管理
 ![普通用户下的订单管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-orders-user.png)
 
+#### 富文本编辑器  
+![富文本编辑器 ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/editor.png)
+
+#### 树形组件
+![树形组件 ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/tree.png)
+
+#### 预览xlsx文件  
+![预览xlsx文件 ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/preview-xls.png)
+ 
+#### 预览pdf文件  
+![预览pdf文件  ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/preview-pdf.png)
+
 ## 4、技术文档
 ### [1、后端快速部署](back.md)
 ### [2、前端快速部署](front.md)

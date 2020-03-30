@@ -214,7 +214,17 @@ export const asyncRoutes = [
           title: '富文本',
           icon: 'tab'
         }
-      }
+      },
+      {
+        path: 'tree',
+        name: 'tree_index',
+        component: () => import('@/views/tree/index'),
+        meta: {
+          roles: ['editor.index'],
+          title: '树形组件',
+          icon: 'tab'
+        }
+      },
 
     ]
   },
