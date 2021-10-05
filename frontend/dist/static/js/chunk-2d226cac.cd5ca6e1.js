@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d226cac"],{e9bd:function(t,n,a){"use strict";a.r(n),a.d(n,"uploadImg",(function(){return o}));var e=a("1c1e");function o(t){return Object(e["a"])({url:"/api/editor/upload",method:"post",data:t,headers:{"Content-Type":"multipart/form-data"}})}}}]);

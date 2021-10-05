@@ -3,17 +3,19 @@
     从多个项目中提取关键点、抛弃了的业务部分，对底层的功能进行了各类优化和抽象，写成本项目。  
 ## 1、 当前版本介绍
 ### 1.1 版本说明
->  当前版本laravel_template_with_vue (2.1)  
+>  当前版本laravel_template_with_vue (3)  
 >
 >  ### 1.2  改进说明
+  
+>  ####  总体构架
+>  1. 修改后端目录为api
+>  2。修改前端目录为admin_element(UI使用element) admin_antd(UI使用antd)
+>  3. 增加小程序端目录uni-app(UI使用uview)
+>  4、增加独立的公众号wx_vant目录(单页面 UI使用vant)
+
 #### 后端：
->  1. 调整xlsx文件的处理插件为fast-excel  
->  2. 数据表部分字段的调整，取消permissions中不常用的method和route_match字段,修改users表中的role字段为roles， roles表中的permission为permissions，使数据表更加规范化     
->  3. 代码层面，资源控制器的功能复用，让代码更简洁和实用，父类Controller中编写好了数据的增删改查和数据表的导入和导出功能，用户可以根据TempController的方式来编写相关代码，可以参考OrderController(订单控制),开箱即用，节省业务的编写时间  
-> 4. 完善日志管理的API
-> 5. 利用showdoc完成文档构建
-> 6. 利用laravel-echo-server,集成websocket,当同一个用户多次登陆，前次登陆的页面，将自动退出。利用webasocket的消息推送来实现
-> 7. 利用laravel-echo-server,集成websocket，实现聊天室功能和客服功能
+> 1.更新larave框架为LTS版本laravel6
+> 2.更新passport插件到最新版本
 
 #### 前端：
 >  1. 前端element ui 更新到了2.7.2版本，请参照开发
