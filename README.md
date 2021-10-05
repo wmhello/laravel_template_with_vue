@@ -2,133 +2,126 @@
     2018年的春节假期，受朋友的鼓励和内心的指引，对近两年所学到的知识进行了系统的沉淀和总结。
     从多个项目中提取关键点、抛弃了的业务部分，对底层的功能进行了各类优化和抽象，写成本项目。  
 ## 1、 当前版本介绍
-### 1.1 版本说明
+
+## 1.1 版本说明
+
 >  当前版本laravel_template_with_vue (3)  
->
->  ### 1.2  改进说明
-  
->  ####  总体构架
+
+## 1.2  改进说明
+
+####  总体构架
 >  1. 修改后端目录为api
->  2。修改前端目录为admin_element(UI使用element) admin_antd(UI使用antd)
->  3. 增加小程序端目录uni-app(UI使用uview)
->  4、增加独立的公众号wx_vant目录(单页面 UI使用vant)
+>  2. 修改管理端目录为element(UI使用element)
+>  3. 增加管理端目录antd(UI使用antd)
+>  4. 增加小程序端目录uni-app(UI使用uview)
+>  5. 增加独立的公众号目录vant(单页面 UI使用vant)
 
 #### 后端：
 > 1.更新larave框架为LTS版本laravel6
+>
 > 2.更新passport插件到最新版本
+>
+> 3.完善RBAC管理
+>
+> 4.增加验证码功能、短信发送功能和第三方登陆等功能
 
-#### 前端：
->  1. 前端element ui 更新到了2.7.2版本，请参照开发
->  2. 集成了同时打开多个页面的功能，多标签功能  
->  3. 集成了全屏操作的功能  
->  4. 增加了日志管理功能  
->  5. 增加了前端开发示列，商品订单管理，代码层面利用mixin功能优化书写
->  6. 接收后端推送的消息，强制下线多次登陆的用户，保证同一个用户在什么时间与地点只能登陆一次。
->  7. 增加了应用事例模块，把具有代表性的聊天室功能和客服功能集成到项目中
+#### 管理端：
+>  1. 前端element ui 更新到了2.15.6版本，请参照开发
+>  2. 完善RBAC的管理端操作 
+>  3. 增加简单的内容管理（文章、文章类型、轮播图，使用于小程序和公众号等）
+>  6. 配置完善websocket功能，实现聊天室、客服等功能
+>  7. 增加微信端的各种配置信息等
 
-#### ToDo：
->  1. 前端增加用户多角色动态切换功能
->  2. 增加成员管理功能，实现微信登录、qq登录等第三方用户登录的功能
->  3. 增加成员注册和使用功能
+#### 小程序端：
+
+> 1.  小程序完善的目录结构和开发功能，直接对接后端接口
+>
+> 2. 小程序内用户的登陆、获取用户名和手机号码
 
 ## 2、系统概述
-    项目依托laravel5.5与vue.js，采用了主流的前后端分离方式来构建，作为程序的起点，你可以在此基础上进行自身业务的扩展。
-    后端(backend目录)负责OAuth认证、用户授权、第三方用户登录验证和提供API，在此基础上集成了跨域和excel文件的操作等基础功能，使用者只需专注于业务api的开发即可。
-    后端(backend目录)整合了laravel-echo-server，实现了websocket。用于消息的实时推送、聊天室、客服等功能，是全网最好的laravel-echo-server教程。
-    前端(frontend目录)负责页面的显示和前端用户权限的控制。项目已经引入了element UI框架，并已经对用户登录认证、路由、权限等基础功能进行了处理。
-    前端用户的权限不但可以控制系统的导航菜单，而且可以控制到页面按钮、表格等内容的显示。使用者只需要专注于业务界面的开发即可。
+    项目依托laravel6与vue.js，采用了主流的前后端分离方式来构建，作为程序的起点，你可以在此基础上进行自身业务的扩展。
+    后端(api目录)负责OAuth认证、用户授权、第三方用户登录验证和提供API，在此基础上集成excel文件的操作和完善的RBAC管理等基础功能，使用者只需专注于业务api的开发即可。后端整合了laravel-echo-server，实现了websocket。并实现消息的实时推送、为聊天室、客服等功能提供了API，是全网最好的laravel-echo-server教程。
+    前端(element目录)负责页面的显示和前端用户权限的控制。项目引入了element UI框架，并已经对用户登录认证、路由、权限等基础功能进行了处理。前端用户的权限不但可以控制系统的导航菜单，而且可以控制到页面按钮、表格等内容的显示。使用者只需要专注于业务界面的开发即可。
+    小程序(uni-app目录)主要用户小程序开发，集成了uview，实现了用户的登陆授权和获取手机号等功能，在此基础上，使用时只需要关心业务页面的开发即可以。
     本项目使用广泛，已经在本人的多个项目中商用。
->  第三方登录测试时，可以先进入系统创建一个用户，然后用github登录后绑定刚刚创建的新用户，之后就可以使用github来自动登录了（可以参考版本1，版本2因为项目调整的关系，之后才会增加）
+#### 注意事项
+
+>  1. 系统中admin用户为超级管理员，为了方便演示，也是为了供大家使用，发布的版本中，已经屏蔽admin用户的信息修改等功能，实际开发中，用户只需要去相应的前端页面中学校除去屏蔽修改的语句就可以。
+>
+>  2. 为了使用websocket等功能，需要用户同时修改前后和后端的配置，开启websocket
+>
+>  ​      3. 为了演示聊天室和客服等功能，用户可以进入系统后首先创建多个用户，并且利用不同的浏览器同时登陆，就可以演示相关功能。
 
 ## 3、项目演示与截图
-> [element-ui](https://github.com/wmhello/laravel_template_with_vue.git)演示网站(http://vue.ouenyione.com)  
-> [antd-for-vue](https://github.com/wmhello/antd_and_html5.git) 演示网站(http://wmhello.wicp.vip)  
-> 管理员用户名和密码(871228582@qq.com/123456)  
-> 普通用户用户名和密码(786270744@qq.com/123456)
+> (管理端 element ui)演示网站(http://elem.halian.net)  
+>
+> 管理员用户名和密码(admin/123456)  
 
 ### 项目截图
-####  文档
-![系统文档](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/doc.png)
+#### 登陆页面(可以扩充到使用验证码和手机号码登陆)  
+![登陆页面]()
 
-#### 登陆页面(随机选择登陆页面)  
-![](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/login.png)
-![](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/login2.png)
 
-####  聊天室
 
-![聊天室](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/chat.png)
+管理员面板
 
-####  客服(普通用户界面 1对1)
-![客服界面1](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/kefu-user.png)
-
-####  客服(客服界面 1对多)
-![客服界面2](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/kefu-service.png)
-
-#### 管理员面板
-![管理员面板](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-admin-dashboard.png)
-
-#### 普通用户面板[注意观察系统日志和左侧导航菜单]
-![普通用户面板](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-user-dashboard.png)
+![管理员面板]()
 
 #### 修改个人信息
-![修改个人信息](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-modify-info.png)
+![修改个人信息]()
 
 #### 全屏幕操作
-![全屏幕操作](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-full-screen.png)
+![全屏幕操作]()
 
-#### 用户管理
-![用户管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-user-list.png)
+#### 管理员管理
+![用户管理]()
 
-#### 用户添加
-![用户添加](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-user-add.png)
+#### 添加管理员
+![用户添加]()
 
-#### 用户数据导出
-![用户数据导出](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-user-download.png)
+#### 导入管理员
+![导入管理员]()
 
 #### 角色管理
-![角色管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-role-manger.png)
+![角色管理]()
 
 #### 角色功能设置
-![角色功能设置](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-role-set-feature.png)
+![角色功能设置]()
 
-#### 功能管理
-![功能管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-permission-manger.png)
+#### 模块与权限管理
+![模块管理]()
 
-#### 功能组管理
-![功能组管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-permission-group.png)
+#### 添加新模块
+![添加新模块]()
 
-#### 添加新功能
-![添加新功能](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-permission-feature.png)
+#### 管理员界面下的功能
+![管理员界面下的功能]()
 
-#### 系统日志管理
-![系统日志管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-log-manger.png)
-
-#### 管理日志的管理
-![工作日志的管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-log-work.png)
-
-#### 管理员界面下的订单管理
-![管理员界面下的订单管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-orders-manger.png)
-
-#### 普通用户下的订单管理
-![普通用户下的订单管理](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/v2-orders-user.png)
+#### 系统用户下的功能
+![系统用户下的功能]()
 
 #### 富文本编辑器  
-![富文本编辑器 ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/editor.png)
+![富文本编辑器 ]()
 
-#### 树形组件
-![树形组件 ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/tree.png)
+####  应用功能-聊天室
 
-#### 预览xlsx文件  
-![预览xlsx文件 ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/preview-xls.png)
- 
-#### 预览pdf文件  
-![预览pdf文件  ](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/preview-pdf.png)
+![聊天室]()
+
+####  应用功能-客服(普通用户界面 1对1)
+
+![客服界面1]()
+
+####  应用功能-客服(客服界面 1对多)
+
+![客服界面2]()
 
 ## 4、技术文档
-### [1、后端快速部署](back.md)
-### [2、前端快速部署](front.md)
-### [3、关键知识点讲述](knowledge.md)
-### [4、业务开发](developer.md)
+### [后端快速部署](back.md)
+### [前端快速部署](front.md)
+### [关键知识点讲述](knowledge.md)
+### [业务开发](developer.md)
+
+
 
 ## 5、 开发视频与在线辅导
 
@@ -137,13 +130,14 @@
 https://v.qq.com/x/page/i3059zqgj4y.html  
 https://v.qq.com/x/page/m3059l9bitb.html
 #### 目录
-![vue-element-admin开发管理系统](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/admin-mulu.png)
+![vue-element-admin开发管理系统]()
 
 ### 利用PHP开发微信公众号
 学习视频:
 https://url.cn/5d4wWGl?sf=uri
+
 #### 目录:
-![微信公众号开发](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/wx-mulu.png)
+![微信公众号开发]()
 
 
 ### 利用Laravel开发RESTful API
@@ -180,7 +174,7 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 ### 利用uni-app开发微信小程序(核心知识点)
 
 #### 目录:
-![微信公众号开发](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/mp-mulu.png)
+![微信公众号开发]()
 
 
 ### 在线辅导
@@ -189,27 +183,26 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 
 ## 6、技术支持
 > 欢迎大家来光临我的博客，主要专注于laravel与vue.js的应用
-[博客](https://wmhello.github.io)
+[博客](https://docs.chenbont.com)
 
-> 部署和使用中如果有疑问，可以到项目交流群进行讨论：106822531(QQ)或者关注公众号(computer_life)学习相关基础知识
+> 部署和使用中如果有疑问，可以到项目交流群进行讨论：xpyzwm(wechat)或者关注公众号(computer_life)学习相关基础知识
 
-> ![QQ群二维码](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/qq_qrcode.jpg)
+> ![微信二维码](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/weixin1.png)
 
-> ![全栈开发公众号](https://github.com/wmhello/laravel_template_with_vue/blob/master/Screenshots/gzh.jpg)
+> ![全栈开发公众号](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/gzh.jpg)
 
 
 ## 6、打赏
 如果我的付出能够帮助到你，我也乐于接受你的帮助，小小的赞赏是我持续进步的动力。
 
-![支付宝支付](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/pay1.jpg)
-![微信支付](https://github.com/wmhello/laravel_template_with_vue/raw/master/Screenshots/wx.jpg)
+![支付宝支付](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/pay1.jpg)
+
+![微信支付](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/wx.jpg)
 
 ## 7、致谢
   站在巨人之上，我们才能走得更远。项目中使用和借鉴了以下开源框架的实现方法 一并致谢
 >- [laravel](https://laravel.com/)
 >- [后端excel插件](https://github.com/rap2hpoutre/fast-excel)
->- [后端跨域](https://github.com/barryvdh/laravel-cors)
->- [API接口文档](https://github.com/star7th/showdoc)
 >- [vue.js](https://cn.vuejs.org/index.html)
 >- [element ui](http://element.eleme.io/#/zh-CN)
 >- [vue-router](https://router.vuejs.org/)
