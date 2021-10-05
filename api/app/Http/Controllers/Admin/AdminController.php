@@ -323,7 +323,7 @@ class AdminController extends Controller
                  $info = $this->getErrorInfo($validator);
                  return $this->errorWithInfo($info, 422);
              }
-             $id = Auth::guard('admin')->id();
+             $id = Auth::guard('api')->id();
              $user = Admin::find($id);
              $pwd = $user->password;
              if (Hash::check($old_password, $pwd)){  // 老密码相等才会修改
@@ -355,7 +355,7 @@ class AdminController extends Controller
                  }
                  $data['avatar'] = $avatar;
                  $data['updated_at'] = Carbon::now();
-                 $id = Auth::guard('admin')->id();
+                 $id = Auth::guard('api')->id();
                  $oldAvatar = $this->model::find($id)->avatar;
                  if ($avatar !== $oldAvatar && !empty($oldAvatar)) {
                     // 删除旧的头像文件 http://lv6.test//storage/axS9bUx4LkOFqwFmmfB5f2TRJBXWGmX4neGMR7RR.png
@@ -382,7 +382,7 @@ class AdminController extends Controller
              if (empty($data['phone'])) {
                  unset($data['phone']);
              }
-             $id = Auth::guard('admin')->id();;
+             $id = Auth::guard('api')->id();;
              $data['updated_at'] = Carbon::now();
              DB::table('admins')->where('id', $id)->update($data);
              return $this->successWithInfo("用户信息修改成功");

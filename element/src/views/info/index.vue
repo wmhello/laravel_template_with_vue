@@ -1,5 +1,11 @@
 <template>
   <div class="personal">
+      <el-alert
+        title="演示版本超级管理员无法修改个人信息, 部署时大家自行修改相关代码即可以"
+        type="error"
+        show-icon
+        v-if="name === 'admin'">
+      </el-alert>
     <el-tabs v-model="tab" tab-position="left">
       <el-tab-pane label="基本设置" name="base">
         <el-row>
@@ -44,7 +50,7 @@
               </el-upload>
             </el-form>
             <div style="margin-top: 10px;">
-              <el-button type="primary" @click="saveData()">保 存</el-button>
+              <el-button type="primary" @click="saveData()" v-if="name !== 'admin'">保 存</el-button>
             </div>
           </el-col>
         </el-row>
@@ -75,7 +81,7 @@
             </el-form>
             <div style="margin-top: 10px;">
               <el-button type="primary" @click="modifyPwd('pwdForm')"
-                >修 改</el-button
+                v-if="name !== 'admin'">修 改</el-button
               >
             </div>
           </el-col>
@@ -88,6 +94,7 @@
 <script>
 import { modify } from "@/api/admin";
 import { getInfo } from "@/api/user";
+import {mapGetters} from 'vuex'
 export default {
   name: "PersonalIndex",
   data() {
@@ -139,6 +146,9 @@ export default {
         ]
       }
     };
+  },
+  computed:{
+    ...mapGetters(['name'])
   },
   async created() {
     const { data } = await getInfo();
