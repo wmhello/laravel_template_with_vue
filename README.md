@@ -59,61 +59,67 @@
 
 ### 项目截图
 #### 登陆页面(可以扩充到使用验证码和手机号码登陆)  
-![登陆页面]()
-
-
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/系统登陆.jpg)
 
 管理员面板
 
-![管理员面板]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/2-管理员面板.jpg)
 
 #### 修改个人信息
-![修改个人信息]()
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/3-修改个人信息.jpg)
 
 #### 全屏幕操作
-![全屏幕操作]()
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/4-全屏操作.jpg)
 
 #### 管理员管理
-![用户管理]()
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/5-管理员管理.jpg)
 
 #### 添加管理员
-![用户添加]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/6-添加管理员.jpg)
 
 #### 导入管理员
-![导入管理员]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/7-批量导入管理员.jpg)
 
 #### 角色管理
-![角色管理]()
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/8-角色管理.jpg)
 
 #### 角色功能设置
-![角色功能设置]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/9-角色功能设置.jpg)
 
 #### 模块与权限管理
-![模块管理]()
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/10-模块管理.jpg)
 
 #### 添加新模块
-![添加新模块]()
 
-#### 管理员界面下的功能
-![管理员界面下的功能]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/11-添加模块.jpg)
 
-#### 系统用户下的功能
-![系统用户下的功能]()
+#### 超级管理员界面下的功能
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/12-超级管理员界面.jpg)
 
-#### 富文本编辑器  
-![富文本编辑器 ]()
+#### 不同角色用户下的功能
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/13-不同角色用户.jpg)
+
+#### 文章管理以及富文本编辑器  
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/14-文章管理及富文本.jpg)
 
 ####  应用功能-聊天室
 
-![聊天室]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/15-聊天室.jpg)
 
 ####  应用功能-客服(普通用户界面 1对1)
 
-![客服界面1]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/16-客服（1-1）.jpg)
 
 ####  应用功能-客服(客服界面 1对多)
 
-![客服界面2]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/17-客服（1-多）.jpg)
 
 ## 4、技术文档
 ### [后端快速部署](back.md)
@@ -125,24 +131,30 @@
 
 ## 5、 开发视频与在线辅导
 
+> 如果需要购买相应的学习视频  可以光临我的小店（https://yzkjit.taobao.com）
+>
+> 如果需要技术辅导和支持 可以加我微信(xpyzwm)
+
 ### 利用vue.js和vue-element-admin开发管理系统
 学习视频： 
 https://v.qq.com/x/page/i3059zqgj4y.html  
 https://v.qq.com/x/page/m3059l9bitb.html
+
 #### 目录
-![vue-element-admin开发管理系统]()
+
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/admin-mulu-2.png)
 
 ### 利用PHP开发微信公众号
 学习视频:
 https://url.cn/5d4wWGl?sf=uri
 
-#### 目录:
-![微信公众号开发]()
+![微信公众号开发目录](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/wx-mulu.png)
 
 
 ### 利用Laravel开发RESTful API
 学习视频:
 https://v.qq.com/x/page/t3059mfpgkg.html
+
 #### 目录:
 1  软件构建与表的设计  
 2  迁移表的编写  
@@ -173,8 +185,7 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 
 ### 利用uni-app开发微信小程序(核心知识点)
 
-#### 目录:
-![微信公众号开发]()
+![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/mp-mulu.png)
 
 
 ### 在线辅导
