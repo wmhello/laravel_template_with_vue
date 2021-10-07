@@ -1,6 +1,10 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <div
+      v-if="device === 'mobile' && sidebar.opened"
+      class="drawer-bg"
+      @click="handleClickOutside"
+    />
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
@@ -13,13 +17,13 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, TagsView } from './components';
-import ResizeMixin from './mixin/ResizeHandler';
-import Echo from 'laravel-echo';
-import { getToken } from '@/utils/auth';
-import {mapGetters} from 'vuex'
+import { Navbar, Sidebar, AppMain, TagsView } from "./components";
+import ResizeMixin from "./mixin/ResizeHandler";
+import { getToken } from "@/utils/auth";
+import { mapGetters } from "vuex";
+import Echo from "laravel-echo";
 export default {
-  name: 'Layout',
+  name: "Layout",
   components: {
     Navbar,
     Sidebar,
@@ -28,7 +32,7 @@ export default {
   },
   mixins: [ResizeMixin],
   computed: {
-    ...mapGetters(['name']),
+    ...mapGetters(["name"]),
     sidebar() {
       return this.$store.state.app.sidebar;
     },
@@ -43,61 +47,68 @@ export default {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        mobile: this.device === "mobile"
       };
     }
   },
   created() {
-    if (process.env.VUE_APP_WEBSOCKET === 'ON') {
-      let hostURL = process.env.VUE_APP_BASE_API;
-      let host = '';
-      if (hostURL.indexOf('/api/admin') > 0) {
-        let end = hostURL.indexOf('/api/admin');
+    if (process.env.VUE_APP_WEBSOCKET === "ON") {
+      const hostURL = process.env.VUE_APP_BASE_API;
+      let host = "";
+      if (hostURL.indexOf("/api/admin") > 0) {
+        const end = hostURL.indexOf("/api/admin");
         host = hostURL.substring(0, end);
       } else {
         host = hostURL;
       }
-      let token = getToken();
-      window.io = require('socket.io-client');
-      let data = {
+      const token = getToken();
+      window.io = require("socket.io-client");
+      const data = {
         // authEndpoint: '/api/broadcasting/auth',
         auth: {
           headers: {
             Authorization: `Bearer ${token}`
           }
         },
-        broadcaster: 'socket.io',
-        host: host + ':6001'
-      }
+        broadcaster: "socket.io",
+        host: host + ":6001"
+      };
       window.Echo = new Echo(data);
-      if (process.env.VUE_APP_SINGLE_LOGIN === 'ON'){
+      if (process.env.VUE_APP_SINGLE_LOGIN === "ON") {
         // 用户仅能一个点登陆
-        window.channel = window.Echo.channel('leave.' + this.name).listen('UserLogin', e => {
-          this.$alert('当前用户在其它地方已经登录，现在即将退出', '登录警告', {
-            confirmButtonText: '确定',
-            callback: action => {
-              this.$store.dispatch('user/resetFrontendToken').then(() => {
-                window.channel.unbind('UserLogin');
-                window.channel = null;
-                this.$router.push(`/login`);
-              });
-            }
-          });
-        });
+        window.channel = window.Echo.channel("leave." + this.name).listen(
+          "UserLogin",
+          (e) => {
+            this.$alert(
+              "当前用户在其它地方已经登录，现在即将退出",
+              "登录警告",
+              {
+                confirmButtonText: "确定",
+                callback: (action) => {
+                  this.$store.dispatch("user/resetFrontendToken").then(() => {
+                    window.channel.unbind("UserLogin");
+                    window.channel = null;
+                    this.$router.push(`/login`);
+                  });
+                }
+              }
+            );
+          }
+        );
       }
     }
   },
   methods: {
     handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false });
+      this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/mixin.scss';
-@import '~@/styles/variables.scss';
+@import "~@/styles/mixin.scss";
+@import "~@/styles/variables.scss";
 
 .app-wrapper {
   @include clearfix;

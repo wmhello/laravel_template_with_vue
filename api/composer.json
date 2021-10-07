@@ -13,6 +13,7 @@
         "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "6.20.*",
         "laravel/passport": "9.*",
+        "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
         "mews/captcha": "3.2",
         "overtrue/easy-sms": "^1.3",

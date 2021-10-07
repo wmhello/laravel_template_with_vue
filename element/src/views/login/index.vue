@@ -56,12 +56,35 @@
         @click.native.prevent="handleLogin"
         >登录</el-button
       >
+      <el-row>
+        <!-- <span class="oath-item" @click="oauth('github')">
+          <svg-icon
+            icon-class="github"
+            style="width:40px;height:40px;color:#f80;"
+          />
+        </span>
+        <span class="oath-item" @click="oauth('qq')">
+          <svg-icon
+            icon-class="qq"
+            style="width:40px;height:40px;color:#f80;"
+          />
+        </span> -->
+        <span class="oath-item" @click="oauth('gitee')">
+          <svg-icon
+            icon-class="gitee"
+            style="width:40px;height:40px;color:#f80;"
+          />
+        </span>
+      </el-row>
     </el-form>
   </div>
 </template>
 
 <script>
 import { setIsAutoLogin } from "@/utils/auth";
+import { openWindow } from "@/utils/tools";
+import Echo from "laravel-echo";
+import { uuid } from "@/utils/tools.js";
 
 export default {
   name: "Login",
@@ -74,10 +97,21 @@ export default {
       }
     };
     return {
+      uuid: uuid(), // 进行身份验证，编译websocket发送数据到指定的用户页面
+      oauthURL: {
+        github: `https://lv6.halian.net/api/admin/login/github?address=${
+          process.env.VUE_APP_GITHUB_CALLBACK
+        }`,
+        qq: "",
+        gitee: `https://lv6.halian.net/api/admin/login/gitee?address=${
+          process.env.VUE_APP_GITEE_CALLBACK
+        }`
+      },
       loginForm: {
         username: "",
         password: ""
       },
+      loginWindow: null,
       loginRules: {
         username: [{ required: true, trigger: "blur" }],
         password: [
@@ -100,7 +134,31 @@ export default {
   created() {
     setIsAutoLogin(0);
   },
+  mounted() {
+    window.io = require("socket.io-client");
+    const hostURL = process.env.VUE_APP_BASE_API;
+    let host = "";
+    if (hostURL.indexOf("/api/admin") > 0) {
+      const end = hostURL.indexOf("/api/admin");
+      host = hostURL.substring(0, end);
+    } else {
+      host = hostURL;
+    }
+    const data = {
+      auth: {},
+      broadcaster: "socket.io",
+      host: host + ":6001"
+    };
+    window.Echo = new Echo(data);
+    window.Echo.channel(`success.${this.uuid}`).listen("ThreeLogin", (e) => {
+      window.threeLogin.close();
+    });
+  },
   methods: {
+    oauth(url) {
+      const webURL = this.oauthURL[url] + "&uuid=" + this.uuid;
+      openWindow(webURL, "第三方登陆", 400, 250);
+    },
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
@@ -152,6 +210,11 @@ $cursor: #fff;
   .login-container .el-input input {
     color: $cursor;
   }
+}
+
+.oath-item {
+  margin-right: 40px;
+  cursor: pointer;
 }
 
 /* reset element-ui css */

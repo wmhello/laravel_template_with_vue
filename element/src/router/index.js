@@ -36,7 +36,21 @@ export const constantRoutes = [
     component: () => import("@/views/login/index"),
     hidden: true
   },
-
+  {
+    path: "/oauth/github/callback",
+    component: () => import("@/views/oauth/github"),
+    hidden: true
+  },
+  {
+    path: "/oauth/qq/callback",
+    component: () => import("@/views/oauth/qq"),
+    hidden: true
+  },
+  {
+    path: "/oauth/gitee/callback",
+    component: () => import("@/views/oauth/gitee"),
+    hidden: true
+  },
   {
     path: "/404",
     component: () => import("@/views/404"),
@@ -167,39 +181,40 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/app',
+    path: "/app",
     component: Layout,
-    redirect: '/app/chat',
-    name: 'app',
+    redirect: "/app/chat",
+    name: "app",
     alwaysShow: true,
     meta: {
-      role: ['admin'],
-      icon: 'edit',
-      title: '应用事例',
-      roles: ['chat.menu', 'kefu.menu']
+      role: ["admin"],
+      icon: "edit",
+      title: "应用事例",
+      roles: ["chat.menu", "kefu.menu"]
     },
     children: [
       {
-        path: 'chat',
-        name: 'chat_index',
-        component: () => import('@/views/chat/index'),
+        path: "chat",
+        name: "chat_index",
+        component: () => import("@/views/chat/index"),
         meta: {
-          roles: ['chat.menu'],
-          title: '聊天室',
-          icon: 'tab'
+          roles: ["chat.menu"],
+          title: "聊天室",
+          icon: "tab"
         }
       },
       {
-        path: 'kefu',
-        name: 'chat_kefu',
-        component: () => import('@/views/chat/kefu'),
+        path: "kefu",
+        name: "chat_kefu",
+        component: () => import("@/views/chat/kefu"),
         meta: {
-          roles: ['kefu.menu'],
-          title: '客服',
-          icon: 'tab'
+          roles: ["kefu.menu"],
+          title: "客服",
+          icon: "tab"
         }
-      }],
-    },
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true }

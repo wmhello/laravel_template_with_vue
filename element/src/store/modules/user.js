@@ -18,7 +18,8 @@ const state = {
   name: "",
   avatar: "",
   roles: [],
-  permissions: []
+  permissions: [],
+  githubToken: null
 };
 
 const mutations = {
@@ -37,6 +38,9 @@ const mutations = {
 
   SET_PERMISSIONS: (state, permissions) => {
     state.permissions = permissions;
+  },
+  SET_GITHUB_TOKEN: (state, token) => {
+    state.githubToken = token;
   }
 };
 
@@ -120,16 +124,16 @@ const actions = {
   // remove token
   resetFrontendToken({ commit }) {
     return new Promise((resolve) => {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      commit('SET_PERMISSIONS', [])
-      commit('SET_NAME', "")
-      commit('SET_AVATAR', "")
-      removeToken()
-      removeTokenExpiresIn()
-      removeRefreshToken()
-      resolve()
-    })
+      commit("SET_TOKEN", "");
+      commit("SET_ROLES", []);
+      commit("SET_PERMISSIONS", []);
+      commit("SET_NAME", "");
+      commit("SET_AVATAR", "");
+      removeToken();
+      removeTokenExpiresIn();
+      removeRefreshToken();
+      resolve();
+    });
   },
   resetToken({ commit }, logInfo) {
     const { accessToken, expiresIn } = logInfo;

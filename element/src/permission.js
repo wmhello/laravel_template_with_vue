@@ -9,7 +9,12 @@ import getPageTitle from "@/utils/get-page-title";
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
-const whiteList = ["/login"]; // no redirect whitelist
+const whiteList = [
+  "/login",
+  "/oauth/github/callback",
+  "/oauth/qq/callback",
+  "/oauth/gitee/callback"
+]; // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar
@@ -69,8 +74,13 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     /* has no token*/
+    if (to.path.indexOf("/oauth/") === 0) {
+      // 第三方登陆页面放行，路由以/oauth/开头
+      next();
+    }
 
     if (whiteList.indexOf(to.path) !== -1) {
+      // 白名单放行
       // in the free login whitelist, go directly
       next();
     } else {

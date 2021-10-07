@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'github' => [
+    'client_id' => env('GITHUB_CLIENT_ID', '52c2e3cc172fee5bccd7'),         // Your GitHub Client ID
+    'client_secret' => env('GITHUB_CLIENT_SECRET', 'fa5a77a1ddbea1728fc1c33bb53eef6e8b1e5757'), // Your GitHub Client Secret
+    'redirect' => env('GITHUB_CLIENT_CALLBACK', 'https://lv6.halian.net/api/admin/oauth/github'),
+   ],
+
 ];

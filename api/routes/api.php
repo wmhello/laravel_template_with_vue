@@ -24,6 +24,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
     Route::post('cp', 'LoginController@captcha')->name('admin.captcha');  // 验证码
     Route::post('sms/send', 'SmsController@send_code')->name('sms.send_code');
     Route::post('sms/verify', 'SmsController@verify_code')->name('sms.verify_code');
+    Route::get('oauth/github', 'OauthController@getUserInfoByGithub')->name('oauth.github');
+    Route::get('login/github', 'OauthController@redirectToProvider')->name('login.github');
+    Route::get('login/gitee', 'OauthController@redirectToGitee')->name('login.gitee');
+    Route::get('oauth/gitee', 'OauthController@getUserInfoByGitee')->name('login.gitee');
+    Route::get('oauth/test1', 'OauthController@test1')->name('login.test1');
+    Route::get('oauth/test2', 'OauthController@test2')->name('login.test2');
+
+
 });
 
 
