@@ -17,8 +17,13 @@
         "laravel/tinker": "^2.5",
         "mews/captcha": "3.2",
         "overtrue/easy-sms": "^1.3",
+        "php-pdfbox/php-pdfbox": "^1.0",
         "predis/predis": "^1.1",
-        "rap2hpoutre/fast-excel": "^3.0"
+        "rap2hpoutre/fast-excel": "^3.0",
+        "sgh/pdfbox": "^1.0",
+        "smalot/pdfparser": "^1.1",
+        "overtrue/laravel-wechat": "~5.0",
+        "overtrue/wechat": "^4.2"
     },
     "require-dev": {
         "facade/ignition": "^1.16.15",

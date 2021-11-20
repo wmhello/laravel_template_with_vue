@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Faker\Factory;
+//use SGH\PdfBox\PdfBox;
+use Pdfbox\Driver\Pdfbox;
+use Pdfbox\Processor\PdfFile;
+use Psr\Log\NullLogger;
+
+use PhpParser\Parser;
 /**
  * @group 管理员登陆管理
  *  管理员登陆、退出、刷新和获取个人信息
@@ -24,7 +30,43 @@ class LoginController extends Controller
     use Tool;
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'loginByPhone', 'captcha']]);
+        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'loginByPhone', 'captcha', 'test']]);
+    }
+
+    public function test()
+    {
+        $jarFile = public_path('/pdf/pdfbox-app-2.0.24.jar');
+        $javaPath = 'C:/Program Files/Java/jdk-17.0.1/bin/java.exe';
+        $pdfFile = public_path('1.pdf');
+
+        $parser = new \Smalot\PdfParser\Parser();
+        $pdf = $parser->parseFile($pdfFile);
+        $text = $pdf->getDetails();; //将所有内容读取到一个字符串中
+        foreach ($text as $property => $value) {
+            if (is_array($value)) {
+                $value = implode(', ', $value);
+            }
+            echo $property . ' => ' . $value . "\n";
+            echo '<br>';
+        }
+
+
+
+//        $converter = new PdfBox;
+//        $converter->setPathToPdfBox($jarFile);
+//        $text = $converter->textFromPdfFile($pdfFile);
+//        echo $text;
+
+        // 可以实现
+
+        $file = new PdfFile(
+            new Pdfbox(
+                $javaPath,
+                $jarFile,
+                new NullLogger()
+            ));
+        echo $file->toText($pdfFile);
+
     }
 
 

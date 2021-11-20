@@ -84,8 +84,9 @@ class LoginController extends Controller
         return $result;
     }
 
-    public function getPhone(Request $request)
+    public function getRun(Request $request)
     {
+
         $sessionKey = $request->input('session_key');
         $iv = $request->input('iv', '');
         $encryptedData = $request->input('encryptedData');

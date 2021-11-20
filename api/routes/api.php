@@ -22,6 +22,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
     Route::post('logout', 'LoginController@logout')->name('admin.logout');
     Route::post('refresh', 'LoginController@refresh')->name('admin.refresh');
     Route::post('cp', 'LoginController@captcha')->name('admin.captcha');  // 验证码
+    Route::get('test', 'LoginController@test')->name('admin.test');
     Route::post('sms/send', 'SmsController@send_code')->name('sms.send_code');
     Route::post('sms/verify', 'SmsController@verify_code')->name('sms.verify_code');
     Route::get('oauth/github', 'OauthController@getUserInfoByGithub')->name('oauth.github');
@@ -72,7 +73,6 @@ Route::middleware(['auth:admin', 'role'])->prefix('admin')->namespace('Admin')->
 });
 
 
-
 // 微信小程序登陆
 Route::group(['prefix' => '/mp', 'namespace' => 'MP'], function () {
     Route::post('/user/code', 'LoginController@getCode');  // 获得code， 用于之后的信息解码
@@ -84,5 +84,32 @@ Route::group(['prefix' => '/mp', 'namespace' => 'MP'], function () {
 
 Route::middleware(['mp'])->prefix('mp')->namespace('MP')->group(function(){
 // api/admin  api/mp
+
+});
+
+
+// 微信公众号相关接口
+Route::group(['prefix' => '/wx', 'namespace' => 'Wx'], function () {
+Route::any('wechat', 'WxController@serve');  // 公众号入口
+Route::post('getId', 'WxController@getOpenId');
+Route::get('menu', 'WxController@createMenu'); // 生成菜单
+Route::get('customMenu', 'WxController@customMenu'); // 生成自定义菜单
+
+// mvc模式的授权信息
+// Route::get('oauth1', 'WxController@oauth1');
+// Route::get('callback1', 'WxController@callback1');
+// Route::get('show', 'WxController@show');  // 授权页面
+// Route::get('callback', 'WxController@callback'); // 回调页面, 获取个人信息
+
+// 支付情况
+Route::post('pay_callback', 'WxController@pay_callback');
+Route::get('pay', 'WxController@pay');
+Route::get('spa-pay', 'WxController@spaPay');
+
+// SPA网页授权
+Route::get('/start_oauth', 'WxController@start_oauth');
+Route::get('/oauth', 'WxController@oauth');
+// SPA中的jssdk
+Route::post('/jssdk/config', 'WxController@config');
 
 });
