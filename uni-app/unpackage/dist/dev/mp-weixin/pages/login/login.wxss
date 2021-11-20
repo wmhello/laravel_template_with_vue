@@ -1,0 +1,110 @@
+
+.logo {
+	margin-top: 300rpx;
+	margin-bottom: 50rpx;
+	display: flex;
+}
+.logo image {
+	margin: auto;
+}
+.toolbars {
+	margin: 0 30rpx;
+}
+.toolbars .active {
+	background-color: rgb(64, 173, 75);
+	color: #fff;
+	margin-bottom: 20rpx;
+}
+.toolbars .close {
+	color: #eb6524;
+	font-size: 30rpx;
+	text-align: center;
+}
+
+/* ---弹窗css--- */
+.modal-mask {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #000;
+	opacity: 0.5;
+	overflow: hidden;
+	color: #fff;
+}
+.modal-dialog {
+	width: 72%;
+	position: absolute;
+	top: 30%;
+	left: 14%;
+	background: #fff;
+	border-radius: 12rpx;
+}
+.modal-content {
+	text-align: center;
+}
+.modal-content .show {
+	/* 	width: 450rpx;
+	height: 323rpx; */
+	display: block;
+	margin: 0 auto;
+	/* margin-top: -118rpx; */
+	z-index: 10000;
+	height: 135rpx;
+	width: 135rpx;
+	margin-top: 20rpx;
+	margin-bottom: 20rpx;
+}
+.iconWx {
+	width: 52rpx;
+	height: 41rpx;
+	padding-right: 20rpx;
+}
+.iconPhone {
+	width: 56rpx;
+	height: 56rpx;
+	padding-right: 15rpx;
+}
+.modal-content view:nth-of-type(2) {
+	font-size: 38rpx;
+	color: #333333;
+	line-height: 1;
+}
+.modal-content view:nth-of-type(3) {
+	font-size: 26rpx;
+	color: #9c9c9c;
+	margin: 18rpx 0 29rpx;
+	line-height: 1;
+}
+.modal-content button:nth-of-type(1) {
+	width: 80%;
+	height: 80rpx;
+	border-radius: 60rpx;
+	margin: 0 auto 80rpx;
+	font-size: 30rpx;
+	color: #fff;
+	background: #31cc32;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	box-sizing: border-box;
+}
+.modal-content button:nth-of-type(1)::after {
+	border: none;
+}
+.modal-content .wxLogin {
+	font-size: 26rpx;
+	color: #424242;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 38rpx 0 80rpx;
+}
+button::after {
+	border: none;
+}
+

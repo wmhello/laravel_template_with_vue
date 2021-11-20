@@ -1,0 +1,108 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.u-cell.data-v-65423b64 {
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 26rpx 32rpx;
+  font-size: 28rpx;
+  line-height: 54rpx;
+  color: #606266;
+  background-color: #fff;
+  text-align: left;
+}
+.u-cell_title.data-v-65423b64 {
+  font-size: 28rpx;
+}
+.u-cell__left-icon-wrap.data-v-65423b64 {
+  margin-right: 10rpx;
+  font-size: 32rpx;
+}
+.u-cell__right-icon-wrap.data-v-65423b64 {
+  margin-left: 10rpx;
+  color: #969799;
+  font-size: 28rpx;
+}
+.u-cell__left-icon-wrap.data-v-65423b64,
+.u-cell__right-icon-wrap.data-v-65423b64 {
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  height: 48rpx;
+}
+.u-cell-border.data-v-65423b64:after {
+  position: absolute;
+  box-sizing: border-box;
+  content: ' ';
+  pointer-events: none;
+  border-bottom: 1px solid #e4e7ed;
+  right: 0;
+  left: 0;
+  top: 0;
+  -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+}
+.u-cell-border.data-v-65423b64 {
+  position: relative;
+}
+.u-cell__label.data-v-65423b64 {
+  margin-top: 6rpx;
+  font-size: 26rpx;
+  line-height: 36rpx;
+  color: #909399;
+  word-wrap: break-word;
+}
+.u-cell__value.data-v-65423b64 {
+  overflow: hidden;
+  text-align: right;
+  vertical-align: middle;
+  color: #909399;
+  font-size: 26rpx;
+}
+.u-cell__title.data-v-65423b64,
+.u-cell__value.data-v-65423b64 {
+  flex: 1;
+}
+.u-cell--required.data-v-65423b64 {
+  overflow: visible;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+.u-cell--required.data-v-65423b64:before {
+  position: absolute;
+  content: '*';
+  left: 8px;
+  margin-top: 4rpx;
+  font-size: 14px;
+  color: #fa3534;
+}
+.u-cell_right.data-v-65423b64 {
+  line-height: 1;
+}
+

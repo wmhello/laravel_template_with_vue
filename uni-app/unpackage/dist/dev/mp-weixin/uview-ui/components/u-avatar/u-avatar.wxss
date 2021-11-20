@@ -1,0 +1,76 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.u-avatar.data-v-4f1b1b40 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #606266;
+  border-radius: 10px;
+  position: relative;
+}
+.u-avatar__img.data-v-4f1b1b40 {
+  width: 100%;
+  height: 100%;
+}
+.u-avatar__sex.data-v-4f1b1b40 {
+  position: absolute;
+  width: 32rpx;
+  color: #ffffff;
+  height: 32rpx;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+  border-radius: 100rpx;
+  top: 5%;
+  z-index: 1;
+  right: -7%;
+  border: 1px #ffffff solid;
+}
+.u-avatar__sex--man.data-v-4f1b1b40 {
+  background-color: #2979ff;
+}
+.u-avatar__sex--woman.data-v-4f1b1b40 {
+  background-color: #fa3534;
+}
+.u-avatar__sex--none.data-v-4f1b1b40 {
+  background-color: #ff9900;
+}
+.u-avatar__level.data-v-4f1b1b40 {
+  position: absolute;
+  width: 32rpx;
+  color: #ffffff;
+  height: 32rpx;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+  border-radius: 100rpx;
+  bottom: 5%;
+  z-index: 1;
+  right: -7%;
+  border: 1px #ffffff solid;
+  background-color: #ff9900;
+}
+

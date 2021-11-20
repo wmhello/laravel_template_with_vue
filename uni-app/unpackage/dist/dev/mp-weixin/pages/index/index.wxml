@@ -1,0 +1,1 @@
+<view>小程序首页<button type="default" data-event-opts="{{[['tap',[['cmdLogin',['$event']]]]]}}" bindtap="__e">点击登陆</button></view>

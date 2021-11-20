@@ -1,0 +1,15 @@
+
+page{
+	background-color: #ededed;
+}
+.camera{
+	width: 54px;
+	height: 44px;
+}
+.camera:active{
+		background-color: #ededed;
+}
+.user-box{
+	background-color: #fff;
+}
+
