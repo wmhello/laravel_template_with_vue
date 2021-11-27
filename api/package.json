@@ -11,7 +11,7 @@
         "clone": "node tools/clone.js"
     },
     "devDependencies": {
-        "axios": "^0.19",
+        "axios": "^0.21",
         "cross-env": "^5.1",
         "fs": "0.0.1-security",
         "laravel-mix": "^4.0.7",
