@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Validator;
 
-class Template
+class ##name##Controller extends Controller
 {
     use Tool;
-    protected  $model = 'App\Models';  // 当前模型
+    protected  $model = 'App\Models\##name##';  // 当前模型
     protected  $fillable = [];  // 当前模型可以修改和新增的字段
-    protected  $resource = 'App\Http\Resources'; // 显示个体资源
-    protected  $resourceCollection = 'App\Http\Resources'; // 显示资源集合
+    protected  $resource = 'App\Http\Resources\##name##'; // 显示个体资源
+    protected  $resourceCollection = 'App\Http\Resources\##name##Collection'; // 显示资源集合
     protected  $map = [];   // 导入导出时候  数据表字段与说明的映射表
 
 
@@ -276,8 +276,8 @@ class Template
     }
 
 
-//    protected function  message(){
-//        return [];
-//    }
+   protected function  message(){
+       return [];
+   }
 
 }

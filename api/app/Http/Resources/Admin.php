@@ -37,16 +37,8 @@ class Admin extends JsonResource
 
     protected function getPermissions($id)
     {
-//        $roleIds = DB::table('admin_roles')->where('admin_id', $id) ->pluck('role_id');
-//        $permissionIds = DB::table('role_permissions')->whereIn('role_id', $roleIds)->pluck('permission_id');
-//       dd($id);
-        $permissionIds = DB::select("select rp.permission_id from role_permissions as rp where role_id in (select role_id from admin_roles where admin_id = ?)", [$id]);
-        $result = [];
-        foreach($permissionIds as $item) {
-            $result [] = $item->permission_id;
-        }
-        $data = DB::table(DB::raw('permissions as p'))->join(DB::raw('modules as m'), 'm.id', "=", "p.module_id")
-            ->whereIn('p.id', $result)->select(DB::raw("concat(m.name,'.', p.name) as permissions"))->pluck('permissions');
+
+        $data = DB::table('v_admin_permissions')->where('admin_id', $id)->pluck('full_permissions');
         return $data;
     }
 
