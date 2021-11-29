@@ -27,7 +27,7 @@
 
 #### 管理端：
 >  1. 前端element ui 更新到了2.15.6版本，请参照开发
->  2. 完善RBAC的管理端操作 
+>  2. 完善RBAC的管理端操作
 >  3. 增加简单的内容管理（文章、文章类型、轮播图，使用于小程序和公众号等）
 >  6. 配置完善websocket功能，实现聊天室、客服等功能
 >  7. 增加微信端的各种配置信息等
@@ -121,6 +121,9 @@
 
 ![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/17-客服（1-多）.jpg)
 
+#### 快速开发应用
+![](https://i.loli.net/2021/11/29/StAMiRD1jPJEc9Z.png)
+
 ## 4、技术文档
 ### [后端快速部署](back.md)
 ### [前端快速部署](front.md)
@@ -136,7 +139,7 @@
 > 如果需要技术辅导和支持 可以加我微信(xpyzwm)
 
 ### 利用vue.js和vue-element-admin开发管理系统
-学习视频： 
+学习视频：
 https://v.qq.com/x/page/i3059zqgj4y.html  
 https://v.qq.com/x/page/m3059l9bitb.html
 
