@@ -124,6 +124,19 @@
 #### 快速开发应用
 ![](https://i.loli.net/2021/11/29/StAMiRD1jPJEc9Z.png)
 
+
+#### 微信公众号测试号
+![微信测试号2.png](https://s2.loli.net/2021/12/10/M2BVRZQDvqjahTo.png)
+
+
+#### 测试号菜单
+![测试号菜单](https://s2.loli.net/2021/12/10/kbzDur6sIhC7FTO.jpg)
+
+#### 测试号H5页面
+![测试号H5页面](https://s2.loli.net/2021/12/10/sS2duifVE4B59he.png)
+
+
+
 ## 4、技术文档
 ### [后端快速部署](back.md)
 ### [前端快速部署](front.md)

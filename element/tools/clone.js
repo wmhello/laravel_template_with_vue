@@ -11,12 +11,12 @@ const question = rlPromisify(rl.question.bind(rl));
     let moduleName ='';
      do {
        moduleName = await question("请输入模型名称（全部小写）：");
-     } while (! moduleName );
+     } while (! moduleName || ! strIsLower(moduleName));
 
     let routerName ='';
      do {
        routerName = await question("请输入路由名称（建议小写、复数）：");
-     } while (! routerName);
+     } while (! routerName || ! strIsLower(moduleName));
 
      let pageType = 2
      do {
@@ -81,4 +81,15 @@ function rlPromisify(fn) {
     return async (...args) => {
         return new Promise(resolve => fn(...args, resolve));
     };
+}
+
+function strIsLower(str){
+  let bool = true;
+  for(let i =0; i<=str.length; i++) {
+    if (str.charCodeAt(i) < 97 || str.charCodeAt > 122) {
+      bool = false;
+      break;
+    }
+  }
+  return bool;
 }

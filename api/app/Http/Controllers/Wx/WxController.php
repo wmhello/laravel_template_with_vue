@@ -147,17 +147,7 @@ class WxController extends Controller
                 "sub_button" => [
                     [
                         "type" => "view",
-                        "name" => "百度",
-                        "url"  => "http://www.baidu.com/"
-                    ],
-                    [
-                        "type" => "view",
-                        "name" => "授权页面1",
-                        "url"  => "http://wmhello.mynatapp.cc/api/oauth1"
-                    ],
-                    [
-                        "type" => "view",
-                        "name" => "获取个人信息",
+                        "name" => "H5页面",
                          "url" => "http://wechat.halian.net/"
                     ]
                 ],
@@ -466,7 +456,7 @@ class WxController extends Controller
             'aes_key' => config('wechat.official_account.default.aes_key', ''),                 // EncodingAESKey
             'oauth' => [
                 'scopes'   => ['snsapi_userinfo'],
-                'callback' => $http_host.'/api/oauth?end_url='.$end_url
+                'callback' => $http_host.'/api/wx/oauth?end_url='.$end_url
             ],
         ];
         $app = Factory::officialAccount($config);

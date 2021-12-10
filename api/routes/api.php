@@ -95,11 +95,6 @@ Route::post('getId', 'WxController@getOpenId');
 Route::get('menu', 'WxController@createMenu'); // 生成菜单
 Route::get('customMenu', 'WxController@customMenu'); // 生成自定义菜单
 
-// mvc模式的授权信息
-// Route::get('oauth1', 'WxController@oauth1');
-// Route::get('callback1', 'WxController@callback1');
-// Route::get('show', 'WxController@show');  // 授权页面
-// Route::get('callback', 'WxController@callback'); // 回调页面, 获取个人信息
 
 // 支付情况
 Route::post('pay_callback', 'WxController@pay_callback');
