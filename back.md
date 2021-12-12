@@ -1,39 +1,53 @@
-## 1、安装依赖
+## 1.apache的配置
+~~~
+<VirtualHost *:80>
+    # 本地目录，注意到后端项目的public目录
+    DocumentRoot "D:/laravel_template_with_vue/api/public/"
+    # 域名
+    ServerName api.temp.test
+    ServerAlias api.temp.test
+  	Header set Access-Control-Allow-Origin *
+    Header set Access-Control-Allow-Credentials false
+    Header set Access-Control-Allow-Headers *
+    Header set Access-Control-Allow-Methods *
+    # 本地目录
+    <Directory "D:/laravel_template_with_vue/api/public/">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+~~~
+
+
+## 2、在后端目录下，安装依赖
 ~~~
 composer  install
 ~~~
 
-## 2、复制配置文件，进行数据库配置
+## 3. 新建数据库  
+>  数据库中的字符集为utfmb8--UTF-8 Unicode , 排序规则为utf8mb4_unicode_ci
 
-> 根据需求，配置.env文件中的DB_DATABASE、DB_USERNAME和DB_PASSWORD  
+## 4、复制配置文件，生成项目密匙
 
 ~~~php
 cp .env.example .env  
 php artisan key:generate
 ~~~
+ 
 
-## 3、生成项目所需的数据表
+## 5.项目配置（数据库和域名配置）
+>  .env文件中的APP_URL为后端域名，以http或者https开头
+>  
+>  配置.env文件中的DB_DATABASE、DB_USERNAME和DB_PASSWORD 设置数据库
+>  
+
+## 6、生成项目所需的数据表
 
 ~~~
 `php artisan migrate`
 ~~~
 
-## 4、使用OAuth认证，生成passport的密钥
-~~~php
-php artisan passport:key --force`
-php artisan passport:install --force`
-~~~
-
-## 5、复制第4步生成的密钥到.env文件中，填写为PERSONAL_CLIENT_SECRET和PASSPORT_CLIENT_SECRET的参数
-
-~~~
-PERSONAL_CLIENT_ID=1
-PERSONAL_CLIENT_SECRET=
-PASSPORT_CLIENT_ID=2
-PASSPORT_CLIENT_SECRET=
-~~~
-
-## 6、生成用户数据和各种结构数据
+## 7、生成用户数据和各种结构数据
 
 > 用户名/密码: admin/123456
 
@@ -41,8 +55,17 @@ PASSPORT_CLIENT_SECRET=
 php artisan db:seed
 ~~~
 
-## 7、配置.env文件中的APP_URL为后端域名，以http或者https开头
-## 8、消息推送
+
+## 8、使用OAuth认证，生成passport的密钥
+~~~php
+php artisan passport:keys
+php artisan passport:clicent --password
+~~~
+
+>  生成的密匙填写到.env文件中的OAuth认证这一块的PASSPORT_CLIENT_ID和PASSPORT_CLIENT_SECRET的参数
+
+
+## 9、消息推送（websocket配置，可以稍后）
 
 需要根据要求配置laravel-echo-server，全局安装  
 
