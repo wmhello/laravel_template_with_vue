@@ -33,7 +33,7 @@ composer  install
 cp .env.example .env  
 php artisan key:generate
 ~~~
- 
+
 
 ## 5.项目配置（数据库和域名配置）
 >  .env文件中的APP_URL为后端域名，以http或者https开头
@@ -44,7 +44,7 @@ php artisan key:generate
 ## 6、生成项目所需的数据表
 
 ~~~
-`php artisan migrate`
+php artisan migrate
 ~~~
 
 ## 7、生成用户数据和各种结构数据
@@ -59,7 +59,7 @@ php artisan db:seed
 ## 8、使用OAuth认证，生成passport的密钥
 ~~~php
 php artisan passport:keys
-php artisan passport:clicent --password
+php artisan passport:client --password
 ~~~
 
 >  生成的密匙填写到.env文件中的OAuth认证这一块的PASSPORT_CLIENT_ID和PASSPORT_CLIENT_SECRET的参数
