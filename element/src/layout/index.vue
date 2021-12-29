@@ -74,28 +74,28 @@ export default {
         host: host + ":6001"
       };
       window.Echo = new Echo(data);
-      if (process.env.VUE_APP_SINGLE_LOGIN === "ON") {
-        // 用户仅能一个点登陆
-        window.channel = window.Echo.channel("leave." + this.name).listen(
-          "UserLogin",
-          (e) => {
-            this.$alert(
-              "当前用户在其它地方已经登录，现在即将退出",
-              "登录警告",
-              {
-                confirmButtonText: "确定",
-                callback: (action) => {
-                  this.$store.dispatch("user/resetFrontendToken").then(() => {
-                    window.channel.unbind("UserLogin");
-                    window.channel = null;
-                    this.$router.push(`/login`);
-                  });
-                }
-              }
-            );
-          }
-        );
-      }
+      // if (process.env.VUE_APP_SINGLE_LOGIN === "ON") {
+      //   // 用户仅能一个点登陆
+      //   window.channel = window.Echo.channel("leave." + this.name).listen(
+      //     "UserLogin",
+      //     (e) => {
+      //       this.$alert(
+      //         "当前用户在其它地方已经登录，现在即将退出",
+      //         "登录警告",
+      //         {
+      //           confirmButtonText: "确定",
+      //           callback: (action) => {
+      //             this.$store.dispatch("user/resetFrontendToken").then(() => {
+      //               window.channel.unbind("UserLogin");
+      //               window.channel = null;
+      //               this.$router.push(`/login`);
+      //             });
+      //           }
+      //         }
+      //       );
+      //     }
+      //   );
+      // }
     }
   },
   methods: {

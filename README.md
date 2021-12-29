@@ -138,9 +138,15 @@
 
 
 ## 4、技术文档
+### 部署视频
+https://www.bilibili.com/video/BV1qi4y197JF?spm_id_from=333.999.0.0
+
 ### [后端快速部署](back.md)
+
 ### [前端快速部署](front.md)
+
 ### [关键知识点讲述](knowledge.md)
+
 ### [业务开发](developer.md)
 
 

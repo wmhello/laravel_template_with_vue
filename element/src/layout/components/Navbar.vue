@@ -42,10 +42,10 @@ export default {
       this.$store.dispatch('app/toggleSideBar');
     },
     async logout() {
-      if (process.env.VUE_APP_WEBSOCKET === 'ON' && process.env.VUE_APP_SINGLE_LOGIN === 'ON' ) {
-        window.channel.unbind('UserLogin');
-        window.channel = null;
-      }
+      // if (process.env.VUE_APP_WEBSOCKET === 'ON' && process.env.VUE_APP_SINGLE_LOGIN === 'ON' ) {
+      //   window.channel.unbind('UserLogin');
+      //   window.channel = null;
+      // }
       await this.$store.dispatch('user/logout');
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
       this.$router.push(`/login`);
