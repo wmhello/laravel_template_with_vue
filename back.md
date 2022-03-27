@@ -1,4 +1,4 @@
-## 1.apache的配置
+## 1. apache的配置
 ~~~
 <VirtualHost *:80>
     # 本地目录，注意到后端项目的public目录
@@ -19,7 +19,7 @@
 ~~~
 
 
-## 2、在后端目录下，安装依赖
+## 2. 在后端目录下，安装依赖
 ~~~
 composer  install
 ~~~
@@ -27,7 +27,7 @@ composer  install
 ## 3. 新建数据库  
 >  数据库中的字符集为utfmb8--UTF-8 Unicode , 排序规则为utf8mb4_unicode_ci
 
-## 4、复制配置文件，生成项目密匙
+## 4. 复制配置文件，生成项目密匙
 
 ~~~php
 cp .env.example .env  
@@ -35,28 +35,28 @@ php artisan key:generate
 ~~~
 
 
-## 5.项目配置（数据库和域名配置）
+## 5. 项目配置（数据库和域名配置）
 >  .env文件中的APP_URL为后端域名，以http或者https开头
 >  
 >  配置.env文件中的DB_DATABASE、DB_USERNAME和DB_PASSWORD 设置数据库
 >  
 
-## 6、生成项目所需的数据表
+## 6. 生成项目所需的数据表
 
-~~~
+~~~php
 php artisan migrate
 ~~~
 
-## 7、生成用户数据和各种结构数据
+## 7. 生成用户数据和各种结构数据
 
 > 用户名/密码: admin/123456
 
-~~~
+~~~php
 php artisan db:seed
 ~~~
 
 
-## 8、使用OAuth认证，生成passport的密钥
+## 8. 使用OAuth认证，生成passport的密钥
 ~~~php
 php artisan passport:keys
 php artisan passport:client --password
@@ -64,8 +64,15 @@ php artisan passport:client --password
 
 >  生成的密匙填写到.env文件中的OAuth认证这一块的PASSPORT_CLIENT_ID和PASSPORT_CLIENT_SECRET的参数
 
+## 9. 建立图像软连接
+>  linux上要设置相关目录的权限为777 public目录和storage目录
+~~~
+php artian storage:link
+~~~
 
-## 9、消息推送（websocket配置，可以稍后）
+
+## 10. 消息推送
+> 如果需要打开客服功能，必须配置，根据情况可以稍后配置 
 
 需要根据要求配置laravel-echo-server，全局安装  
 

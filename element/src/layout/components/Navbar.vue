@@ -42,13 +42,23 @@ export default {
       this.$store.dispatch('app/toggleSideBar');
     },
     async logout() {
-      // if (process.env.VUE_APP_WEBSOCKET === 'ON' && process.env.VUE_APP_SINGLE_LOGIN === 'ON' ) {
-      //   window.channel.unbind('UserLogin');
-      //   window.channel = null;
-      // }
-      await this.$store.dispatch('user/logout');
-      // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-      this.$router.push(`/login`);
+      let tab = {
+        fullPath: "/dashboard",
+        meta: {
+          affix: true,
+          icon: "dashboard",
+          title: "面板"
+        },
+        name: "Dashboard",
+        path: "/dashboard",
+        title: "面板"
+      }
+      this.$store.dispatch('tagsView/delOthersViews', tab).then(async () => {
+        // this.$router.push('/dashboard')
+        await this.$store.dispatch("user/logout");
+        this.$router.push(`/login`);
+        // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      })
     }
   }
 };

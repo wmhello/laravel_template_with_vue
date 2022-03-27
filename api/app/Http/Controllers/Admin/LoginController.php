@@ -200,7 +200,8 @@ class LoginController extends Controller
        $http = new Client();
        $url = env('APP_URL');
        $result = $http->post("$url/oauth/token", [
-           'form_params' => $data
+           'form_params' => $data,
+           "verify" => false
        ]);
        $result = json_decode((string) $result->getBody(), true);
        return response()->json([
