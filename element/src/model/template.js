@@ -5,10 +5,12 @@ export const rules = {
 
 export function Model(
   name = "",
+  desc = null,
   status = true
 ) {
   this.name = name;
-  this.status = status;
+  this.desc = desc;
+  this.status = status
 }
 
 export function SearchModel() {}
