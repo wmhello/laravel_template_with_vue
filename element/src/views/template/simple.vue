@@ -29,7 +29,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="名称" prop="name">
-              <el-input v-model="formData.seller_name" :disabled="isEdit" />
+              <el-input v-model="formData.name" :disabled="isEdit" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -51,7 +51,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save()">{{ cmdTitle }}</el-button>
+        <el-button type="primary" @click="save('ruleForm')">{{ cmdTitle }}</el-button>
       </div>
     </el-dialog>
   </div>

@@ -1,23 +1,23 @@
 <template>
 
   <div class="warpper">
-    <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-      <el-form-item label="名称">
-        <el-input v-model="searchForm.name" @keyup.enter.native="search" placeholder="请输入名称">
-        </el-input>
-      </el-form-item>
-      <el-form-item label="状态">
-        <el-select v-model="searchForm.status" placeholder="请选择状态">
-          <el-option :value='true' label='是'></el-option>
-          <el-option :value='false' label='否'></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="find()" plain>查询</el-button>
-        <el-button type="info" @click="findReset()" plain>重置</el-button>
-      </el-form-item>
-    </el-form>
     <div class="toolbar">
+      <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+        <el-form-item label="名称">
+          <el-input v-model="searchForm.name" @keyup.enter.native="search" placeholder="请输入名称">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="searchForm.status" placeholder="请选择状态">
+            <el-option :value='true' label='是'></el-option>
+            <el-option :value='false' label='否'></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="find()" plain>查询</el-button>
+          <el-button type="info" @click="findReset()" plain>重置</el-button>
+        </el-form-item>
+      </el-form>
       <el-button type="primary" plain @click="add">添加</el-button>
     </div>
     <div class="table">
@@ -63,16 +63,18 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-select v-model="formData.status" placeholder="请选择状态">
-              <el-option :value='true' label='是'></el-option>
-              <el-option :value='false' label='否'></el-option>
-            </el-select>
+            <el-form-item label="状态">
+              <el-select v-model="formData.status" placeholder="请选择状态">
+                <el-option :value='true' label='是'></el-option>
+                <el-option :value='false' label='否'></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save()">{{ cmdTitle }}</el-button>
+        <el-button type="primary" @click="save('ruleForm')">{{ cmdTitle }}</el-button>
       </div>
     </el-dialog>
   </div>
