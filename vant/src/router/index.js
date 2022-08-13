@@ -29,6 +29,13 @@ const routes = [
 	  } 
   },
   {
+	  path: '/scan',
+	  name: 'scan',
+	  component: function() {
+		  return import(/* webpackChunkName: "img" */ '../views/Scan.vue')
+	  } 
+  },
+  {
 	  path: '/pay/index',
 	  name: 'pay',
 	  component: function () {

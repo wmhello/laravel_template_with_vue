@@ -1,14 +1,12 @@
 import request from "@/utils/request";
 const url = "/##name##";
 
-export function index(page = 1, pageSize = 100) {
+export function index(page = 1, pageSize = 100, searchObj = {}) {
+  let params = Object.assign({}, {page, pageSize}, searchObj)
   return request({
     url: `${url}`,
     method: "get",
-    params: {
-      page,
-      pageSize
-    }
+    params
   });
 }
 

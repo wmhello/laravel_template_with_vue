@@ -37,6 +37,21 @@ export default {
   computed: {
     ...mapGetters(['sidebar', 'avatar'])
   },
+    async created() {
+      if (
+        process.env.VUE_APP_WEBSOCKET === "ON" &&
+        process.env.VUE_APP_WEBSOCKET_SINGLE === "ON"
+      ) {
+        // 如果设置了单独的用户登录，则之前登录的其他用户都必须退出
+        if (!window.websocketHandle) {
+          window.websocketHandle = {};
+        }
+        window.websocketHandle.logout = async (item, res) => {
+          await this.logout()
+          delete window.websocketHandle.logout
+        };
+      }
+    },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar');
@@ -54,10 +69,8 @@ export default {
         title: "面板"
       }
       this.$store.dispatch('tagsView/delOthersViews', tab).then(async () => {
-        // this.$router.push('/dashboard')
         await this.$store.dispatch("user/logout");
         this.$router.push(`/login`);
-        // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
       })
     }
   }

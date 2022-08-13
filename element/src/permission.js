@@ -1,13 +1,26 @@
 import router from "./router";
 import store from "./store";
-import { Message } from "element-ui";
+import {
+  Message
+} from "element-ui";
 import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
-import { getToken, getExpiredStatus } from "@/utils/auth"; // get token from cookie
-import { refreshToken, handleRefreshFail } from "@/utils/refresh.js";
+import {
+  getToken,
+  getExpiredStatus
+} from "@/utils/auth"; // get token from cookie
+import {
+  refreshToken,
+  handleRefreshFail
+} from "@/utils/refresh.js";
 import getPageTitle from "@/utils/get-page-title";
+import {
+  bindUser
+} from '@/api/user'
 
-NProgress.configure({ showSpinner: false }); // NProgress Configuration
+NProgress.configure({
+  showSpinner: false
+}); // NProgress Configuration
 
 const whiteList = [
   "/login",
@@ -38,7 +51,9 @@ router.beforeEach(async (to, from, next) => {
     }
     if (to.path === "/login") {
       // if is logged in, redirect to the home page
-      next({ path: "/" });
+      next({
+        path: "/"
+      });
       NProgress.done();
     } else {
       // determine whether the user has obtained his permission roles through getInfo
@@ -49,20 +64,28 @@ router.beforeEach(async (to, from, next) => {
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-
-          const { roles } = await store.dispatch("user/getInfo");
+          const {
+            roles
+          } = await store.dispatch("user/getInfo");
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch(
             "permission/generateRoutes",
             roles
           );
-
           // dynamically add accessible routes
           router.addRoutes(accessRoutes);
-
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true });
+          // 在开启websocket的状态下，个人身份绑定
+          if (process.env.VUE_APP_WEBSOCKET === "ON") {
+            // 开启websocket，需要去绑定登录的身份
+            await bindUser({               uuid: window.localStorage.getItem("uuid"),
+            });
+          }
+          next({
+            ...to,
+            replace: true
+          });
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch("user/resetToken");

@@ -42,3 +42,12 @@ export function refreshTokenFn() {
       });
   });
 }
+
+// websocket中绑定个人信息
+export function bindUser(data) {
+  return request({
+    url: `/user/bind`,
+    method: "post",
+    data
+  });
+}

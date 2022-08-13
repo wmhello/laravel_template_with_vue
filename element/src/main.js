@@ -34,6 +34,8 @@ Vue.use(ElementUI, { locale });
 
 Vue.config.productionTip = false;
 
+import '@/utils/websocket.js'
+
 new Vue({
   el: "#app",
   router,

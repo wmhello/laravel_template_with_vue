@@ -31,8 +31,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
     Route::get('oauth/gitee', 'OauthController@getUserInfoByGitee')->name('login.gitee');
     Route::get('oauth/test1', 'OauthController@test1')->name('login.test1');
     Route::get('oauth/test2', 'OauthController@test2')->name('login.test2');
-
-
+    Route::post('user/bind', "LoginController@bind")->name('login.bind');
 });
 
 
@@ -70,6 +69,14 @@ Route::middleware(['auth:admin', 'role'])->prefix('admin')->namespace('Admin')->
         $msg = request()->only(['sendName', 'receiveName', 'time', 'timezone', 'content']);
         broadcast(new \App\Events\CustomerService($msg))->toOthers();
     })->name('kefu.menu');
+
+    //  系统工具  代码生成
+    Route::apiResource('tables', 'TableController');
+    Route::apiResource('codes', 'CodeController');
+    Route::apiResource('code_configs', 'CodeConfigController');
+    Route::apiResource('code_snippets', 'CodeSnippetController');
+    // 应用程序的业务接口
+
 });
 
 
@@ -106,5 +113,4 @@ Route::get('/start_oauth', 'WxController@start_oauth');
 Route::get('/oauth', 'WxController@oauth');
 // SPA中的jssdk
 Route::post('/jssdk/config', 'WxController@config');
-
 });

@@ -120,6 +120,15 @@ const actions = {
         });
     });
   },
+  // 前端清除令牌退出，仅用于多个用户登录后，之前用户的退出
+  nativeLogout({ commit, state }) {
+          commit("SET_TOKEN", "");
+          commit("SET_ROLES", []);
+          removeToken();
+          removeTokenExpiresIn();
+          resetRouter();
+          removeRefreshToken();
+  },
 
   // remove token
   resetFrontendToken({ commit }) {

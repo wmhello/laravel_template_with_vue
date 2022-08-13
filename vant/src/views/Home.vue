@@ -37,8 +37,8 @@ export default {
 				icon: 'orders-o'
 			},
 			{
-				name: '首页',
-				path: '/',
+				name: '扫码',
+				path: '/scan',
 				icon: 'home-o'
 			}] 
 	  }

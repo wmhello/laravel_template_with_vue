@@ -52,51 +52,6 @@ export default {
     }
   },
   created() {
-    if (process.env.VUE_APP_WEBSOCKET === "ON") {
-      const hostURL = process.env.VUE_APP_BASE_API;
-      let host = "";
-      if (hostURL.indexOf("/api/admin") > 0) {
-        const end = hostURL.indexOf("/api/admin");
-        host = hostURL.substring(0, end);
-      } else {
-        host = hostURL;
-      }
-      const token = getToken();
-      window.io = require("socket.io-client");
-      const data = {
-        // authEndpoint: '/api/broadcasting/auth',
-        auth: {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        },
-        broadcaster: "socket.io",
-        host: host + ":6001"
-      };
-      window.Echo = new Echo(data);
-      // if (process.env.VUE_APP_SINGLE_LOGIN === "ON") {
-      //   // 用户仅能一个点登陆
-      //   window.channel = window.Echo.channel("leave." + this.name).listen(
-      //     "UserLogin",
-      //     (e) => {
-      //       this.$alert(
-      //         "当前用户在其它地方已经登录，现在即将退出",
-      //         "登录警告",
-      //         {
-      //           confirmButtonText: "确定",
-      //           callback: (action) => {
-      //             this.$store.dispatch("user/resetFrontendToken").then(() => {
-      //               window.channel.unbind("UserLogin");
-      //               window.channel = null;
-      //               this.$router.push(`/login`);
-      //             });
-      //           }
-      //         }
-      //       );
-      //     }
-      //   );
-      // }
-    }
   },
   methods: {
     handleClickOutside() {

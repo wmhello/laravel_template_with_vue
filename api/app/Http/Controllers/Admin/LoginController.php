@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Events\UserLogin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -13,12 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Faker\Factory;
-//use SGH\PdfBox\PdfBox;
-use Pdfbox\Driver\Pdfbox;
-use Pdfbox\Processor\PdfFile;
-use Psr\Log\NullLogger;
-
-use PhpParser\Parser;
+use App\GatewayClient\Gateway;
 /**
  * @group 管理员登陆管理
  *  管理员登陆、退出、刷新和获取个人信息
@@ -35,37 +29,7 @@ class LoginController extends Controller
 
     public function test()
     {
-        $jarFile = public_path('/pdf/pdfbox-app-2.0.24.jar');
-        $javaPath = 'C:/Program Files/Java/jdk-17.0.1/bin/java.exe';
-        $pdfFile = public_path('1.pdf');
 
-        $parser = new \Smalot\PdfParser\Parser();
-        $pdf = $parser->parseFile($pdfFile);
-        $text = $pdf->getDetails();; //将所有内容读取到一个字符串中
-        foreach ($text as $property => $value) {
-            if (is_array($value)) {
-                $value = implode(', ', $value);
-            }
-            echo $property . ' => ' . $value . "\n";
-            echo '<br>';
-        }
-
-
-
-//        $converter = new PdfBox;
-//        $converter->setPathToPdfBox($jarFile);
-//        $text = $converter->textFromPdfFile($pdfFile);
-//        echo $text;
-
-        // 可以实现
-
-        $file = new PdfFile(
-            new Pdfbox(
-                $javaPath,
-                $jarFile,
-                new NullLogger()
-            ));
-        echo $file->toText($pdfFile);
 
     }
 
@@ -129,6 +93,25 @@ class LoginController extends Controller
         }
     }
 
+    public function bind(){
+       $client_id = request('uuid');
+        $uid = Auth::id();
+        Gateway::$registerAddress = env('REGISTER_ADDRESS','127.0.0.1:1680');
+
+        Gateway::bindUid($client_id, $uid);
+        // 获得所有的client_id,删除除了该次登录的内容以外，剔除其他的客户端，前端自动的退出
+        $arr = Gateway::getClientIdByUid($uid);
+        // 获得之前登录的所有client_id
+        unset($arr[array_search($client_id, $arr)]);
+        $result = [
+            'type' => 'logout',
+            'content' => null,
+            'select' => 'all'
+        ];
+        Gateway::sendToAll(json_encode($result), $arr);
+        return $this->success();
+    }
+
     /**
      * 获取管理员信息
      * @authenticated
@@ -150,8 +133,9 @@ class LoginController extends Controller
     public function logout()
     {
         if (Auth::check()){
-             $admin = Auth::user();
-             DB::table('oauth_access_tokens')->where('user_id', $admin->id)->update(['revoked' => 1]);
+               Auth::user()->token()->delete();
+//             $admin = Auth::user();
+//             DB::table('oauth_access_tokens')->where('user_id', $admin->id)->update(['revoked' => 1]);
              return $this->successWithInfo('退出成功');
         }
     }
