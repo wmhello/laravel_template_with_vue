@@ -23,6 +23,15 @@ export function logout() {
     method: "post"
   });
 }
+export function logoutWithWebsocket(data) {
+  return request({
+    url: "/logout",
+    method: "post",
+    data
+  });
+}
+
+
 
 export function refreshTokenFn() {
   return new Promise((resolve, reject) => {

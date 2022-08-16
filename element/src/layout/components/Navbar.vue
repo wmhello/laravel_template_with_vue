@@ -1,6 +1,10 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
 
     <breadcrumb class="breadcrumb-container" />
 
@@ -13,9 +17,17 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/"><el-dropdown-item>首页</el-dropdown-item></router-link>
-          <router-link to="/personal/index"><el-dropdown-item>个人设置</el-dropdown-item></router-link>
-          <el-dropdown-item divided><span style="display:block;" @click="logout">退出</span></el-dropdown-item>
+          <router-link to="/"
+            ><el-dropdown-item>首页</el-dropdown-item></router-link
+          >
+          <router-link to="/personal/index"
+            ><el-dropdown-item>个人设置</el-dropdown-item></router-link
+          >
+          <el-dropdown-item divided
+            ><span style="display: block" @click="logout"
+              >退出</span
+            ></el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -23,38 +35,40 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Breadcrumb from '@/components/Breadcrumb';
-import Hamburger from '@/components/Hamburger';
-import screenfull from '@/components/Screenfull';
-
+import { mapGetters } from "vuex";
+import Breadcrumb from "@/components/Breadcrumb";
+import Hamburger from "@/components/Hamburger";
+import screenfull from "@/components/Screenfull";
+import setting from "@/settings";
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    screenfull
+    screenfull,
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar'])
+    ...mapGetters(["sidebar", "avatar"]),
   },
-    async created() {
-      if (
-        process.env.VUE_APP_WEBSOCKET === "ON" &&
-        process.env.VUE_APP_WEBSOCKET_SINGLE === "ON"
-      ) {
-        // 如果设置了单独的用户登录，则之前登录的其他用户都必须退出
-        if (!window.websocketHandle) {
-          window.websocketHandle = {};
-        }
-        window.websocketHandle.logout = async (item, res) => {
-          await this.logout()
-          delete window.websocketHandle.logout
-        };
+  async created() {
+    if (setting.isWebsocket && setting.isSingle) {
+      // 如果设置了单独的用户登录，则之前登录的其他用户都必须退出
+      if (!window.websocketHandle) {
+        window.websocketHandle = {};
       }
-    },
+      window.websocketHandle.logout = async (item, res) => {
+        this.$alert("该用户已经在其它地方登录，此操作将强制下线", "友情提示", {
+          confirmButtonText: "确定",
+          callback: async (action) => {
+            await this.logout();
+            delete window.websocketHandle.logout;
+          },
+        });
+      };
+    }
+  },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar');
+      this.$store.dispatch("app/toggleSideBar");
     },
     async logout() {
       let tab = {
@@ -62,18 +76,18 @@ export default {
         meta: {
           affix: true,
           icon: "dashboard",
-          title: "面板"
+          title: "面板",
         },
         name: "Dashboard",
         path: "/dashboard",
-        title: "面板"
-      }
-      this.$store.dispatch('tagsView/delOthersViews', tab).then(async () => {
+        title: "面板",
+      };
+      this.$store.dispatch("tagsView/delOthersViews", tab).then(async () => {
         await this.$store.dispatch("user/logout");
         this.$router.push(`/login`);
-      })
-    }
-  }
+      });
+    },
+  },
 };
 </script>
 

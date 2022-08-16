@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from "@/api/user";
+import { login, logout, getInfo, logoutWithWebsocket } from "@/api/user";
 import {
   getToken,
   setToken,
@@ -12,6 +12,7 @@ import {
   removeRefreshToken
 } from "@/utils/auth";
 import { resetRouter } from "@/router";
+import setting from "@/settings"
 
 const state = {
   token: getToken(),
@@ -105,29 +106,39 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token)
-        .then(() => {
-          commit("SET_TOKEN", "");
-          commit("SET_ROLES", []);
-          removeToken();
-          removeTokenExpiresIn();
-          resetRouter();
-          removeRefreshToken();
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
+      // 退出登录，在开启websocket的时候需要退出与用户的绑定
+      if (setting.isWebsocket) {
+        logoutWithWebsocket({ uuid: window.localStorage.getItem('uuid') })
+          .then(() => {
+            commit("SET_TOKEN", "");
+            commit("SET_ROLES", []);
+            removeToken();
+            removeTokenExpiresIn();
+            resetRouter();
+            removeRefreshToken();
+            delete window.websocketHandle
+            resolve();
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      } else {
+        logout(state.token)
+          .then(() => {
+            commit("SET_TOKEN", "");
+            commit("SET_ROLES", []);
+            removeToken();
+            removeTokenExpiresIn();
+            resetRouter();
+            removeRefreshToken();
+            resolve();
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      }
+
     });
-  },
-  // 前端清除令牌退出，仅用于多个用户登录后，之前用户的退出
-  nativeLogout({ commit, state }) {
-          commit("SET_TOKEN", "");
-          commit("SET_ROLES", []);
-          removeToken();
-          removeTokenExpiresIn();
-          resetRouter();
-          removeRefreshToken();
   },
 
   // remove token

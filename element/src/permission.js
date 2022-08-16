@@ -17,6 +17,7 @@ import getPageTitle from "@/utils/get-page-title";
 import {
   bindUser
 } from '@/api/user'
+import setting from './settings'
 
 NProgress.configure({
   showSpinner: false
@@ -77,9 +78,10 @@ router.beforeEach(async (to, from, next) => {
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
           // 在开启websocket的状态下，个人身份绑定
-          if (process.env.VUE_APP_WEBSOCKET === "ON") {
+          if (setting.isWebsocket) {
             // 开启websocket，需要去绑定登录的身份
-            await bindUser({               uuid: window.localStorage.getItem("uuid"),
+            await bindUser({
+              uuid: window.localStorage.getItem("uuid"),
             });
           }
           next({

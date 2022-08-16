@@ -180,42 +180,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: "/app",
-    component: Layout,
-    redirect: "/app/chat",
-    name: "app",
-    alwaysShow: true,
-    meta: {
-      role: ["admin"],
-      icon: "edit",
-      title: "应用事例",
-      roles: ["chat.menu", "kefu.menu"]
-    },
-    children: [
-      {
-        path: "chat",
-        name: "chat_index",
-        component: () => import("@/views/chat/index"),
-        meta: {
-          roles: ["chat.menu"],
-          title: "聊天室",
-          icon: "tab"
-        }
-      },
-      {
-        path: "kefu",
-        name: "chat_kefu",
-        component: () => import("@/views/chat/kefu"),
-        meta: {
-          roles: ["kefu.menu"],
-          title: "客服",
-          icon: "tab"
-        }
-      }
-    ]
-  },
-
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true }
 ];
