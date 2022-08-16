@@ -14,11 +14,13 @@ class Table extends JsonResource
      */
     public function toArray($request)
     {
-        $data = parent::toArray($request);
-        $data['created_at'] = $data['created_at'] * 1000;
-        $data['updated_at'] = $data['updated_at'] * 1000;
-        // 数据转换
-
+        $data = [
+            'table_name' => $this->table_name,
+            'engine' => $this->engine,
+            'table_collation' => $this->table_collation,
+            'table_comment' => $this->table_comment,
+            'create_time' => $this->create_time
+        ];
         return $data;
     }
 

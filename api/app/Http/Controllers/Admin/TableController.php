@@ -3,10 +3,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class TableController extends Controller
@@ -17,13 +17,57 @@ class TableController extends Controller
     protected  $resource = 'App\Http\Resources\Table'; // 显示个体资源
     protected  $resourceCollection = 'App\Http\Resources\TableCollection'; // 显示资源集合
     protected  $map = [];   // 导入导出时候  数据表字段与说明的映射表
-
+    protected  $systemTable = [
+     "admin_permissions",
+     "admin_roles",
+     "admins",
+     "article_categories",
+     "articles",
+     "carousels",
+     "failed_jobs",
+     "logs",
+     "migrations",
+     "modules",
+     "oauth_access_tokens",
+     "oauth_auth_codes",
+     "oauth_clients",
+     "oauth_personal_access_clients",
+     "oauth_refresh_tokens",
+     "password_resets",
+     "permissions",
+     "role_permissions",
+     "roles",
+     "three_logins",
+     "users",
+    ];
 
     public function index(Request $request)
     {
         // 显示订单列表
-        $pageSize = $request->input('pageSize', 10);
-        return  $this->getListData($pageSize);
+//        $tables = DB::connection()->getDoctrineSchemaManager()->listTableNames();
+//        $existsTable = array_diff($tables, $this->systemTable);
+//        dd($existsTable);
+        $dbName = env('DB_DATABASE');
+        $sql = <<<SQL
+        SELECT table_name,engine, table_collation, table_comment, create_time  
+        FROM INFORMATION_SCHEMA.TABLES  
+        WHERE TABLE_SCHEMA = '$dbName' and table_comment <> 'VIEW'
+    SQL;
+        $sql = str_replace('$dbName', $dbName, $sql);
+        $tables = DB::connection("super")->select($sql);
+        $myTable = array_filter($tables, function($table) {
+            return   in_array($table->table_name, $this->systemTable)?false:true;
+        });
+        $data = array_values($myTable);
+        $page = $request->page ?: 1;
+          //每页的条数
+        $pageSize = request('pageSize', 10);
+          //计算每页分页的初始位置
+        $offset = ($page * $pageSize ) - $pageSize;
+        $result = new LengthAwarePaginator(array_slice($data, $offset, $pageSize, true), count($data), $pageSize, $page);
+        return new $this->resourceCollection($result);
+//        $pageSize = $request->input('pageSize', 10);
+//        return  $this->getListData($pageSize);
     }
 
     protected  function  getListData($pageSize){

@@ -96,20 +96,20 @@ class LoginController extends Controller
     public function bind(){
        $client_id = request('uuid');
         $uid = Auth::id();
-        Gateway::$registerAddress = env('REGISTER_ADDRESS','127.0.0.1:1680');
-
+        $address = env('REGISTER_ADDRESS','127.0.0.1:1680');
+        Gateway::$registerAddress = $address;
         Gateway::bindUid($client_id, $uid);
         // 获得所有的client_id,删除除了该次登录的内容以外，剔除其他的客户端，前端自动的退出
         $arr = Gateway::getClientIdByUid($uid);
         // 获得之前登录的所有client_id
-        unset($arr[array_search($client_id, $arr)]);
+        unset($arr[array_search($client_id, $arr)]); // 剔除当前登录的client_id后剩余的client_id内容,保证永远一对一，前端用于剔除之前登录的用户
+        $arr = array_values($arr); // 此操作非常重要，这样才能保证经过json编码后为数组
         $result = [
             'type' => 'logout',
             'content' => null,
-            'select' => 'all'
+            'select' => 'all',
         ];
         Gateway::sendToAll(json_encode($result), $arr);
-        return $this->success();
     }
 
     /**
@@ -133,6 +133,12 @@ class LoginController extends Controller
     public function logout()
     {
         if (Auth::check()){
+            $id = Auth::id();
+            $uuid = request('uuid', null);
+            // 取消client_id与uid的绑定
+            if ($uuid) {
+               Gateway::unbindUid($uuid, $id);
+            }
                Auth::user()->token()->delete();
 //             $admin = Auth::user();
 //             DB::table('oauth_access_tokens')->where('user_id', $admin->id)->update(['revoked' => 1]);

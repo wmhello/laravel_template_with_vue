@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
     Route::get('oauth/test1', 'OauthController@test1')->name('login.test1');
     Route::get('oauth/test2', 'OauthController@test2')->name('login.test2');
     Route::post('user/bind', "LoginController@bind")->name('login.bind');
+    Route::apiResource('tables', 'TableController');
 });
 
 
@@ -59,19 +61,9 @@ Route::middleware(['auth:admin', 'role'])->prefix('admin')->namespace('Admin')->
     // 轮播图
     Route::apiResource('carousels', 'CarouselController');
 
-    // 聊天室等功能
-    Route::post('/chat', function(){
-        $msg = request()->only(['name', 'time', 'timezone', 'content']);
-        broadcast(new \App\Events\Chat($msg))->toOthers();
-    })->name('chat.menu');
-
-    Route::post('/kefu', function(){
-        $msg = request()->only(['sendName', 'receiveName', 'time', 'timezone', 'content']);
-        broadcast(new \App\Events\CustomerService($msg))->toOthers();
-    })->name('kefu.menu');
 
     //  系统工具  代码生成
-    Route::apiResource('tables', 'TableController');
+
     Route::apiResource('codes', 'CodeController');
     Route::apiResource('code_configs', 'CodeConfigController');
     Route::apiResource('code_snippets', 'CodeSnippetController');
