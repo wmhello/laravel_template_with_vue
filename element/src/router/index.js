@@ -100,7 +100,7 @@ export const asyncRoutes = [
     meta: {
       title: "系统管理",
       icon: "category",
-      roles: ["admin.index", "roles.index", "modules.index"]
+      roles: ["admin.menu", "roles.menu", "modules.menu", "table.menu"]
     },
     redirect: "/admin/index",
     alwaysShow: true,
@@ -111,7 +111,7 @@ export const asyncRoutes = [
         component: () => import("@/views/system/admin/index"),
         meta: {
           title: "用户管理",
-          roles: ["admin.index"],
+          roles: ["admin.menu"],
           icon: "dashboard"
         }
       },
@@ -121,7 +121,7 @@ export const asyncRoutes = [
         component: () => import("@/views/system/role/index"),
         meta: {
           title: "角色管理",
-          roles: ["roles.index"],
+          roles: ["roles.menu"],
           icon: "form"
         }
       },
@@ -131,10 +131,56 @@ export const asyncRoutes = [
         component: () => import("@/views/system/module/index"),
         meta: {
           title: "模块与功能管理",
-          roles: ["modules.index"],
+          roles: ["modules.menu"],
           icon: "lock"
         }
-      }
+      },
+
+    ]
+  },
+  {
+    path: "/sys",
+    component: Layout,
+    meta: {
+      title: "系统工具",
+      icon: "category",
+      roles: ["tables.menu", "code_snippets.menu"]
+    },
+    redirect: "/sys/table",
+    alwaysShow: true,
+    children: [
+      {
+        path: "table",
+        name: "TableIndex",
+        component: () => import("@/views/system/table/index"),
+        meta: {
+          title: "代码生成",
+          roles: ["tables.menu"],
+          icon: "lock"
+        }
+      },
+      {
+        path: "preview",
+        name: "PreviewIndex",
+        hidden: true,
+        activeMenu: '/sys/table',
+        component: () => import("@/views/system/table/preview"),
+        meta: {
+          title: "代码预览",
+          roles: ["tables.menu"],
+          icon: "lock"
+        }
+      },
+      {
+        path: "snippet",
+        name: "SnippetIndex",
+        component: () => import("@/views/system/snippet/index"),
+        meta: {
+          title: "代码片段",
+          roles: ["code_snippets.menu"],
+          icon: "lock"
+        }
+      },
     ]
   },
   {

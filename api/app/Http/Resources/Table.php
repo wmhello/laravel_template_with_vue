@@ -15,11 +15,13 @@ class Table extends JsonResource
     public function toArray($request)
     {
         $data = [
+            'id' => $this->id,
             'table_name' => $this->table_name,
             'engine' => $this->engine,
             'table_collation' => $this->table_collation,
             'table_comment' => $this->table_comment,
-            'create_time' => $this->create_time
+            'create_time' => $this->create_time,
+            'table_config' => $this->table_config
         ];
         return $data;
     }

@@ -1,0 +1,72 @@
+.table,
+.toolbar,
+.page {
+  margin: 20px;
+}
+
+.toolbar {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+.table {
+  margin-bottom: 10px;
+}
+.page {
+  margin-top: 10px;
+}
+.page {
+  text-align: center;
+}
+.el-form table tbody {
+  width: 100%;
+}
+.el-form .header {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #09f;
+  color: #fff;
+  height: 44px;
+  display: flex;
+  flex-direction: row;
+}
+.el-form .header .title {
+  margin: auto;
+  font-weight: bold;
+}
+.el-form .content {
+  display: flex;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #0cf;
+  color: #fff;
+  height: 44px;
+  flex-direction: row;
+}
+.el-form .content div {
+  margin: auto;
+  border-radius: 0px;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}

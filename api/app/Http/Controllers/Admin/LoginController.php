@@ -13,6 +13,10 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Faker\Factory;
 use App\GatewayClient\Gateway;
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
+use App\Http\Controllers\Admin\HZip;
+
 /**
  * @group 管理员登陆管理
  *  管理员登陆、退出、刷新和获取个人信息
@@ -29,6 +33,59 @@ class LoginController extends Controller
 
     public function test()
     {
+//     var_dump('控制器目录');
+//     $os = php_uname('s');
+//     $controller = 'api/Http/Controllers/Admin';
+//     $model = 'api/Models';
+//     $routes = "api/routes";
+//     $resource = 'api/Http/Resources';
+//     $api = 'element/src/api';
+//     $front_model = 'element/src/model';
+//     $page = 'element/src/view';
+//     $back_controller_path = app_path($controller);
+//     $back_model_path = app_path($model);
+//     $back_routes_path = base_path($routes);
+//     $back_resources_path = app_path($resource);
+//     $app_path = app_path();
+//     if (strpos($os, 'Windows')>=0){
+//       $back_controller_path = str_replace("\\", "/", $back_controller_path);
+//       $back_model_path = str_replace("\\", "/", $back_model_path);
+//       $back_routes_path = str_replace("\\", "/", $back_routes_path);
+//       $back_resources_path = str_replace("\\", "/", $back_resources_path);
+//     }
+     $tableName = 'wechats';
+     if (Storage::disk('code')->exists($tableName)){
+         Storage::disk('code')->deleteDirectory($tableName);
+     }
+     Storage::disk('code')->makeDirectory($tableName);
+     Storage::disk('code')->makeDirectory($tableName.'/'.$controller);
+     Storage::disk('code')->makeDirectory($tableName.'/'.$model);
+     Storage::disk('code')->makeDirectory($tableName.'/'.$routes);
+     Storage::disk('code')->makeDirectory($tableName.'/'.$resource);
+     Storage::disk('code')->makeDirectory($tableName.'/'.$api);
+     Storage::disk('code')->makeDirectory($tableName.'/'.$front_model);
+     Storage::disk('code')->makeDirectory($tableName.'/'.$page);
+     $zip = public_path("code/$tableName.zip");//压缩文件名，自己命名
+     HZip::zipDir(public_path("code/$tableName"),$zip);
+     return response()->download($zip, basename($zip))->deleteFileAfterSend(true);
+
+//     $code_root_dir = public_path('code/'.'wechats');
+//     if (!file_exists($code_root_dir)){
+//         mkdir($code_root_dir);
+//     }
+//     mkdir($code_root_dir.'/'.$controller);
+//     mkdir($code_root_dir.'/'.$model);
+//     mkdir($code_root_dir.'/'.$routes);
+//     mkdir($code_root_dir.'/'.$resource);
+//     var_dump($back_controller_path);
+//     var_dump($back_model_path);
+//     var_dump($back_routes_path);
+//     var_dump($back_resources_path);
+
+
+
+
+
 
 
     }

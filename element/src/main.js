@@ -1,3 +1,11 @@
+/*
+ * @Author: wmhello 871228582@qq.com
+ * @Date: 2021-10-12 22:49:35
+ * @LastEditors: wmhello 871228582@qq.com
+ * @LastEditTime: 2022-08-17 11:41:20
+ * @FilePath: \element\src\main.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import Vue from "vue";
 
 import "normalize.css/normalize.css"; // A modern alternative to CSS resets
@@ -16,6 +24,10 @@ import "@/icons"; // icon
 import "@/permission"; // permission control
 import permission from "@/directive/permission/index.js"; // 权限指令
 Vue.use(permission);
+
+import elDragDialog from '@/directive/el-drag-dialog/index.js'  // 可以拖动的对话框
+Vue.use(elDragDialog)
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -33,6 +45,13 @@ Vue.use(permission);
 Vue.use(ElementUI, { locale });
 
 Vue.config.productionTip = false;
+//代码编辑器
+
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+Vue.use(codemirror)
+
+
 
 import '@/utils/websocket.js'
 

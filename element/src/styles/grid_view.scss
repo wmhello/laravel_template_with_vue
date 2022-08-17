@@ -1,0 +1,48 @@
+$grid-row-height: 35px;
+$title-width: 120px;
+$content-width: 300px;
+
+.grid-row_title, .grid-row_content{
+  height: $grid-row-height;
+  line-height: $grid-row-height;
+  padding-bottom: 3px;
+}
+.grid-row_title{
+  text-align: right;
+  width: $title-width;
+  vertical-align: middle;
+}
+.grid-row_content{
+   width: $content-width;
+   vertical-align: middle;
+}
+
+.grid-row_content .el-input__inner {
+  height:$grid-row-height
+}
+
+.grid-row_content  .el-textarea__inner{
+  line-height: 1;
+  height:$grid-row-height
+}
+.grid-row_content .el-form-item__content {
+  line-height: $grid-row-height
+}
+
+.grid-row_content .el-form-item{
+  margin-bottom: 0px;
+}
+
+td.grid-row_title.is_required:before{
+   content: '*';
+   color: red;
+}
+
+.grid .el-divider--horizontal {
+  margin: 10px 0;
+}
+
+div.tools{
+  margin: 10px 0;
+  width: ($content-width * 3 + $title-width * 3 )
+}

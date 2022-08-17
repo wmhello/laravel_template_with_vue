@@ -19,6 +19,8 @@ class CreateCodesTable extends Migration
             $table->text('value')->comment('配置内容');
             $table->timestamps();
         });
+
+
     }
 
     /**

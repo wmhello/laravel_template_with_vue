@@ -15,8 +15,7 @@ class Code extends JsonResource
     public function toArray($request)
     {
         $data = parent::toArray($request);
-        $data['created_at'] = $data['created_at'] * 1000;
-        $data['updated_at'] = $data['updated_at'] * 1000;
+
         // 数据转换
 
         return $data;

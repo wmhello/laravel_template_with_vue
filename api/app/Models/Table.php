@@ -15,11 +15,10 @@ use Illuminate\Database\Eloquent\Model;
 class Table extends Model
 {
     //
-    protected $casts =[
-      'created_at' => 'timestamp',
-      'updated_at' => 'timestamp'
+    protected $dateFormat = "Y-m-d H:i:s";
+    protected $casts = [
+        'table_config' => 'array'
     ];
-
     protected $guarded = [];
 
 

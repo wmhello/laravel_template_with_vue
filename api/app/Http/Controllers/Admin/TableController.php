@@ -3,8 +3,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\CodeSnippet;
+use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -13,7 +16,7 @@ class TableController extends Controller
 {
     use Tool;
     protected  $model = 'App\Models\Table';  // 当前模型
-    protected  $fillable = [];  // 当前模型可以修改和新增的字段
+    protected  $fillable = ['table_name', 'table_comment', 'engine', 'table_collation', 'create_time', 'table_config'];  // 当前模型可以修改和新增的字段
     protected  $resource = 'App\Http\Resources\Table'; // 显示个体资源
     protected  $resourceCollection = 'App\Http\Resources\TableCollection'; // 显示资源集合
     protected  $map = [];   // 导入导出时候  数据表字段与说明的映射表
@@ -39,6 +42,10 @@ class TableController extends Controller
      "roles",
      "three_logins",
      "users",
+     "code_configs",
+     "code_snippets",
+     "codes",
+     "tables"
     ];
 
     public function index(Request $request)
@@ -49,7 +56,7 @@ class TableController extends Controller
 //        dd($existsTable);
         $dbName = env('DB_DATABASE');
         $sql = <<<SQL
-        SELECT table_name,engine, table_collation, table_comment, create_time  
+        SELECT 0 as id, table_name,engine, table_collation, table_comment, create_time, '' as table_config  
         FROM INFORMATION_SCHEMA.TABLES  
         WHERE TABLE_SCHEMA = '$dbName' and table_comment <> 'VIEW'
     SQL;
@@ -78,8 +85,48 @@ class TableController extends Controller
 
 
     public function show($id){
-        $data = $this->model::find($id);
-        return new $this->resource($data);
+        if ($id >= 1) {
+           $result = $this->model::find($id);
+        } else {
+           $result = $this->getResultByTable();
+        }
+        return new $this->resource($result);
+    }
+
+    protected function getResultByTable(){
+         $table_name = request('table_name');
+         $result = $this->model::where('table_name', $table_name)->first();
+            if (!$result){
+               $data = request()->only($this->fillable);
+               $len = strlen($table_name);
+               if ($table_name[$len-1] === "s"){
+                   $front_model = substr($table_name, 0,$len-1);  // 去掉复数形式
+                   $back_model = ucfirst($front_model);  // 首字母大写
+                   $component = $back_model.'Index';
+                   $config = [
+                     'back_model' => $back_model,
+                     'back_routes' => $table_name,
+                     'front_model'  =>  $front_model,
+                     'front_component_name' => $component
+                   ];
+               } else {
+                   $back_model = ucfirst($table_name);  // 首字母大写
+                   $component = $back_model.'Index';
+                   $config = [
+                     'back_model' => $back_model,
+                     'back_routes' => $table_name.'s',
+                     'front_model'  =>  $table_name,
+                     'front_component_name' => $component
+                   ];
+
+               }
+                  $data['create_time'] = Carbon::createFromFormat('Y-m-d H:i:s', $data['create_time']);
+                  $data['table_config'] = json_encode($config);
+                  $id = $this->model::insertGetId($data);
+                  $result = $this->model::find($id);
+            }
+
+         return $result;
     }
 
     public function store(Request $request)
@@ -128,25 +175,87 @@ class TableController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->only($this->fillable);
-        if (method_exists($this, 'message')){
-            $validator = Validator::make($data, $this->updateRule($id), $this->message());
-        } else {
-            $validator = Validator::make($data, $this->updateRule($id));
+        $action = request('action', 'default');
+        if ($action === 'default') {
+            // 普通的保存信息
+            $data = $request->only($this->fillable);
+            if (method_exists($this, 'message')){
+                $validator = Validator::make($data, $this->updateRule($id), $this->message());
+            } else {
+                $validator = Validator::make($data, $this->updateRule($id));
+            }
+            if ($validator->fails()){
+                // 有错误，处理错误信息并且返回
+                $errorTips = $this->getErrorInfo($validator);
+                return $this->errorWithInfo($errorTips, 422);
+            }
+            // 进一步处理数据
+            $data = $this->updateHandle($data);
+            // 更新到数据表
+            if ($this->model::where('id', $id)->update($data)){
+                return $this->successWithInfo('数据更新成功');
+            } else {
+                return $this->errorWithInfo('数据更新失败');
+            }
         }
-        if ($validator->fails()){
-            // 有错误，处理错误信息并且返回
-            $errorTips = $this->getErrorInfo($validator);
-            return $this->errorWithInfo($errorTips, 422);
+        if ($action === 'download'){
+           $result = $this->getResultByTable();
+           $config = $result->table_config;
+           $tableName = $result->table_name;
+           $this->createDir($tableName);
+           $snippet = CodeSnippet::whereNotNull('name')->first();
+           // 处理后端控制器数据
+           $code = $this->createCodeBySnippet($snippet->back_api,$config);
+
+           // 保存内容
+           $fileName = $config['back_model'].'Controller.php';
+           $controller = 'api/app/Http/Controllers/Admin';
+           file_put_contents(public_path('code/'.$tableName.'/'.$controller)."/$fileName",$code);
+           // 后端模型
+           $code = $this->createCodeBySnippet($snippet->back_model,$config);
+
+           dd($code);
+
+           dd($config['back_model']);
+           $zip = public_path("code/$tableName.zip");//压缩文件名，自己命名
+           HZip::zipDir(public_path("code/$tableName"),$zip);
+           return response()->download($zip, basename($zip))->deleteFileAfterSend(true);
         }
-        // 进一步处理数据
-        $data = $this->updateHandle($data);
-        // 更新到数据表
-        if ($this->model::where('id', $id)->update($data)){
-            return $this->successWithInfo('数据更新成功');
-        } else {
-            return $this->errorWithInfo('数据更新失败');
-        }
+
+    }
+
+    public function createDir($tableName)
+    {
+        // 建立保存文件的目录
+         $controller = 'api/app/Http/Controllers/Admin';
+         $model = 'api/app/Models';
+         $routes = "api/routes";
+         $resource = 'api/app/Http/Resources';
+         $api = 'element/src/api';
+         $front_model = 'element/src/model';
+         $page = 'element/src/view';
+         if (Storage::disk('code')->exists($tableName)){
+             Storage::disk('code')->deleteDirectory($tableName);
+         }
+         Storage::disk('code')->makeDirectory($tableName);
+         Storage::disk('code')->makeDirectory($tableName.'/'.$controller);
+         Storage::disk('code')->makeDirectory($tableName.'/'.$model);
+         Storage::disk('code')->makeDirectory($tableName.'/'.$routes);
+         Storage::disk('code')->makeDirectory($tableName.'/'.$resource);
+         Storage::disk('code')->makeDirectory($tableName.'/'.$api);
+         Storage::disk('code')->makeDirectory($tableName.'/'.$front_model);
+         Storage::disk('code')->makeDirectory($tableName.'/'.$page);
+    }
+
+    protected function createCodeBySnippet($code, $config)
+    {
+        $keys = array_keys($config);
+        foreach ($keys as $key){
+           $format = "##".$key."##";
+           $value = $config[$key];
+           $code = str_replace($format, $value, $code);;
+         }
+        return $code;
     }
 
     protected  function  updateHandle($data){

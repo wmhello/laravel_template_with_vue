@@ -13,7 +13,8 @@ class CodeSnippetController extends Controller
 {
     use Tool;
     protected  $model = 'App\Models\CodeSnippet';  // 当前模型
-    protected  $fillable = [];  // 当前模型可以修改和新增的字段
+    protected  $fillable = ['name', 'desc', 'front_api', 'front_model', 'front_page', 'back_routes', 'back_model',
+        'back_resource', 'back_api'];  // 当前模型可以修改和新增的字段
     protected  $resource = 'App\Http\Resources\CodeSnippet'; // 显示个体资源
     protected  $resourceCollection = 'App\Http\Resources\CodeSnippetCollection'; // 显示资源集合
     protected  $map = [];   // 导入导出时候  数据表字段与说明的映射表
