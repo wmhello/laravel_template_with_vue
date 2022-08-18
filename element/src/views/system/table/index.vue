@@ -45,7 +45,9 @@
             <el-button plain size="mini" @click="previewHandle(row)"
               >预览</el-button
             >
-            <el-button plain size="mini">详细配置</el-button>
+            <el-button plain size="mini" @click="configHandle(row)"
+              >详细配置</el-button
+            >
             <el-button plain size="mini" @click="editHandle(row)"
               >基础配置</el-button
             >
@@ -123,7 +125,7 @@
 <script>
 import CURD from "@/mixin/CURD";
 import "@/styles/view.scss";
-import { show, update } from "@/api/table.js";
+import { show, download } from "@/api/table.js";
 export default {
   name: "TableIndex",
   mixins: [CURD],
@@ -137,12 +139,24 @@ export default {
   },
   methods: {
     baseConfigHandle() {},
+    async configHandle(row) {
+      let { data } = await show(row.id || 0, row);
+      this.$router.push({
+        path: `/sys/table_config`,
+        query: {
+          table: data.table_name,
+        },
+      });
+    },
     async previewHandle(row) {
       let { data } = await show(row.id || 0, row);
       this.config = data.table_config;
+      let query = Object.assign({}, this.config, {
+        table_name: row.table_name,
+      });
       this.$router.push({
         path: `/sys/preview`,
-        query: this.config,
+        query,
       });
     },
     async editHandle(row) {
@@ -154,7 +168,29 @@ export default {
     },
     async downloadCode(row) {
       row.action = "download";
-      await update(row);
+      let res = await download(row);
+      let fileName = `${row.table_name}.zip`;
+      this.exportFile(fileName, res);
+    },
+    exportFile(fileName, res) {
+      const content = res;
+      const blob = new Blob([content], {
+        type: "application/zip;charset=utf-8",
+      });
+      if ("download" in document.createElement("a")) {
+        // 非IE下载
+        const elink = document.createElement("a");
+        elink.download = fileName;
+        elink.style.display = "none";
+        elink.href = window.URL.createObjectURL(blob);
+        document.body.appendChild(elink);
+        elink.click();
+        window.URL.revokeObjectURL(elink.href); // 释放 URL对象
+        document.body.removeChild(elink);
+      } else {
+        // IE10+下载
+        window.navigator.msSaveBlob(blob, fileName);
+      }
     },
   },
 };

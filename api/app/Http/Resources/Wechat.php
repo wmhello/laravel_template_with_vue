@@ -15,14 +15,17 @@ class Wechat extends JsonResource
     public function toArray($request)
     {
         $data = parent::toArray($request);
+
+        // 数据转换
+
         return $data;
     }
 
     public function with($request)
     {
         return [
-          'status' => 'success',
-          'status_code' => 200
+            'status' => 'success',
+            'status_code' => 200
         ];
     }
 }

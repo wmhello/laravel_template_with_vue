@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-const url = "/##name##";
+const url = "/wechats";
 
 // 列表
 export function index(page = 1, pageSize = 100, searchObj = {}) {
@@ -77,5 +77,3 @@ export function exportData(data) {
     responseType: "blob"
   });
 }
-
-

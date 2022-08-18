@@ -21,7 +21,7 @@
     >
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <el-button
-        style="margin-left: 10px;"
+        style="margin-left: 10px"
         size="small"
         type="success"
         @click="submitUpload"
@@ -42,23 +42,23 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     module: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
       visible: this.show,
-      fileReader: new FileReader()
+      fileReader: new FileReader(),
     };
   },
   watch: {
     show() {
       this.visible = this.show;
-    }
+    },
   },
   methods: {
     async uploadHandle(options) {
@@ -71,13 +71,13 @@ export default {
         formData.append("file", file);
         const { upload } = require(`@/api/${this.module}`);
         upload(formData)
-          .then(res => {
+          .then((res) => {
             const { info } = res;
             this.$message.success(info);
             this.$parent.fetchData();
             this.visible = false;
           })
-          .catch(err => {
+          .catch((err) => {
             if (err.response.status === 422) {
               const { info, fileName } = err.response.data;
               this.$message.error(info);
@@ -98,7 +98,7 @@ export default {
     exportFile(fileName, res) {
       const content = res;
       const blob = new Blob([content], {
-        type: "application/vnd.ms-excel;charset=utf-8"
+        type: "application/vnd.ms-excel;charset=utf-8",
       });
       if ("download" in document.createElement("a")) {
         // 非IE下载
@@ -114,8 +114,8 @@ export default {
         // IE10+下载
         window.navigator.msSaveBlob(blob, fileName);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

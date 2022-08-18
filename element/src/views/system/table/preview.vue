@@ -2,7 +2,7 @@
  * @Author: wmhello 871228582@qq.com
  * @Date: 2022-08-16 21:01:45
  * @LastEditors: wmhello 871228582@qq.com
- * @LastEditTime: 2022-08-17 12:58:14
+ * @LastEditTime: 2022-08-18 19:49:04
  * @FilePath: \element\src\views\system\snippet\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE-->
 <template>
@@ -63,6 +63,7 @@ require("codemirror/addon/fold/indent-fold.js");
 require("codemirror/addon/fold/markdown-fold.js");
 require("codemirror/addon/fold/comment-fold.js");
 import { Model } from "@/model/snippet";
+import { listColumns, index } from "@/api/table_config";
 export default {
   name: "PreviewIndex",
   mixins: [CURD],
@@ -80,6 +81,7 @@ export default {
       editor: null,
       editor2: null,
       tableConfig: {},
+      columns: [],
       cmOptions: {
         // codemirror options
         tabSize: 4,
@@ -113,9 +115,14 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    next((vm) => {
+    next(async (vm) => {
       // 通过 `vm` 访问组件实例
       vm.tableConfig = to.query;
+      let { data } = await index(1, 100, { table: vm.tableConfig.table_name });
+      vm.tableData = data;
+      vm.tableData.forEach((v) => {
+        vm.columns.push(v.column_name);
+      });
     });
   },
   // 监听屏幕
@@ -144,20 +151,22 @@ export default {
       } else {
         this.formData = new Model();
       }
-      let {
-        back_api,
-        back_model,
-        back_resource,
-        back_routes,
-        front_api,
-        front_model,
-        front_page,
-      } = this.formData;
       // 处理后端控制器
       this.formData.back_api = this.formData.back_api.replace(
         /##back_model##/g,
         this.tableConfig.back_model
       );
+      // 拼接字符串
+      let str = "";
+      this.columns.forEach((v) => {
+        str += `'${v}', `;
+      });
+      str = "[" + str.slice(0, str.length - 2) + "]";
+      this.formData.back_api = this.formData.back_api.replace(
+        /##fillable##/g,
+        str || "[]"
+      );
+
       // 处理后端模型
       this.formData.back_model = this.formData.back_model.replace(
         /##back_model##/g,
@@ -186,12 +195,20 @@ export default {
         /##front_model##/g,
         this.tableConfig.front_model
       );
+      let content = "";
+      this.tableData.forEach((v) => {
+        if (v.is_list) {
+          content += ` <el-table-column prop="${v.column_name}" label="${v.column_comment}" width="100" align="center" />\n`;
+        }
+      });
       this.formData.front_page = this.formData.front_page.replace(
         /##front_component_name##/g,
         this.tableConfig.front_component_name
       );
-
-      console.log(this.tableConfig.back_model);
+      this.formData.front_page = this.formData.front_page.replace(
+        /##columnInfo##/g,
+        content
+      );
       return data;
     },
     handleClick() {},

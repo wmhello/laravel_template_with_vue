@@ -172,6 +172,18 @@ export const asyncRoutes = [
         }
       },
       {
+        path: "table_config",
+        name: "TableConfigIndex",
+        hidden: true,
+        activeMenu: '/sys/table',
+        component: () => import("@/views/system/table/config"),
+        meta: {
+          title: "详细配置",
+          roles: ["table_configs.menu"],
+          icon: "lock"
+        }
+      },
+      {
         path: "snippet",
         name: "SnippetIndex",
         component: () => import("@/views/system/snippet/index"),
@@ -222,6 +234,29 @@ export const asyncRoutes = [
           title: "文章管理",
           roles: ["articles.menu"],
           icon: "article"
+        }
+      }
+    ]
+  },
+  {
+    path: "/common",
+    component: Layout,
+    meta: {
+      title: "通用管理",
+      icon: "pdf",
+      roles: ["wechats.menu"]
+    },
+    redirect: "/common/wechat",
+    alwaysShow: true,
+    children: [
+      {
+        path: "wechat",
+        name: "WechatIndex",
+        component: () => import("@/views/common/wechat/index"),
+        meta: {
+          title: "微信设置",
+          roles: ["wechats.menu"],
+          icon: "list"
         }
       }
     ]

@@ -2,7 +2,7 @@
  * @Author: wmhello 871228582@qq.com
  * @Date: 2022-08-16 21:01:45
  * @LastEditors: wmhello 871228582@qq.com
- * @LastEditTime: 2022-08-16 23:56:38
+ * @LastEditTime: 2022-08-18 23:29:11
  * @FilePath: \element\src\views\system\snippet\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE-->
 <template>
@@ -21,9 +21,9 @@
           <el-input v-model="formData.desc" placeholder="中文说明"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="success" @click="saveHandle">保存片段</el-button>
+          <!-- <el-button type="success" @click="saveHandle">保存片段</el-button>
           <el-button type="primary" @click="onNew">新建方案</el-button>
-          <el-button type="info">选择已经存在编辑</el-button>
+          <el-button type="info">选择已经存在编辑</el-button> -->
         </el-form-item>
       </el-form>
     </div>
@@ -113,6 +113,7 @@ export default {
         showCursorwhenSelecting: true,
         matchBrackets: true, //括号匹配
         line: true,
+        readonly: true,
       },
       backOptions: {
         // codemirror options
@@ -128,6 +129,7 @@ export default {
         showCursorwhenSelecting: true,
         matchBrackets: true, //括号匹配
         line: true,
+        readonly: true,
       },
     };
   },

@@ -243,11 +243,112 @@ class TableController extends Controller
         // 处理后端控制器数据
         $code = $this->createCodeBySnippet($snippet->back_api, $config);
         $code = str_replace("##fillable##", $fillable, $code);
+        $format = "\$this->model::paginate(\$pageSize)";
+        $value = '';
+        foreach ($tableConfig as $v) {
+            if ($v->query_type) {
+                $title = ucfirst($v->column_name);
+                $content = <<<STR
+                 $title()->
+                 STR;
+             $value = $value . $content;
+            }
+        }
+        $value = "\$this->model::".trim($value)."paginate(\$pageSize)";
+        $code = str_replace($format, $value, $code);
         $fileName = $config['back_model'] . 'Controller.php';
         $path = 'api/app/Http/Controllers/Admin';
         file_put_contents(public_path('code/' . $tableName . '/' . $path) . "/$fileName", $code);
         // 后端模型
         $code = $this->createCodeBySnippet($snippet->back_model, $config);
+        // 模型中的条件
+        $format = "##scopeItem##";
+        $value = '';
+        foreach ($tableConfig as $v) {
+            if ($v->query_type) {
+                switch ($v->query_type) {
+                    case "=":
+                        $title = ucfirst($v->column_name);
+                        $content = <<<STR
+    public function scope$title(\$query)
+    {
+        \$params = request()->input('$v->column_name');
+        if (\$params) {
+            return \$query = \$query->where('$v->column_name', \$params);
+        } else {
+            return \$query;
+        }
+    }
+    
+STR;
+                        break;
+                    case "like":
+                        $title = ucfirst($v->column_name);
+                        $content = <<<STR
+    public function scope$title(\$query)
+    {
+        \$params = request()->input('$v->column_name');
+        if (\$params) {
+            return \$query = \$query->where('$v->column_name', 'like', "%".\$params."%");
+        } else {
+            return \$query;
+        }
+    }
+    
+STR;
+
+                        break;
+                    case "<>":
+                        $title = ucfirst($v->column_name);
+                        $content = <<<STR
+    public function scope$title(\$query)
+    {
+        \$params = request()->input('$v->column_name');
+        if (\$params) {
+            return \$query = \$query->where('$v->column_name', '<>', \$params);
+        } else {
+            return \$query;
+        }
+    }
+    
+STR;
+                        break;
+                    case "null":
+                        $title = ucfirst($v->column_name);
+                        $content = <<<STR
+    public function scope$title(\$query)
+    {
+        \$params = request()->input('$v->column_name');
+        if (\$params) {
+            return \$query = \$query->whereNull('$v->column_name');
+        } else {
+            return \$query;
+        }
+    }
+    
+STR;
+                        break;
+                    case "notnull":
+                        $title = ucfirst($v->column_name);
+                        $content = <<<STR
+    public function scope$title(\$query)
+    {
+        \$params = request()->input('$v->column_name');
+        if (\$params) {
+            return \$query = \$query->whereNotNull('$v->column_name');
+        } else {
+            return \$query;
+        }
+    }
+    
+STR;
+                        break;
+                }
+                $value = $value . $content;
+            }
+        }
+        $code = str_replace($format, $value, $code);
+
         $fileName = $config['back_model'] . '.php';
         $path = 'api/app/Models';
         file_put_contents(public_path('code/' . $tableName . '/' . $path) . "/$fileName", $code);
@@ -397,7 +498,7 @@ STR;
                       </el-col>
             STR;
                         break;
-                        case "datetime":
+                    case "datetime":
                         $content = <<<STR
                         <el-col :span="12">
                             <el-form-item label="$v->column_comment" prop="$v->column_name">
@@ -434,7 +535,7 @@ STR;
         $value = '';
         foreach ($tableConfig as $v) {
             if ($v->query_type) {
-                switch ($v->form_type){
+                switch ($v->form_type) {
                     case 'datetime':
                         $content = <<<STR
                             <el-form-item label="$v->column_comment">
@@ -450,7 +551,7 @@ STR;
 
             STR;
                         break;
-                        case 'date':
+                    case 'date':
                         $content = <<<STR
                             <el-form-item label="$v->column_comment">
                                      <el-date-picker
@@ -467,7 +568,7 @@ STR;
                         break;
                     case 'select':
                     case 'radio':
-                          $content = <<<STR
+                        $content = <<<STR
                             <el-form-item label="$v->column_comment">
                                 <el-select v-model="searchForm.$v->column_name" placeholder="请选择$v->column_comment">
                                   <el-option :value="true" :label="是"></el-option>
@@ -478,22 +579,18 @@ STR;
             STR;
                         break;
                     default:
-                         $content = <<<STR
+                        $content = <<<STR
                             <el-form-item label="$v->column_comment">
                                 <el-input v-model="searchForm.$v->column_name" placeholder="请输入$v->column_comment">
                                 </el-input>
                             </el-form-item>
 
             STR;
-
                 }
-
-
                 $value = $value . $content;
             }
         }
         $code = str_replace($format, $value, $code);
-
 
         $fileName = 'index.vue';
         $path = "element/src/views/" . $config['front_model'];

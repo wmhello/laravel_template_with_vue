@@ -1,11 +1,28 @@
+/*
+ * @Author: wmhello 871228582@qq.com
+ * @Date: 2022-08-18 10:38:55
+ * @LastEditors: wmhello 871228582@qq.com
+ * @LastEditTime: 2022-08-18 18:56:39
+ * @FilePath: \element\src\api\table_config.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import request from "@/utils/request";
-const url = "/##name##";
+const url = "/table_configs";
 
 // 列表
 export function index(page = 1, pageSize = 100, searchObj = {}) {
   let params = Object.assign({}, { page, pageSize }, searchObj)
   return request({
     url: `${url}`,
+    method: "get",
+    params
+  });
+}
+
+export function listColumns(table = null) {
+  let params = Object.assign({}, { table })
+  return request({
+    url: `${url}/columns`,
     method: "get",
     params
   });
@@ -77,5 +94,3 @@ export function exportData(data) {
     responseType: "blob"
   });
 }
-
-

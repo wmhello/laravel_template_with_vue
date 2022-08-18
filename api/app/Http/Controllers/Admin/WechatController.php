@@ -1,18 +1,19 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Wechat;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class WechatController extends Controller
 {
     use Tool;
     protected  $model = 'App\Models\Wechat';  // 当前模型
-    protected  $fillable = [];  // 当前模型可以修改和新增的字段
+    protected  $fillable = ['app_id', 'app_secret', 'type', 'status'];  // 当前模型可以修改和新增的字段
     protected  $resource = 'App\Http\Resources\Wechat'; // 显示个体资源
     protected  $resourceCollection = 'App\Http\Resources\WechatCollection'; // 显示资源集合
     protected  $map = [];   // 导入导出时候  数据表字段与说明的映射表
@@ -27,7 +28,7 @@ class WechatController extends Controller
 
     protected  function  getListData($pageSize){
         // 当前列表数据  对应于原来的index
-        $data = $this->model::paginate($pageSize);
+        $data = $this->model::App_id()->App_secret()->paginate($pageSize);
         return new $this->resourceCollection($data);
     }
 
@@ -277,8 +278,8 @@ class WechatController extends Controller
     }
 
 
-//    protected function  message(){
-//        return [];
-//    }
+   protected function  message(){
+       return [];
+   }
 
 }
