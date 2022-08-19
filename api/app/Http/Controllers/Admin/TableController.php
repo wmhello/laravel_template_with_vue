@@ -243,6 +243,7 @@ class TableController extends Controller
         // 处理后端控制器数据
         $code = $this->createCodeBySnippet($snippet->back_api, $config);
         $code = str_replace("##fillable##", $fillable, $code);
+        // 查询
         $format = "\$this->model::paginate(\$pageSize)";
         $value = '';
         foreach ($tableConfig as $v) {

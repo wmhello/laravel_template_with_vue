@@ -15,7 +15,7 @@ class Wechat extends Model
     {
         $params = request()->input('app_id');
         if ($params) {
-            return $query = $query->where('app_id', 'like', "%".$params."%");
+            return $query = $query->where('app_id', $params);
         } else {
             return $query;
         }

@@ -252,7 +252,7 @@ export const asyncRoutes = [
       {
         path: "wechat",
         name: "WechatIndex",
-        component: () => import("@/views/common/wechat/index"),
+        component: () => import("@/views/wechat/index"),
         meta: {
           title: "微信设置",
           roles: ["wechats.menu"],

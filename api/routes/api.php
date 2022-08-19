@@ -118,3 +118,6 @@ Route::middleware(['auth:admin','role'])->prefix('admin')->namespace('Admin')->g
 Route::middleware(['auth:admin','role'])->prefix('admin')->namespace('Admin')->group(function(){
     Route::apiResource('table_configs', 'TableConfigController');
 });
+Route::middleware(['auth:admin','role'])->prefix('admin')->namespace('Admin')->group(function(){
+    Route::apiResource('wechats', 'WechatController');
+});

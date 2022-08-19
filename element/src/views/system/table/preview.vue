@@ -2,7 +2,7 @@
  * @Author: wmhello 871228582@qq.com
  * @Date: 2022-08-16 21:01:45
  * @LastEditors: wmhello 871228582@qq.com
- * @LastEditTime: 2022-08-18 19:49:04
+ * @LastEditTime: 2022-08-19 11:05:19
  * @FilePath: \element\src\views\system\snippet\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE-->
 <template>
@@ -63,7 +63,7 @@ require("codemirror/addon/fold/indent-fold.js");
 require("codemirror/addon/fold/markdown-fold.js");
 require("codemirror/addon/fold/comment-fold.js");
 import { Model } from "@/model/snippet";
-import { listColumns, index } from "@/api/table_config";
+import { index } from "@/api/table_config";
 export default {
   name: "PreviewIndex",
   mixins: [CURD],
@@ -156,27 +156,129 @@ export default {
         /##back_model##/g,
         this.tableConfig.back_model
       );
-      // 拼接字符串
-      let str = "";
+
+      // 填充字段
+      let format = "##fillable##";
+      let value = null;
       this.columns.forEach((v) => {
-        str += `'${v}', `;
+        let content = "";
+        content = `'${v}', `;
+        value === null ? (value = content) : (value += content);
       });
-      str = "[" + str.slice(0, str.length - 2) + "]";
-      this.formData.back_api = this.formData.back_api.replace(
-        /##fillable##/g,
-        str || "[]"
-      );
+      value === null
+        ? (value = "[]")
+        : (value = "[" + value.slice(0, value.length - 2) + "]");
+      this.formData.back_api = this.formData.back_api.replace(format, value);
+
+      // 控制器中的查询
+      format = `$this->model::paginate($pageSize)`;
+      value = null;
+      this.tableData.forEach((v) => {
+        let content = "";
+        if (v.query_type) {
+          let title = this.upperToForamt(v.column_name);
+          content = `${title}()->`;
+          value === null ? (value = content) : (value += content);
+        }
+      });
+      value === null
+        ? (value = format)
+        : (value = `$this->model::${value}paginate($pageSize)`);
+      this.formData.back_api = this.formData.back_api.replace(format, value);
 
       // 处理后端模型
       this.formData.back_model = this.formData.back_model.replace(
         /##back_model##/g,
         this.tableConfig.back_model
       );
+      format = "##scopeItem##";
+      value = null;
+      this.tableData.forEach((v) => {
+        let content = "";
+        if (v.query_type) {
+          let title = this.upperToForamt(v.column_name);
+          switch (v.query_type) {
+            case "=":
+              content = `
+              public function scope${title}($query)
+                {
+                    $params = request()->input('${v.column_name}');
+                    if ($params) {
+                        return $query = $query->where('${v.column_name}', $params);
+                    } else {
+                        return $query;
+                    }
+                }
+              `;
+              break;
+            case "like":
+              content = `
+              public function scope${title}($query)
+                {
+                    $params = request()->input('${v.column_name}');
+                    if ($params) {
+                        return $query = $query->where('${v.column_name}','like', "%".$params."%");
+                    } else {
+                        return $query;
+                    }
+                }
+              `;
+              break;
+            case "<>":
+              content = `
+              public function scope${title}($query)
+                {
+                    $params = request()->input('${v.column_name}');
+                    if ($params) {
+                        return $query = $query->where('${v.column_name}', '<>', $params);
+                    } else {
+                        return $query;
+                    }
+                }
+              `;
+              break;
+            case "null":
+              content = `
+              public function scope${title}($query)
+                {
+                    $params = request()->input('${v.column_name}');
+                    if ($params) {
+                        return $query = $query->whereNull('${v.column_name}');
+                    } else {
+                        return $query;
+                    }
+                }
+              `;
+              break;
+            case "notnull":
+              content = `
+              public function scope${title}($query)
+                {
+                    $params = request()->input('${v.column_name}');
+                    if ($params) {
+                        return $query = $query->whereNotNull('${v.column_name}');
+                    } else {
+                        return $query;
+                    }
+                }
+              `;
+              break;
+          }
+          value === null ? (value = content) : (value += content);
+        }
+      });
+      value === null ? (value = "") : (value = content);
+      console.log(content);
+      // this.formData.back_model = this.formData.back_model.replace(
+      //   format,
+      //   value
+      // );
       // 处理后端资源集合
       this.formData.back_resource = this.formData.back_resource.replace(
         /##back_model##/g,
         this.tableConfig.back_model
       );
+
       // 处理后端路由
       this.formData.back_routes = this.formData.back_routes.replace(
         /##back_model##/g,
@@ -210,6 +312,10 @@ export default {
         content
       );
       return data;
+    },
+    upperToForamt(str) {
+      str = str.charAt(0).toUpperCase() + str.slice(1);
+      return str;
     },
     handleClick() {},
     async saveHandle() {
