@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Message } from "element-ui";
+import setting from "@/settings";
 import { getToken, getExpiredStatus } from "@/utils/auth";
 import { refreshToken, handleRefreshFail } from "@/utils/refresh.js";
 
@@ -28,14 +28,10 @@ service.interceptors.request.use(
       }
     }
     config.headers["Authorization"] = Auth;
-    // if(window.Echo)
-    //   {
-    //     let socketId = window.Echo.socketId()
-    //     if (socketId)
-    //     {
-    //       config.headers['X-Socket-Id'] = socketId
-    //     }
-    //   }
+
+    if (setting.isWebsocket) {
+      config.headers['X-Socket-Id'] = window.localStorage.getItem('uuid')
+    }
     return config;
   },
   (error) => {

@@ -54,21 +54,9 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >登录</el-button
+        >{{ cmdTitle }}</el-button
       >
       <el-row>
-        <!-- <span class="oath-item" @click="oauth('github')">
-          <svg-icon
-            icon-class="github"
-            style="width:40px;height:40px;color:#f80;"
-          />
-        </span>
-        <span class="oath-item" @click="oauth('qq')">
-          <svg-icon
-            icon-class="qq"
-            style="width:40px;height:40px;color:#f80;"
-          />
-        </span> -->
         <span class="oath-item" @click="oauth('gitee')" v-if="isThreeLogin">
           <svg-icon
             icon-class="gitee"
@@ -83,9 +71,9 @@
 <script>
 import { setIsAutoLogin } from "@/utils/auth";
 import { openWindow } from "@/utils/tools";
-import Echo from "laravel-echo";
 import { uuid } from "@/utils/tools.js";
-
+import web from "@/utils/socket";
+import setting from "@/settings";
 export default {
   name: "Login",
   data() {
@@ -97,6 +85,8 @@ export default {
       }
     };
     return {
+      loading: false,
+      cmdTitle: "登录",
       uuid: uuid(), // 进行身份验证，编译websocket发送数据到指定的用户页面
       oauthURL: {
         github:
@@ -130,6 +120,8 @@ export default {
       loading: false,
       passwordType: "password",
       redirect: undefined,
+      timer: {},
+      websock: null,
     };
   },
   computed: {
@@ -137,19 +129,120 @@ export default {
       return process.env.VUE_APP_THREE_LOGIN === "ON";
     },
   },
-  watch: {
-    $route: {
-      handler: function (route) {
-        this.redirect = route.query && route.query.redirect;
-      },
-      immediate: true,
-    },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if ("WebSocket" in window && setting.isWebsocket) {
+        vm.loading = true;
+        vm.cmdTitle = "服务器连接中...";
+        vm.loginWebsocket();
+      }
+    });
   },
   created() {
     setIsAutoLogin(0);
+    // web.initWebpack.bind(this)();
   },
-  mounted() {},
   methods: {
+    websocketonmessage(e) {
+      //数据接收
+      var res = JSON.parse(e.data);
+      if (res && res.type === "init") {
+        // 初始化,保留client_id,准备去做绑定数据  开发阶段显示提示
+        if (process.env.NODE_ENV === "development") {
+          console.log("初始化并返回client_id");
+        }
+        window.localStorage.setItem("uuid", res.client_id);
+        this.loading = false;
+        this.cmdTitle = "登录";
+        // 清除所有的等待连接的定时器任务
+        for (let i = 1; i <= 5; i++) {
+          clearTimeout(this.timer[`websocket${i}`]);
+        }
+        let that = this;
+        setInterval(() => {
+          that.websock.send(
+            JSON.stringify({
+              type: "ping",
+            })
+          );
+        }, 30 * 1000);
+      } else {
+        // 存在特定业务的处理逻辑，则调用
+        let uuid = window.localStorage.getItem("uuid");
+        if (window.websocketHandle && window.websocketHandle[res.type]) {
+          // 后端放回的数据类型，进行识别
+          // 如果用户标识为all 或者说没有uuid，则发送给全部
+          if (res.select === "all" || !res.hasOwnProperty("uuid")) {
+            window.websocketHandle[res.type](res.content, res);
+          } else {
+            // 发送到指定的设备
+            if (
+              res.select === "one" &&
+              typeof res.uuid === "string" &&
+              res.uuid === uuid
+            ) {
+              window.websocketHandle[res.type](res.content, res);
+            }
+            // 发送到组，包含多个设备
+            if (
+              res.select === "includes" &&
+              Array.isArray(res.uuid) &&
+              res.uuid.includes(uuid)
+            ) {
+              window.websocketHandle[res.type](res.content, res);
+            }
+            // 除了本设备以外
+            if (
+              res.select === "except" &&
+              typeof res.uuid === "string" &&
+              res.uuid !== uuid
+            ) {
+              window.websocketHandle[res.type](res.content, res);
+            }
+            // 排除本分组内的设备
+            if (
+              res.select === "except" &&
+              Array.isArray(res.uuid) &&
+              !res.uuid.includes(uuid)
+            ) {
+              window.websocketHandle[res.type](res.content, res);
+            }
+          }
+        } else {
+          if (process.env.NODE_ENV === "development") {
+            console.log("没有注册处理程序");
+            console.log(res);
+          }
+        }
+      }
+    },
+    websocketclose() {
+      //关闭
+      console.log("WebSocket关闭");
+      // initWebpack(this.token)
+    },
+    websocketerror() {
+      //失败
+      console.log("WebSocket连接失败");
+    },
+    websocketopen() {
+      //打开
+    },
+    loginWebsocket() {
+      // 连续5次发送新建websocket等待请求，2秒钟一次，这样的话，
+      // 只要有一次完成就把所有定时器都清除，然后设置为允许登录
+      for (let i = 1; i <= 5; i++) {
+        this.timer[`websocket${i}`] = null;
+        this.timer[`websocket${i}`] = setTimeout(() => {
+          let url = setting.websocketUrl || "ws://127.0.0.1:1800";
+          this.websock = new WebSocket(url); //这里面的this都指向vue
+          this.websock.onopen = this.websocketopen;
+          this.websock.onmessage = this.websocketonmessage;
+          this.websock.onclose = this.websocketclose;
+          this.websock.onerror = this.websocketerror;
+        }, 2000 * i);
+      }
+    },
     oauth(url) {
       const webURL = this.oauthURL[url] + "&uuid=" + this.uuid;
       openWindow(webURL, "第三方登陆", 400, 250);
@@ -176,31 +269,8 @@ export default {
             });
           } catch (error) {
             console.log(error);
-            // const result = error.response.data;
-            // this.$message({
-            //   message: result.info,
-            //   type: "error",
-            //   duration: 5 * 1000,
-            // });
             this.loading = false;
           }
-          // this.$store
-          //   .dispatch("user/login", this.loginForm)
-          //   .then(() => {
-          //     this.$router.push({
-          //       path: this.redirect || "/",
-          //     });
-          //     this.loading = false;
-          //   })
-          //   .catch((error) => {
-          //     const result = error.response.data;
-          //     this.$message({
-          //       message: result.info,
-          //       type: "error",
-          //       duration: 5 * 1000,
-          //     });
-          //     this.loading = false;
-          //   });
         } else {
           console.log("error submit!!");
           return false;

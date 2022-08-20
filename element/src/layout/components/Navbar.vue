@@ -84,7 +84,8 @@ export default {
       };
       this.$store.dispatch("tagsView/delOthersViews", tab).then(async () => {
         await this.$store.dispatch("user/logout");
-        this.$router.push(`/login`);
+        window.location.reload();
+        // this.$router.push(`/login`);
       });
     },
   },

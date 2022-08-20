@@ -239,6 +239,39 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: "/message",
+    component: Layout,
+    meta: {
+      title: "系统通讯",
+      icon: "pdf",
+      roles: ["serveices.menu"]
+    },
+    redirect: "/message/service",
+    alwaysShow: true,
+    children: [
+      {
+        path: "service",
+        name: "ServiceIndex",
+        component: () => import("@/views/message/service/index"),
+        meta: {
+          title: "客服演示(用户)",
+          roles: ["serveices.menu"],
+          icon: "list"
+        }
+      },
+      {
+        path: "customer",
+        name: "CustomerIndex",
+        component: () => import("@/views/message/service/customer"),
+        meta: {
+          title: "客服演示(客服)",
+          roles: ["serveices.menu"],
+          icon: "list"
+        }
+      }
+    ]
+  },
+  {
     path: "/common",
     component: Layout,
     meta: {

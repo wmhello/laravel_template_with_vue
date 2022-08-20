@@ -39,6 +39,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
 Route::middleware(['auth:admin'])->prefix('admin')->namespace('Admin')->group(function(){
   Route::get('tables/list', 'TableController@getAllTable')->name("tables.list");
   Route::get('table_configs/columns', 'TableConfigController@getColumnByTable')->name("tables.column");
+  Route::post('services/check','ServiceController@check')->name("services.check");
+  Route::post('services/register','ServiceController@register')->name("services.register");
+  Route::post('services/un_register','ServiceController@unRegister')->name("services.un_register");
+  Route::get('services/customer', 'ServiceController@customer')->name("services.customer");
+  Route::post('services/user_leave', 'ServiceController@leave')->name("services.leave");
+  Route::post('services/send_data_to_customer', 'ServiceController@sendDataToCustomer')->name("services.send_data_to_customer");
+  Route::post('services/send_data_to_user', 'ServiceController@sendDataToUser')->name("services.send_data_to_user");
 });
 
 

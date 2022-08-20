@@ -2,13 +2,12 @@
  * @Author: wmhello 871228582@qq.com
  * @Date: 2022-08-07 13:53:08
  * @LastEditors: wmhello 871228582@qq.com
- * @LastEditTime: 2022-08-16 15:36:57
+ * @LastEditTime: 2022-08-19 22:06:42
  * @FilePath: \upload_frontend\src\utils\websocket.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import setting from "@/settings";
 if ("WebSocket" in window && setting.isWebsocket) {
-  // alert("WebSocket is supported by your Browser!");
   // 打开WebSocket
 
   let url = setting.websocketUrl || "ws://127.0.0.1:1800"
