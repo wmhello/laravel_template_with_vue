@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
 Route::middleware(['auth:admin'])->prefix('admin')->namespace('Admin')->group(function(){
   Route::get('tables/list', 'TableController@getAllTable')->name("tables.list");
   Route::get('table_configs/columns', 'TableConfigController@getColumnByTable')->name("tables.column");
+   // 客服功能
   Route::post('services/check','ServiceController@check')->name("services.check");
   Route::post('services/register','ServiceController@register')->name("services.register");
   Route::post('services/un_register','ServiceController@unRegister')->name("services.un_register");
@@ -46,6 +47,14 @@ Route::middleware(['auth:admin'])->prefix('admin')->namespace('Admin')->group(fu
   Route::post('services/user_leave', 'ServiceController@leave')->name("services.leave");
   Route::post('services/send_data_to_customer', 'ServiceController@sendDataToCustomer')->name("services.send_data_to_customer");
   Route::post('services/send_data_to_user', 'ServiceController@sendDataToUser')->name("services.send_data_to_user");
+  // 聊天室
+  // 进入聊天室进行注册
+  Route::post("chats/register", "ChatController@register")->name("chat.register");
+  // 退出聊天室，广播到全部
+  Route::post("chats/un_register", "ChatController@unRegister")->name("chat.un_register");
+  // 用户发送信息到用户
+  Route::post("chats/send_data_to_user", "ChatController@sendDataToUser")->name("chat.send_data_to_user");
+
 });
 
 

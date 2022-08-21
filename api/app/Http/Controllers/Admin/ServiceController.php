@@ -6,7 +6,6 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\GatewayClient\Gateway;
 use Illuminate\Support\Facades\Auth;
-use function React\Promise\all;
 
 class ServiceController extends Controller
 {

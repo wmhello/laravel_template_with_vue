@@ -169,7 +169,7 @@ export default {
     onUserLogin(item, res) {
       let index = this.onlineUser.findIndex((v) => v.name === res.name);
       // 之前没有添加为在线用户，则必须添加
-      if (index >= 0) {
+      if (index === -1) {
         this.onlineUser.push({
           name: res.name,
           avatar: res.avatar,
@@ -187,6 +187,7 @@ export default {
           offset: 100,
         });
       } else {
+        // 之前已经添加，更新下信息，尤其是client_id
         this.onlineUser.splice(index, 1, {
           name: res.name,
           avatar: res.avatar,

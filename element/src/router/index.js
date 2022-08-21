@@ -268,7 +268,17 @@ export const asyncRoutes = [
           roles: ["serveices.menu"],
           icon: "list"
         }
-      }
+      },
+      {
+        path: "chat",
+        name: "ChatIndex",
+        component: () => import("@/views/message/chat/index"),
+        meta: {
+          title: "聊天室",
+          roles: ["chats.menu"],
+          icon: "list"
+        }
+      },
     ]
   },
   {
