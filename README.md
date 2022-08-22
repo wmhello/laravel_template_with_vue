@@ -109,17 +109,26 @@
 
 ![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/14-文章管理及富文本.jpg)
 
-####  应用功能-聊天室
+####  聊天室
 
-![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/15-聊天室.jpg)
+![](https://s2.loli.net/2022/08/22/YeTZas5VJMX9uky.jpg)
 
-####  应用功能-客服(普通用户界面 1对1)
+####  客服功能(普通用户界面)
+![](https://s2.loli.net/2022/08/22/kToDHnEixfgMU8d.jpg)
 
-![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/16-客服（1-1）.jpg)
+####  客服功能(客服界面 1对多)
+![](https://s2.loli.net/2022/08/22/CKnlR7FIgNm4Wh9.jpg)
 
-####  应用功能-客服(客服界面 1对多)
+#### 代码片段
+![](https://s2.loli.net/2022/08/22/aYRStNyWws3lV9Q.jpg)
 
-![](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/17-客服（1-多）.jpg)
+#### 自动化编码配置
+![](https://s2.loli.net/2022/08/22/CugynFAtPi4SBQG.jpg)
+![](https://s2.loli.net/2022/08/22/WjB2DXphQKwAHqa.jpg)
+
+#### 代码下载（代码包括前后端增删改查的所有内容）
+![](https://s2.loli.net/2022/08/22/IQkKE1UStW2TiV6.jpg)
+
 
 #### 快速开发应用
 ![](https://i.loli.net/2021/11/29/StAMiRD1jPJEc9Z.png)
