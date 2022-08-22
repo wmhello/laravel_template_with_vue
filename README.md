@@ -225,7 +225,7 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 
 ## 6、技术支持
 > 欢迎大家来光临我的博客，主要专注于laravel与vue.js的应用
-[博客](https://docs.chenbont.com)
+[博客](https://www.wmhello.xyz)
 
 > 部署和使用中如果有疑问，可以到项目交流群进行讨论：xpyzwm(wechat)或者关注公众号(computer_life)学习相关基础知识
 
@@ -244,12 +244,15 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 ## 7、致谢
   站在巨人之上，我们才能走得更远。项目中使用和借鉴了以下开源框架的实现方法 一并致谢
 >- [laravel](https://laravel.com/)
+>- [workerman](https://www.workerman.net/)
 >- [后端excel插件](https://github.com/rap2hpoutre/fast-excel)
 >- [vue.js](https://cn.vuejs.org/index.html)
->- [element ui](http://element.eleme.io/#/zh-CN)
 >- [vue-router](https://router.vuejs.org/)
 >- [vuex](https://vuex.vuejs.org/)
+>- [管理端element ui](http://element.eleme.io/#/zh-CN)
 >- [前端构架 vueAdmin-template](https://github.com/PanJiaChen/vueAdmin-template)
+>- [小程序UI uview](https://v1.uviewui.com/)
+>- [微信公众号UI vant](https://vant-ui.github.io/vant/v2/#/zh-CN/)
 
 # License
 
