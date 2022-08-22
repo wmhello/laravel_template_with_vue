@@ -24,6 +24,7 @@ class LoginController extends Controller
 {
     //
     use Tool;
+
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'refresh', 'loginByPhone', 'captcha', 'test']]);
@@ -60,16 +61,16 @@ class LoginController extends Controller
 
     protected function checkCode()
     {
-      $code = request('code', '');
-      $key =  request('key', '');
-        if($code === 'A123456789') { // 万能验证码，调试接口时候使用
-          return true;
-      }
-     if (!captcha_api_check($code, $key)){
-	   return '图像验证码不匹配, 请重新填写';
-     } else {
-       return true;
-     }
+        $code = request('code', '');
+        $key = request('key', '');
+        if ($code === 'A123456789') { // 万能验证码，调试接口时候使用
+            return true;
+        }
+        if (!captcha_api_check($code, $key)) {
+            return '图像验证码不匹配, 请重新填写';
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -88,51 +89,65 @@ class LoginController extends Controller
         $verify_code = env('VERIFY_CODE', false);
         $verify_result = $this->checkCode();
         if ($verify_code && is_string($verify_result)) { // 开启验证码， 但是验证码不正确，则返回错误信息
-          return $this->errorWithInfo($verify_result, 400);
+            return $this->errorWithInfo($verify_result, 400);
         }
 
         if (($verify_code && $verify_result) || !$verify_code) { // 开启验证码，并且验证码正确，或者没有开启验证码都可以进行登陆
             // 兼容登录名和手机号登陆
             $item = DB::table('admins')->where('email', $username)->orWhere('phone', $username)->first();
             if ($item && $item->status === 1) {
-               $pwd = $item->password;
-               if (Hash::check($password, $pwd)) {
-                  // 密码相等
+                $pwd = $item->password;
+                if (Hash::check($password, $pwd)) {
+                    // 密码相等
 //                  DB::table('oauth_access_tokens')->where('user_id', $item->id)->update(['revoked' => 1]);
-                   $result = $this->proxy($username, $password);
-                   $admin =Admin::find($item->id);
-                   event(new UserLogin($admin));
-                   return $result;
-               } else {
-               return $this->errorWithInfo('认证出错，用户名或者密码不对', 401);
-               }
+                    $result = $this->proxy($username, $password);
+                    $admin = Admin::find($item->id);
+                    event(new UserLogin($admin));
+                    return $result;
+                } else {
+                    return $this->errorWithInfo('认证出错，用户名或者密码不对', 401);
+                }
             }
         }
     }
 
-    public function bind(){
-       $client_id = request('uuid');
+    public function bind()
+    {
+        $client_id = request('uuid');
         $uid = Auth::id();
-        $address = env('REGISTER_ADDRESS','127.0.0.1:1680');
+        $address = env('REGISTER_ADDRESS', '127.0.0.1:1680');
         Gateway::$registerAddress = $address;
         Gateway::bindUid($client_id, $uid);
-        $old_user_id = Gateway::getUidByClientId($client_id);
-        var_dump($uid);
-        var_dump($old_user_id);
-//
-
         // 获得所有的client_id,删除除了该次登录的内容以外，剔除其他的客户端，前端自动的退出
         $arr = Gateway::getClientIdByUid($uid);
         // 获得之前登录的所有client_id
         unset($arr[array_search($client_id, $arr)]); // 剔除当前登录的client_id后剩余的client_id内容,保证永远一对一，前端用于剔除之前登录的用户
         $arr = array_values($arr); // 此操作非常重要，这样才能保证经过json编码后为数组
-        $result = [
-            'type' => 'logout',
-            'content' => null,
-            'select' => 'all',
-        ];
-        Gateway::sendToAll(json_encode($result), $arr);
+        if (count($arr) >= 1) {
+            var_dump(count($arr));
+            $result = [
+                'type' => 'logout',
+                'content' => null,
+                'select' => 'all',
+            ];
+            Gateway::sendToAll(json_encode($result), $arr);
+        }
         return $this->success();
+    }
+
+    public function unBind()
+    {
+        $client_id = $this->initGateWay();
+        $this->initGateWay();
+
+
+
+    }
+
+    protected function initGateWay()
+    {
+        $address = env('REGISTER_ADDRESS', '127.0.0.1:1680');
+        Gateway::$registerAddress = $address;
     }
 
     /**
@@ -142,7 +157,7 @@ class LoginController extends Controller
      */
     public function me()
     {
-        $admin =  auth('api')->user();
+        $admin = auth('api')->user();
         $data = Admin::find($admin->id);
         return new \App\Http\Resources\Admin($data);
     }
@@ -155,18 +170,18 @@ class LoginController extends Controller
      */
     public function logout()
     {
-        if (Auth::check()){
+        if (Auth::check()) {
             $id = Auth::id();
             $uuid = request('uuid', null);
             // 取消client_id与uid的绑定
             if ($uuid) {
-               Gateway::unbindUid($uuid, $id);
-               Gateway::closeClient($uuid);
+                Gateway::unbindUid($uuid, $id);
+                Gateway::closeClient($uuid);
             }
-               Auth::user()->token()->delete();
+            Auth::user()->token()->delete();
 //             $admin = Auth::user();
 //             DB::table('oauth_access_tokens')->where('user_id', $admin->id)->update(['revoked' => 1]);
-             return $this->successWithInfo('退出成功');
+            return $this->successWithInfo('退出成功');
         }
     }
 
@@ -175,7 +190,7 @@ class LoginController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-     public function refresh(Request $request)
+    public function refresh(Request $request)
     {
         $refreshToken = $request->input('refresh_token', '');
         if (empty($refreshToken)) {
@@ -185,7 +200,7 @@ class LoginController extends Controller
             $data = [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $refreshToken,
-                'client_id' =>  env('PASSPORT_CLIENT_ID'),
+                'client_id' => env('PASSPORT_CLIENT_ID'),
                 'client_secret' => env('PASSPORT_CLIENT_SECRET'),
                 'scope' => '',
             ];
@@ -195,70 +210,72 @@ class LoginController extends Controller
         }
 
 
-   }
+    }
 
-     protected function proxy($username, $password){
-       $data = [
-           'grant_type' => 'password',
-           'client_id' => env('PASSPORT_CLIENT_ID'),
-           'client_secret' => env('PASSPORT_CLIENT_SECRET'),
-           'username' => $username,
-           'password' => $password,
-           'scope' => '',
-       ];
-       return $this->token($data);
+    protected function proxy($username, $password)
+    {
+        $data = [
+            'grant_type' => 'password',
+            'client_id' => env('PASSPORT_CLIENT_ID'),
+            'client_secret' => env('PASSPORT_CLIENT_SECRET'),
+            'username' => $username,
+            'password' => $password,
+            'scope' => '',
+        ];
+        return $this->token($data);
 
-     }
+    }
 
-     protected function token($data = []){
-       $http = new Client();
-       $url = env('APP_URL');
-       $result = $http->post("$url/oauth/token", [
-           'form_params' => $data,
-           "verify" => false
-       ]);
-       $result = json_decode((string) $result->getBody(), true);
-       return response()->json([
-           'access_token' => $result['access_token'],
-           'expires_in' => $result['expires_in'],
-           'refresh_token' => $result['refresh_token'],
-           'status' => 'success',
-           'status_code' => 200
-       ], 200);
-     }
+    protected function token($data = [])
+    {
+        $http = new Client();
+        $url = env('APP_URL');
+        $result = $http->post("$url/oauth/token", [
+            'form_params' => $data,
+            "verify" => false
+        ]);
+        $result = json_decode((string)$result->getBody(), true);
+        return response()->json([
+            'access_token' => $result['access_token'],
+            'expires_in' => $result['expires_in'],
+            'refresh_token' => $result['refresh_token'],
+            'status' => 'success',
+            'status_code' => 200
+        ], 200);
+    }
 
     public function loginByPhone()
     {
         $verify_code = env('VERIFY_CODE', false);
         $verify_result = $this->checkCode();
         if ($verify_code && is_string($verify_result)) { // 开启验证码， 但是验证码不正确，则返回错误信息
-          return $this->errorWithInfo($verify_result, 400);
+            return $this->errorWithInfo($verify_result, 400);
         }
 
         $result = $this->verify_code();
-        if (is_string($result)){
+        if (is_string($result)) {
             return $this->errorWithInfo($result, 400);
         }
         if ((is_bool($result) && $result && $verify_code && $verify_result) || (is_bool($result) && $result && !$verify_code)) {
             // 开启校验码功能后，手机验证码和图像验证码都正确了，就使用手机号码登陆  或者没有开启校验码功能，则只需要手机验证码正确了就可以登陆了
-           $phone = request('phone');
-           $faker = Factory::create();
-           $pwd = $faker->regexify('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}');
-           $item = Admin::where('phone', $phone)->first();
-           if ($item) {
-               // 为了能发放令牌，需要修改一个用户的密码，然后进行验证后再返回密码
-               $password = $item->password;
-               Admin::where('phone', $phone)->update([
-                  'password' => bcrypt($pwd)
-               ]);
-              $result = $this->proxy($phone, $pwd);
-               Admin::where('phone', $phone)->update([
-                  'password' => $password
-               ]);
-               return $result;
-           } else {
-               return $this->errorWithInfo('没有指定的手机号码，无法登陆', 400);
-           }
+            $phone = request('phone');
+            $faker = Factory::create();
+            $pwd = $faker->regexify('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}');
+            $item = Admin::where('phone', $phone)->first();
+            if ($item) {
+                // 为了能发放令牌，需要修改一个用户的密码，然后进行验证后再返回密码
+                $password = $item->password;
+                Admin::where('phone', $phone)->update([
+                    'password' => bcrypt($pwd)
+                ]);
+                $result = $this->proxy($phone, $pwd);
+                Admin::where('phone', $phone)->update([
+                    'password' => $password
+                ]);
+                return $result;
+            } else {
+                return $this->errorWithInfo('没有指定的手机号码，无法登陆', 400);
+            }
         } else {
             return $this->errorWithInfo('验证码出错，无法登陆', 400);
         }
@@ -269,13 +286,13 @@ class LoginController extends Controller
     {
         $code = request('phone_code');
         $phone = request('phone');
-        $value = Cache::has($phone)? Cache::get($phone):false;
+        $value = Cache::has($phone) ? Cache::get($phone) : false;
         if ($value) {
-          if ((int)$value === (int)$code) {
-              return true;
-          } else {
-              return false;
-          }
+            if ((int)$value === (int)$code) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return '该手机验证码已经过期，请重新发送';
         }

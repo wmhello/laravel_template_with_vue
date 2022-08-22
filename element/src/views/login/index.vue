@@ -151,6 +151,10 @@ export default {
         if (process.env.NODE_ENV === "development") {
           console.log("初始化并返回client_id");
         }
+        // 如果已经存在定时器，则说明说明之前的websocket连接成功了
+        if (this.$bus.timer1) {
+          return false;
+        }
         window.localStorage.setItem("uuid", res.client_id);
         this.loading = false;
         this.cmdTitle = "登录";
@@ -159,7 +163,7 @@ export default {
           clearTimeout(this.timer[`websocket${i}`]);
         }
         let that = this;
-        setInterval(() => {
+        this.$bus.timer1 = setInterval(() => {
           that.websock.send(
             JSON.stringify({
               type: "ping",
@@ -231,6 +235,7 @@ export default {
     loginWebsocket() {
       // 连续5次发送新建websocket等待请求，2秒钟一次，这样的话，
       // 只要有一次完成就把所有定时器都清除，然后设置为允许登录
+
       for (let i = 1; i <= 5; i++) {
         this.timer[`websocket${i}`] = null;
         this.timer[`websocket${i}`] = setTimeout(() => {

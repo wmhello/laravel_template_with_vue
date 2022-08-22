@@ -103,8 +103,7 @@ export default {
       }
     });
   },
-  // 离开页面，取消客服注册
-  async beforeRouteLeave(to, from, next) {
+  async beforeDestroy() {
     if (!this.loading) {
       await unRegister({
         uuid: window.localStorage.getItem("uuid"),
@@ -114,9 +113,6 @@ export default {
       delete window.websocketHandle.userLogin;
       delete window.websocketHandle.userLogout;
       delete window.websocketHandle.userSay;
-      next();
-    } else {
-      next();
     }
   },
   created() {
@@ -212,6 +208,8 @@ export default {
           avatar: this.avatar || null,
         };
         this.msgList[`${this.currentUser}`].push(data);
+        let mainDiv = document.querySelector(".main");
+        mainDiv.scrollTop = mainDiv.scrollHeight - 40;
         await sendDataToUser(data);
       }
     },

@@ -83,18 +83,6 @@ export default {
       });
     });
   },
-  async beforeRouteLeave(to, from, next) {
-    // 正常时候退出才会去发送退出消息给客服
-    try {
-      await unRegister();
-      delete window.websocketHandle.chatUserLogin;
-      // // 客户退出咨询
-      delete window.websocketHandle.chatUserLogout;
-      // 接收到用户发送来的数据执行的代码
-      delete window.websocketHandle.chatUserSay;
-    } catch (error) {}
-    next();
-  },
   created() {
     if (setting.isWebsocket && !this.loading) {
       // 开启websocket
@@ -108,6 +96,14 @@ export default {
       // 接收到用户发送来的数据执行的代码
       window.websocketHandle.chatUserSay = this.onChatUserSay;
     }
+  },
+  async beforeDestroy() {
+    await unRegister();
+    delete window.websocketHandle.chatUserLogin;
+    // // 客户退出咨询
+    delete window.websocketHandle.chatUserLogout;
+    // 接收到用户发送来的数据执行的代码
+    delete window.websocketHandle.chatUserSay;
   },
   mounted() {
     let height = document.documentElement.clientHeight;
@@ -145,7 +141,9 @@ export default {
     },
     // 用户收到其他用户的信息
     onChatUserSay(item, res) {
-      this.msgList.push(res);
+      if (res.name !== name) {
+        this.msgList.push(res);
+      }
     },
     async sendMsg() {
       this.msg = document.querySelector(".msg-box").innerText;
@@ -157,6 +155,8 @@ export default {
         time: moment(new Date()).format("HH:mm"),
       };
       this.msgList.push(data);
+      let mainDiv = document.querySelector(".main");
+      mainDiv.scrollTop = mainDiv.scrollHeight - 40;
       await sendDataToUser(data);
     },
   },
@@ -196,6 +196,8 @@ export default {
 }
 .content > .sidebar .main {
   flex: 2;
+  height: 360px;
+  overflow: auto;
 }
 .content > .sidebar .msg {
   flex: 1;

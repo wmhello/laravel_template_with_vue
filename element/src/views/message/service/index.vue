@@ -98,8 +98,7 @@ export default {
       }
     });
   },
-  async beforeRouteLeave(to, from, next) {
-    // 正常时候退出才会去发送退出消息给客服
+  async beforeDestroy() {
     if (!this.loading) {
       try {
         await userLeave();
@@ -109,9 +108,6 @@ export default {
         // 接收到用户发送来的数据执行的代码
         delete window.websocketHandle.customerSay;
       } catch (error) {}
-      next();
-    } else {
-      next();
     }
   },
   created() {
@@ -165,6 +161,8 @@ export default {
         time: moment(new Date()).format("HH:mm"),
       };
       this.msgList.push(data);
+      let mainDiv = document.querySelector(".main");
+      mainDiv.scrollTop = mainDiv.scrollHeight - 40;
       await sendDataToCustomer(data);
     },
     selectList(e) {
@@ -230,6 +228,8 @@ export default {
 }
 .content > .sidebar .main {
   flex: 2;
+  overflow: auto;
+  height: 360px;
 }
 .content > .sidebar .msg {
   flex: 1;

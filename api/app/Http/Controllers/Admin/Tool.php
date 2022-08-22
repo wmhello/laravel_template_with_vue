@@ -31,6 +31,8 @@ trait Tool
         return request()->header('X-Socket-Id');
     }
 
+
+
     protected function successWithData($data = [], $code = 200)
     {
         return response()->json([
