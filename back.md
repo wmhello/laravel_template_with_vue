@@ -67,29 +67,6 @@ php artisan passport:client --password
 ## 9. 建立图像软连接
 >  linux上要设置相关目录的权限为777 public目录和storage目录
 ~~~
-php artian storage:link
+php artisan storage:link
 ~~~
 
-
-## 10. 消息推送
-> 如果需要打开客服功能，必须配置，根据情况可以稍后配置 
-
-需要根据要求配置laravel-echo-server，全局安装  
-
-~~~
-npm install -g laravel-echo-server
-~~~
-
-安装之后，在后端目录(backend)执行初始化  
-
-~~~
-aravel-echo-server init
-~~~
-
-相关的配置请参考相关文档，或者加我微信（xpyzwm）交流  
-
-配置完成之后，需要后端目录下启动laravel-echo-server 才能实现聊天、推送等功能
-
-~~~
-laravel-echo-server start
-~~~
