@@ -69,7 +69,7 @@ return [
             'port' => env('DB_PORT', '3306'),
             'database' => 'INFORMATION_SCHEMA',
             'username' => 'root',
-            'password' => 'Test@123456',
+            'password' => 'abc@123456',
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
