@@ -25,6 +25,7 @@ class CreateTableConfigsTable extends Migration
             $table->string('form_type')->nullable()->comment("表单类型");
             $table->string('query_type')->nullable()->comment("查询方式");
             $table->string('assoc_table')->nullable()->comment("关联表");
+            $table->integer('form_order')->nullable()->comment("表单的顺序");
             $table->timestamps();
         });
     }
