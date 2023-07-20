@@ -23,8 +23,8 @@ module.exports = {
   /**
    * websocket相关的配置
    */
-  isWebsocket: true,   // 是否开启websocket支持
-  isSingle: true,      // 是否单用户登录
+  isWebsocket: false,   // 是否开启websocket支持
+  isSingle: false,      // 是否单用户登录
   websocketUrl: "wss://api.wmhello.xyz/wss" // websocket的地址
 
 }
