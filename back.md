@@ -70,3 +70,12 @@ php artisan passport:client --password
 php artisan storage:link
 ~~~
 
+## 10.配置自动生成代码
+>  修改后端目录（api）下的config目录中的database.php, 修改'super'关联数组中的'password'选项，设置mysql数据库中root用户名的密码，其余不变
+> 注意：只能使用root用户
+~~~
+   'username' => 'root',
+  'password' => 'abc@123456',
+~~~
+
+
