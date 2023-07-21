@@ -40,7 +40,8 @@ class Events
            'type' => 'init',
            'client_id' => $client_id
         ];
-        Gateway::sendToClient(json_decode($data));
+	
+	Gateway::sendToClient($client_id,json_encode($data));
     }
     
    /**
@@ -51,12 +52,16 @@ class Events
    public static function onMessage($client_id, $message)
    {
         // 向所有人发送 
-		        $res = json_decode($message, true);
-		        if ($res['type'] === 'ping'){
-		            // 心跳包 前端50秒发送一次
-		
-		        }
-        // Gateway::sendToAll("$client_id said $message\r\n");
+
+				
+	$res = json_decode($message, true);
+	if ($res['type'] === 'ping'){
+	    // 心跳包 前端50秒发送一次					
+	}
+				
+	if ($res["msg"] === "gongzuo") {
+	   Gateway::sendToClient($client_id, "gongzuo");
+	}
    }
    
    /**
