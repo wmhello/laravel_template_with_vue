@@ -50,7 +50,7 @@
 >
 >  2. 为了使用websocket等功能，需要用户同时修改前后和后端的配置，开启websocket
 >
->  ​      3. 为了演示聊天室和客服等功能，用户可以进入系统后首先创建多个用户，并且利用不同的浏览器同时登陆，就可以演示相关功能。
+> 3. 为了演示聊天室和客服等功能，用户可以进入系统后首先创建多个用户，并且利用不同的浏览器同时登陆，就可以演示相关功能。
 
 ## 3、项目演示与截图
 > (管理端 element ui)演示网站(https://element.wmhello.cn)  
@@ -225,9 +225,9 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 
 ## 6、技术支持
 > 欢迎大家来光临我的博客，主要专注于laravel与vue.js的应用
-[博客](https://www.wmhello.xyz)
+[博客](https://docs.wmhello.cn)
 
-> 部署和使用中如果有疑问，可以到项目交流群进行讨论：xpyzwm(wechat)或者关注公众号(computer_life)学习相关基础知识
+> 部署和使用中如果有疑问，可以到项目交流群进行讨论：微信(xpyzwm)或者关注公众号(computer_life)学习相关基础知识
 
 > ![微信二维码](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/weixin1.png)
 
