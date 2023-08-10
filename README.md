@@ -223,7 +223,20 @@ https://v.qq.com/x/page/t3059mfpgkg.html
  如果你在计算机程序设计的学习与开发的过程中，碰到难点，需要技术指导和相关的开发辅导。可以联系本人，本人将提供有偿的技术支持和辅导（50元/时-100元/小时），辅导的内容包括但不局限于以下（前端、后端PHP、nodejs、数据库、javascript和PHP的程序设计模式、公众号、小程序、vue.js、uni-app等）。
 
 
-## 6、技术支持
+## 6.使用该模板开发的项目
+1.[在线考试系统管理端](http://exam-admin.wmhello.cn/#/login) 用户名/密码(admin/123456)
+[在线考试系统用户端](http://exam-online.wmhello.cn/) 用户名/密码(test/123456)
+
+2.[商品进销存管理系统](http://erp-admin.wmhello.cn/login) 用户名/密码(admin/123456)
+
+3.[民主测评管理系统](http://result.wmhello.cn) 用户名/密码(admin/123456)
+
+4.[学校信息管理系统模板](https://docs.wmhello.cn/design/b65500/)
+
+5.[其他案列](https://docs.wmhello.cn/project/)
+
+
+## 7、技术支持
 > 欢迎大家来光临我的博客，主要专注于laravel与vue.js的应用
 [博客](https://docs.wmhello.cn)
 
@@ -234,14 +247,14 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 > ![全栈开发公众号](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/gzh.jpg)
 
 
-## 6、打赏
+## 8、打赏
 如果我的付出能够帮助到你，我也乐于接受你的帮助，小小的赞赏是我持续进步的动力。
 
 ![支付宝支付](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/pay1.jpg)
 
 ![微信支付](https://cdn.jsdelivr.net/gh/wmhello/imgs/blog/wx.jpg)
 
-## 7、致谢
+## 9、致谢
   站在巨人之上，我们才能走得更远。项目中使用和借鉴了以下开源框架的实现方法 一并致谢
 >- [laravel](https://laravel.com/)
 >- [workerman](https://www.workerman.net/)
