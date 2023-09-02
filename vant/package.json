@@ -7,7 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "good-storage": "^1.1.0",
     "js-cookie": "^2.2.1",
     "vant": "^2.4.7",
