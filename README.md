@@ -231,7 +231,7 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 
 3.[民主测评管理系统](http://eval.wmhello.cn/admin/) 用户名/密码(admin/123456)
 
-4.[学校信息管理系统模板](https://wwww.wmhello.cn/design/b65500/)
+4.[学校信息管理系统模板](https://www.wmhello.cn/design/b65500/)
 
 5.[其他案列](https://www.wmhello.cn/project/)
 
