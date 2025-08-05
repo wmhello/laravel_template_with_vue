@@ -53,7 +53,7 @@
 > 3. 为了演示聊天室和客服等功能，用户可以进入系统后首先创建多个用户，并且利用不同的浏览器同时登陆，就可以演示相关功能。
 
 ## 3、项目演示与截图
-> (管理端 element ui)演示网站(https://element.wmhello.cn)  
+> (管理端 element ui)演示网站(https://demo.wmhello.cn/admin/)  
 >
 > 管理员用户名和密码(admin/123456)  
 
@@ -224,21 +224,21 @@ https://v.qq.com/x/page/t3059mfpgkg.html
 
 
 ## 6.使用该模板开发的项目
-1.[在线考试系统管理端](http://exam-admin.wmhello.cn/#/login) 用户名/密码(admin/123456)
-[在线考试系统用户端](http://exam-online.wmhello.cn/) 用户名/密码(test/123456)
+1.[在线考试系统管理端](http://exam.wmhello.cn/admin/#/login) 用户名/密码(admin/123456)
+[在线考试系统用户端](http://exam.wmhello.cn/web/) 用户名/密码(test/123456)
 
-2.[商品进销存管理系统](http://erp-admin.wmhello.cn/login) 用户名/密码(admin/123456)
+2.[商品进销存管理系统](http://erp.wmhello.cn/admin/) 用户名/密码(admin/123456)
 
-3.[民主测评管理系统](http://result.wmhello.cn) 用户名/密码(admin/123456)
+3.[民主测评管理系统](http://eval.wmhello.cn/admin/) 用户名/密码(admin/123456)
 
-4.[学校信息管理系统模板](https://docs.wmhello.cn/design/b65500/)
+4.[学校信息管理系统模板](https://wwww.wmhello.cn/design/b65500/)
 
-5.[其他案列](https://docs.wmhello.cn/project/)
+5.[其他案列](https://www.wmhello.cn/project/)
 
 
 ## 7、技术支持
 > 欢迎大家来光临我的博客，主要专注于laravel与vue.js的应用
-[博客](https://docs.wmhello.cn)
+[博客](https://www.wmhello.cn)
 
 > 部署和使用中如果有疑问，可以到项目交流群进行讨论：微信(xpyzwm)或者关注公众号(computer_life)学习相关基础知识
 
